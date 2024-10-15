@@ -43,7 +43,7 @@ namespace MUS.Controllers
         }
 
         [HttpPost("AddTheLoai")]
-        public async Task<IActionResult> AddTheLoai(TheLoaiModal modal)
+        public async Task<IActionResult> AddTheLoai([FromForm] TheLoaiModal modal)
         {
             try
             {

@@ -24,7 +24,7 @@ namespace MUS.Repository
         {
             try
             {
-                var db = _musDbConText.TheLoais.Where(r => r.Id == modal.Id).AsNoTracking().FirstOrDefaultAsync();
+                var db = _musDbConText.TheLoais.FirstOrDefault(r =>r.Id == modal.Id);
                 if (db == null)
                 {
                     TheLoai theLoai = new TheLoai();

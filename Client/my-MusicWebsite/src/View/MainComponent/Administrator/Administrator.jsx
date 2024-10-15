@@ -17,7 +17,7 @@ const stylesBox = {
 const Administrator = () => {
   return (
     <Container >
-       <Grid2 spacing={2} container style={{display:"flex" ,margin:"0 auto"}}>
+       <Grid2 spacing={2} container >
             <Grid2 size={3}>
                 <Box sx={stylesBox}>
                   <MusicNoteIcon/>
