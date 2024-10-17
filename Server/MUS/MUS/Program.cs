@@ -23,6 +23,9 @@ builder.Services.AddDbContext<MusDbConText>(options =>
 builder.Services.AddScoped<ITheLoaiRepository, TheLoaiRepository>();
 builder.Services.AddScoped<ITheLoaiServices, TheLoaiServices>();
 
+builder.Services.AddScoped<IChuDeRepository, ChuDeRepository>();
+builder.Services.AddScoped<IChudeServices, ChuDeServices>();
+
 builder.Services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();

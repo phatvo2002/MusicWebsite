@@ -4,17 +4,18 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import Slide from '@mui/material/Slide';
 import CustomImageUpload from '../../../../../Components/CustomUploadImage/CusTomUploadImages';
 import Button from '@mui/material/Button';
 import PropTypes from 'prop-types';
 import toastr from 'toastr';
 import { Grid2, TextField } from '@mui/material';
 import axios from 'axios';
-const ModalAddTheLoai = ({ openModal, handleClose }) => {
+import Swal from 'sweetalert2';
+const ModalAddTheLoai = ({ openModal, handleClose ,setLoading }) => {
       ModalAddTheLoai.propTypes = {
         openModal: PropTypes.bool.isRequired,  
         handleClose: PropTypes.func.isRequired, 
+        setLoading : PropTypes.func.isRequired
       };
       const [base64String, setBase64String] = useState("");
       const [imageDataBasic, setImageDataBasic] = useState("");
@@ -22,17 +23,35 @@ const ModalAddTheLoai = ({ openModal, handleClose }) => {
         tenTheLoai : "",
         file :"",
      })
+     const resetForm = () => {
+      setObj({
+        tenTheLoai : "",
+      })    // Reset the text field
+      setBase64String('');       // Clear the image preview
+      setImageDataBasic(null);   // Reset any other state related to image
+    };
       const handleChange = (name) => (event) => {
         setObj({ ...obj, [name]: event.target.value });
       }
       const handleImageConvert = (base64String) => {
         setBase64String(base64String);
-        toastr.success("Thêm ảnh thành công");
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Thêm ảnh thành công",
+          showConfirmButton: false,
+          timer: 1500
+        });
       };
 
       const handelSave = async () => {
         if (!obj?.tenTheLoai || !imageDataBasic) {
-            toastr.error("Vui lòng nhập đầy đủ dữ liệu");
+          Swal.fire({
+            position: "center",
+            icon: "warning",
+            title: "Vui lòng nhập đầy đủ dữ liệu",
+            showConfirmButton: false,
+          });
             return;
         }
     
@@ -44,18 +63,32 @@ const ModalAddTheLoai = ({ openModal, handleClose }) => {
         };
         formData.append("tenTheLoai", obj?.tenTheLoai);
         formData.append("file", imageDataBasic);
-    
-       
             const response = await axios.post("https://localhost:7280/api/TheLoai/AddTheLoai", formData, config);
-            console.log(response);
     
             if (response.status === 200) {
-                toastr.success("Thêm thành công");
-                handleClose(); // Đóng modal khi thành công
+              Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Thêm thể loại thành công",
+                showConfirmButton: false,
+                timer: 1500
+              });
+               setLoading(true)
+                handleClose(); 
             } else {
-                toastr.error("Có lỗi xảy ra");
+              Swal.fire({
+                position: "center",
+                icon: "error",
+                title: "Có lỗi đã xảy ra",
+                showConfirmButton: false,
+              });
             }
        
+    };
+
+    const handleCloseModal = () => {
+      resetForm();               
+      handleClose()    
     };
     
   return (
@@ -93,7 +126,7 @@ const ModalAddTheLoai = ({ openModal, handleClose }) => {
       </DialogContentText>
     </DialogContent>
     <DialogActions>
-      <Button onClick={handleClose}>Đóng</Button>
+      <Button onClick={handleCloseModal}>Đóng</Button>
       <Button onClick={handelSave}>Lưu</Button>
     </DialogActions>
   </Dialog>

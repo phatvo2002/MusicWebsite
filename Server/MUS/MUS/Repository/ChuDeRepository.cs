@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Azure.Core;
 using Microsoft.EntityFrameworkCore;
 using MUS.Entities;
 using MUS.Entities.DTO;
@@ -9,51 +8,50 @@ using MUS.Repository.Interface;
 
 namespace MUS.Repository
 {
-    public class TheLoaiRepository : ITheLoaiRepository
+    public class ChuDeRepository : IChuDeRepository
     {
         public readonly MusDbConText _musDbConText;
         public readonly IMapper _mapper;
 
-        public TheLoaiRepository(MusDbConText conText , IMapper mapper)
+        public ChuDeRepository(MusDbConText conText, IMapper mapper)
         {
             _musDbConText = conText;
             _mapper = mapper;
         }
-
-        public async Task<ResultModel> AddTheLoai(TheLoaiModal modal)
+        public async Task<ResultModel> AddChuDe(ChuDeModal modal)
         {
             try
             {
-                var db = _musDbConText.TheLoais.FirstOrDefault(r =>r.Id == modal.Id);
+                var db = _musDbConText.ChuDes.FirstOrDefault(r => r.Id == modal.Id);
                 if (db == null)
                 {
-                    TheLoai theLoai = new TheLoai();
-                    theLoai.Id = Guid.NewGuid(); ;
-                    theLoai.TenTheLoai = modal.TenTheLoai;
+                    ChuDe chuDe = new ChuDe();
+                    chuDe.Id = Guid.NewGuid(); ;
+                    chuDe.TenChuDe = modal.TenChuDe;
                     if (modal.File != null && modal.File.Length > 0)
                     {
                         var res = Untils.UploadFileImage(modal.File);
                         if (!string.IsNullOrEmpty(res))
                         {
-                         theLoai.Url = res;
-                        }    
+                            chuDe.Url = res;
+                        }
                     }
-                    _musDbConText.TheLoais.Add(theLoai);
+                    _musDbConText.ChuDes.Add(chuDe);
                     await _musDbConText.SaveChangesAsync();
                     return new ResultModel() { Status = 200, Message = "Thêm mới thành công", Success = true };
                 }
-                return new ResultModel() { Status = 202, Message = "thể loại đã tồn tại trong hệ thống", Success = true };
+                return new ResultModel() { Status = 202, Message = "Chủ đề đã tồn tại trong hệ thống", Success = true };
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                return new ResultModel() { Status = 500, Message =ex.Message, Success = false };
+                return new ResultModel() { Status = 500, Message = ex.Message, Success = false };
             }
         }
 
-        public async Task<ResultModel> DeleteTheLoai(Guid id)
+        public async Task<ResultModel> DeleteChuDe(Guid id)
         {
-            var db = _musDbConText.TheLoais.Where(r => r.Id == id).FirstOrDefault();
-            if(db != null)
+            var db = _musDbConText.ChuDes.Where(r => r.Id == id).FirstOrDefault();
+            if (db != null)
             {
                 if (!string.IsNullOrEmpty(db.Url))
                 {
@@ -63,28 +61,28 @@ namespace MUS.Repository
                     }
                     catch { }
                 }
-                _musDbConText.TheLoais.Remove(db);
+                _musDbConText.ChuDes.Remove(db);
                 await _musDbConText.SaveChangesAsync();
-                return new ResultModel() { Status = 200, Message ="Xóa thành công", Success = true };
+                return new ResultModel() { Status = 200, Message = "Xóa thành công", Success = true };
             }
             return new ResultModel() { Status = 202, Message = "Không tìm thấy dữ liệu", Success = false };
         }
 
-        public async Task<List<TheLoaiDTO>> GetAllTheLoai()
+        public async Task<List<ChuDeDTO>> GetAllChuDe()
         {
-            var db =await _musDbConText.TheLoais.AsNoTracking().ToListAsync();
-            return _mapper.Map<List<TheLoaiDTO>>(db);
+            var db = await _musDbConText.ChuDes.AsNoTracking().ToListAsync();
+            return _mapper.Map<List<ChuDeDTO>>(db);
         }
 
-        public async Task<TheLoaiDTO> GetTheLoaiById(Guid id)
+        public async Task<ChuDeDTO> GetChuDeById(Guid id)
         {
-            var db = await _musDbConText.TheLoais.Where(r => r.Id == id).AsNoTracking().FirstOrDefaultAsync();
-            return  _mapper.Map<TheLoaiDTO>(db);         
+            var db = await _musDbConText.ChuDes.Where(r => r.Id == id).AsNoTracking().FirstOrDefaultAsync();
+            return _mapper.Map<ChuDeDTO>(db);
         }
 
-        public async Task<ResultModel> UpdateTheLoai(TheLoaiModal modal)
+        public async Task<ResultModel> UpdateChuDe(ChuDeModal modal)
         {
-            var db = _musDbConText.TheLoais.FirstOrDefault(r=> r.Id == modal.Id);
+            var db = _musDbConText.ChuDes.FirstOrDefault(r => r.Id == modal.Id);
             try
             {
                 if (db != null)
@@ -101,18 +99,17 @@ namespace MUS.Repository
                     var res = Untils.UploadFileImage(modal.File!);
                     if (!string.IsNullOrEmpty(res))
                         url = res;
-                    db.TenTheLoai = modal.TenTheLoai;
-                    _musDbConText.TheLoais.Update(db);
+                    db.TenChuDe = modal.TenChuDe;
+                    _musDbConText.ChuDes.Update(db);
                     await _musDbConText.SaveChangesAsync();
                     return new ResultModel() { Status = 200, Message = "Chỉnh sửa thành công", Success = true };
                 }
                 return new ResultModel() { Status = 202, Message = "Không tìm thấy dữ liệu", Success = false };
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return new ResultModel() { Status = 500, Message = ex.Message, Success = false };
             }
-         
         }
     }
 }

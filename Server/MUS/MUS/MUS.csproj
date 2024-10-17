@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\UploadFiles\Files\" />
+    <Folder Include="wwwroot\UploadFiles\Images\20241017\" />
   </ItemGroup>
 
 </Project>

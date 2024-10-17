@@ -8,32 +8,20 @@ namespace MUS.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TheLoaiController : ControllerBase
+    public class ChuDeController : ControllerBase
     {
-        public readonly ITheLoaiServices _theLoaiServices;
-        public TheLoaiController(ITheLoaiServices theLoaiServices) {
-            _theLoaiServices = theLoaiServices;
-        }
-
-        [HttpGet("GetAllTheLoai")]
-        public async Task<IActionResult> GetAllTheLoai()
+        public readonly IChudeServices _chudeServices;
+        public ChuDeController(IChudeServices chudeServices)
         {
-            try {
-                List<TheLoaiDTO> result = await _theLoaiServices.GetAllTheLoai();
-                return Ok(result);
-            }
-            catch (ArgumentException ex)
-            { 
-                return BadRequest(ex.Message);
-            }
+            _chudeServices = chudeServices;
         }
 
-        [HttpGet("GetAllTheLoaiById")]
-        public async Task<IActionResult> GetTheLoaiById(Guid Id)
+        [HttpGet("getallchude")]
+        public async Task<IActionResult> GetAllChuDe()
         {
             try
             {
-                TheLoaiDTO result = await _theLoaiServices.GetTheLoaiById(Id);
+                List<ChuDeDTO> result = await _chudeServices.GetAllChuDe();
                 return Ok(result);
             }
             catch (ArgumentException ex)
@@ -42,12 +30,12 @@ namespace MUS.Controllers
             }
         }
 
-        [HttpPost("AddTheLoai")]
-        public async Task<IActionResult> AddTheLoai([FromForm] TheLoaiModal modal)
+        [HttpGet("getchudebyid")]
+        public async Task<IActionResult> GetChuDeById(Guid Id)
         {
             try
             {
-                ResultModel result = await _theLoaiServices.AddTheLoai(modal);
+                ChuDeDTO result = await _chudeServices.GetChuDeById(Id);
                 return Ok(result);
             }
             catch (ArgumentException ex)
@@ -55,12 +43,13 @@ namespace MUS.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpPut("UpdateTheLoai")]
-        public async Task<IActionResult> UpdateTheLoai([FromForm]  TheLoaiModal modal)
+
+        [HttpPost("addchude")]
+        public async Task<IActionResult> AddChuDe([FromForm] ChuDeModal modal)
         {
             try
             {
-                ResultModel result = await _theLoaiServices.UpdateTheLoai(modal);
+                ResultModel result = await _chudeServices.AddChuDe(modal);
                 return Ok(result);
             }
             catch (ArgumentException ex)
@@ -68,13 +57,12 @@ namespace MUS.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
-        [HttpDelete("DeleteTheLoai")]
-        public async Task<IActionResult> DeleteTheLoai(Guid id)
+        [HttpPut("updatechude")]
+        public async Task<IActionResult> UpdateChuDe([FromForm] ChuDeModal modal)
         {
             try
             {
-                ResultModel result = await _theLoaiServices.DeleteTheLoai(id);
+                ResultModel result = await _chudeServices.UpdateChuDe(modal);
                 return Ok(result);
             }
             catch (ArgumentException ex)
@@ -83,9 +71,18 @@ namespace MUS.Controllers
             }
         }
 
-
-
-
-
+        [HttpDelete("deletechude")]
+        public async Task<IActionResult> DeleteChuDe(Guid id)
+        {
+            try
+            {
+                ResultModel result = await _chudeServices.DeleteChuDe(id);
+                return Ok(result);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

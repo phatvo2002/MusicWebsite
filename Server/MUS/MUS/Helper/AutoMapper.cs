@@ -8,6 +8,7 @@ namespace MUS.Helper
     {
        public AutoMapper() {
             CreateMap<TheLoai, TheLoaiDTO>();
+            CreateMap<ChuDe, ChuDeDTO>();
         }
     }
 }
