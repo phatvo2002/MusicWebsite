@@ -20,6 +20,7 @@ namespace MUS.Entities
         public virtual DbSet<ChuDe> ChuDes { get; set; }
         public virtual DbSet<NhacSi> NhacSis { get; set; }
         public virtual DbSet<Album> Albums { get; set; }
+        public virtual DbSet<BaiNhac> BaiNhacs { get; set; }
 
         public virtual DbSet<AlbumNhacSi> AlbumNhacSis { get; set; }
 
@@ -91,7 +92,8 @@ namespace MUS.Entities
                 entity.Property(e => e.DuongDanHinhAnh).HasMaxLength(300);
                 entity.Property(e => e.DuongDanFileAmNhac).HasMaxLength(300);
                 entity.Property(e => e.LoiBaiHat).HasMaxLength(1000);
-
+                entity.Property(e => e.KichThuoc).HasColumnType("decimal");
+                entity.Property(e => e.TenFile).HasMaxLength(100);
                 entity.HasOne(d => d.NhacSi).WithMany(p => p.BaiNhacs)
                    .HasForeignKey(d => d.NhacSiId)
                    .OnDelete(DeleteBehavior.ClientSetNull)

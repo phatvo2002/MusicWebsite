@@ -50,8 +50,6 @@ useEffect(() => {
     setOpenModalUpdateTheLoaiNhac(false)
   }
 
-
-
   const handleDelete = (theloaiId) => {
     Swal.fire({
       title: "Bạn có muốn xóa thể loại này không",

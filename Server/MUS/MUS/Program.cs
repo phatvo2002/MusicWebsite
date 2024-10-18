@@ -26,6 +26,9 @@ builder.Services.AddScoped<ITheLoaiServices, TheLoaiServices>();
 builder.Services.AddScoped<IChuDeRepository, ChuDeRepository>();
 builder.Services.AddScoped<IChudeServices, ChuDeServices>();
 
+builder.Services.AddScoped<IBaiNhacRepository, BaiNhacRepository>();
+builder.Services.AddScoped<IBaiNhacServices, BaiNhacServices>();
+
 builder.Services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();

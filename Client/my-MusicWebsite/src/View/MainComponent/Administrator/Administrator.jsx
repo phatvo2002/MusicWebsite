@@ -1,5 +1,4 @@
 import { Box, Container, Grid2, Typography , Link } from '@mui/material'
-import React from 'react'
 import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
 import MusicNoteIcon from '@mui/icons-material/MusicNote';
 import PersonPinIcon from '@mui/icons-material/PersonPin';
@@ -22,7 +21,7 @@ const Administrator = () => {
                 <Box sx={stylesBox}>
                   <MusicNoteIcon/>
                   <Typography >
-                     Quản lý bài nhạc
+                  <Link component={RouterLink} to="/Administrator/BaiNhac"> Quản lý bài nhạc</Link>
                    </Typography>
                 </Box>
             </Grid2>
