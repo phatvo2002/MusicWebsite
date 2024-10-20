@@ -9,13 +9,87 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers';
 import { Label } from '@mui/icons-material';
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import axios from 'axios';
 const ThemMoiBaiNhac = ({openModal,handleClose}) => {
     ThemMoiBaiNhac.propTypes = {
         openModal: PropTypes.bool.isRequired,  
         handleClose: PropTypes.func.isRequired,
      };
     const [base64String, setBase64String] = useState("");
+    const [base64StringBanner, setBase64StringBanner] = useState("");
     const [imageDataBasic, setImageDataBasic] = useState("");
+    const [bannderDataBasic , setBannersDataBasic] = useState("");
+    const [selectedDate, setSelectedDate] = useState(null);
+    const [files,setFiles] = useState("");
+    const [obj , setObj] = useState({
+      tenBaiNhac :"",
+      ngayPhatHanh : "",
+      duongDanHinhAnh :"",
+      duongDanBanner :"",
+      duongDanFileAmNhac:"",
+      loiBaiHat :"",
+      nhacSiId :"",
+      theLoaiId :"",
+      tamTrangId :"",
+      chudeId :"",
+      albumId :"",
+    });
+    //handle Changes values obj
+    const handleChange = (name) => (event) => {
+      setObj({ ...obj, [name]: event.target.value });
+    }
+    const handleDateChange = (field) => (newValue) => {
+      // Convert the new date to the required format or just store it
+      setSelectedDate(newValue);
+      console.log(`${field} updated to`, newValue ? dayjs(newValue).format("YYYY-MM-DD") : "null");
+    };
+    const handleFileChange = (e) => {
+      if (Array.from(e.target.files).some((arr) => arr?.size < 30000000)) {
+        // Get the selected files
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Thêm file thành công",
+          showConfirmButton: false,
+          timer: 1500
+        });
+        const selectedFiles = Array.from(e.target.files);
+        setFiles([...files, ...selectedFiles]); 
+        // if (handleFileSelect) {
+        //   handleFileSelect([...files, ...selectedFiles]); 
+        // }
+      } else {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "File của bạn không được vượt quá 30MB",
+          showConfirmButton: false,
+          timer: 1500
+        });
+      }
+    };
+
+    const resetForm = () => {
+      setObj({
+        tenBaiNhac :"",
+        ngayPhatHanh : "",
+        duongDanHinhAnh :"",
+        duongDanBanner :"",
+        duongDanFileAmNhac:"",
+        loiBaiHat :"",
+        nhacSiId :"",
+        theLoaiId :"",
+        tamTrangId :"",
+        chudeId :"",
+        albumId :"",
+      })    
+      setBase64String('');     
+      setBase64StringBanner('')
+      setImageDataBasic(null);  
+      setBannersDataBasic(null);
+      setFiles(null);
+    };
+    //convert image
     const handleImageConvert = (base64String) => {
         setBase64String(base64String);
         Swal.fire({
@@ -26,11 +100,71 @@ const ThemMoiBaiNhac = ({openModal,handleClose}) => {
           timer: 1500
         });
       };
+    //convert banner 
+    const handleBannerConvert = (base64StringBanner) => {
+      setBase64StringBanner(base64StringBanner);
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Thêm banner thành công",
+        showConfirmButton: false,
+        timer: 1500
+      });
+    };
 
       const handleCloseModal = () => {
-        // resetForm();               
+         resetForm();               
         handleClose()    
       };
+
+    const handelSubmit  = async () =>{
+      // if (!obj?.tenBaiNhac || !obj.ngayPhatHanh || !obj.loiBaiHat || !obj.thoiLuong ||!imageDataBasic || !bannderDataBasic) {
+      //   Swal.fire({
+      //     position: "center",
+      //     icon: "warning",
+      //     title: "Vui lòng nhập đầy đủ dữ liệu",
+      //     showConfirmButton: false,
+      //   });
+      //     return;
+      // }
+       const formData = new FormData();
+       const config = {
+        headers: {
+            "Content-Type": "multipart/form-data"
+        }
+        };
+      formData.append("TenBaiNhac" , obj.tenBaiNhac)
+      formData.append("NgayPhatHanh" , selectedDate)
+      formData.append("ThoiLuong" , obj.thoiLuong)
+      formData.append("LoiBaiHat" , obj.loiBaiHat)
+      formData.append("DuongDanHinhAnh" , imageDataBasic)
+      formData.append("DuongDanBanner" , bannderDataBasic)
+      formData.append("DuongDanBanner" , bannderDataBasic)
+      formData.append("DuongDanFileAmNhac" , files[0])
+
+      const response = await axios.post("https://localhost:7280/api/BaiNhac/addbainhac", formData, config);
+      if (response.status== 200)
+      {
+        if (response.status === 200) {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Thêm bài hát thành công",
+            showConfirmButton: false,
+            timer: 1500
+          });
+          //  setLoading(true)
+            handleClose(); 
+        } else {
+          Swal.fire({
+            position: "center",
+            icon: "error",
+            title: "Có lỗi đã xảy ra",
+            showConfirmButton: false,
+          });
+        }
+      }
+    }
 
   return (
     <Dialog
@@ -49,7 +183,7 @@ const ThemMoiBaiNhac = ({openModal,handleClose}) => {
         label="Tên bài nhạc"
         variant="outlined"
         fullWidth
-       
+        onChange={handleChange("tenBaiNhac")}
       />
     </Grid2>
     <Grid2 sx={{width:"50%" , marginTop:2}}>
@@ -57,7 +191,7 @@ const ThemMoiBaiNhac = ({openModal,handleClose}) => {
      <DatePicker
       label="Ngày phát hành"
        renderInput={(params) => <TextField {...params} />}
-      
+       onChange={handleDateChange("ngayPhatHanh")}
      />
 </LocalizationProvider>
     </Grid2>
@@ -67,6 +201,7 @@ const ThemMoiBaiNhac = ({openModal,handleClose}) => {
         label="Thời lượng"
         variant="outlined"
         fullWidth
+        onChange={handleChange("thoiLuong")}
       />
     </Grid2>
     <Grid2 sx={{width:"100%" ,marginTop:2}} >
@@ -76,6 +211,7 @@ const ThemMoiBaiNhac = ({openModal,handleClose}) => {
         variant="outlined"
         type=''
         fullWidth
+        onChange={handleChange("loiBaiHat")}
       />
     </Grid2>
     <Grid2 sx={{width:"100%" ,marginTop:2}}>
@@ -83,14 +219,14 @@ const ThemMoiBaiNhac = ({openModal,handleClose}) => {
     </Grid2>
     <Grid2  >
       <CustomImageUpload
-        onImageConvert={handleImageConvert}
-        setImageDataBasic={setImageDataBasic}
+        onImageConvert={handleBannerConvert}
+        setImageDataBasic={setBannersDataBasic}
       />
-      {base64String && (
+      {base64StringBanner && (
         <div style={{ textAlign: "center" }}>
        
           <img
-            src={base64String}
+            src={base64StringBanner}
             alt="Converted"
             style={{ maxWidth: "100%", maxHeight: "300px" }}
           />
@@ -125,7 +261,7 @@ const ThemMoiBaiNhac = ({openModal,handleClose}) => {
               id="inputUploadFile"
               type="file"
               multiple
-           //   onChange={handleFileChange}
+              onChange={handleFileChange}
             />
           </label>
         </Grid2>
@@ -135,7 +271,7 @@ const ThemMoiBaiNhac = ({openModal,handleClose}) => {
     </DialogContent>
     <DialogActions>
       <Button onClick={handleCloseModal}>Đóng</Button>
-      <Button>Lưu</Button>
+      <Button onClick={()=> handelSubmit()}>Lưu</Button>
     </DialogActions>
   </Dialog>
   )

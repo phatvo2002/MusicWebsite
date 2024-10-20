@@ -107,7 +107,7 @@ namespace MUS.Helper
             {
     
                 var permittedExtensions = new[] { ".mp3", ".wav" };  // Add your allowed extensions here
-                var fileSizeLimit = 10 * 1024 * 1024;  // Example: 10 MB size limit
+                var fileSizeLimit = 30 * 1024 * 1024;  // Example: 30 MB size limit
 
                 // Validate file extension
                 var ext = Path.GetExtension(file.FileName).ToLowerInvariant();
@@ -150,7 +150,7 @@ namespace MUS.Helper
             {
                 // Log or handle the exception as needed
                 string message = $"File upload failed: {ex.Message}";
-                return ""; // Return an empty string or a meaningful error message if needed
+                return message; // Return an empty string or a meaningful error message if needed
             }
         }
 

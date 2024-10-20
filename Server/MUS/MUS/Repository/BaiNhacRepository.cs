@@ -1,4 +1,5 @@
-﻿using MUS.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using MUS.Entities;
 using MUS.Entities.DTO;
 using MUS.Helper;
 using MUS.Model;
@@ -28,11 +29,11 @@ namespace MUS.Repository
                     baiNhac.ThoiLuong = model.ThoiLuong;
                     baiNhac.LuotNghe = model.LuotNghe;
                     baiNhac.LoiBaiHat = model.LoiBaiHat;
-                    baiNhac.NhacSiId = model.NhacSiId;
-                    baiNhac.TheLoaiId = model.TheLoaiId;
-                    baiNhac.TamTrangId = model.TamTrangId;
-                    baiNhac.AlbumId = model.AlbumId;
-                    baiNhac.ChudeId = model.ChudeId;
+                    baiNhac.NhacSiId = null;
+                    baiNhac.TheLoaiId = null;
+                    baiNhac.TamTrangId = null;
+                    baiNhac.AlbumId = null;
+                    baiNhac.ChudeId = null;
                     if (model.DuongDanHinhAnh != null && model.DuongDanHinhAnh.Length > 0)
                     {
                         var res = Untils.UploadFileImage(model.DuongDanHinhAnh);
@@ -65,9 +66,9 @@ namespace MUS.Repository
                  }
                 return new ResultModel() { Status = 202, Message = "Bài nhạc đã tồn tại trong hệ thống" ,Success =false };
             }
-            catch(Exception ex)
+            catch(DbUpdateException ex )
             {
-                return new ResultModel() { Status = 500, Message = ex.Message, Success = false };
+                return new ResultModel() { Status = 500, Message = ex.InnerException?.Message, Success = false };
             } 
         }
 

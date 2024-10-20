@@ -4,7 +4,7 @@
     {
         public Guid Id { get; set; }
         public string? TenBaiNhac { get; set; }
-        public DateTime? NgayPhatHanh { get; set; }
+        public DateTime? NgayPhatHanh { get; set; } = DateTime.Now;
         public string? ThoiLuong { get; set; }
         public int? LuotNghe { get; set; } = 0;
         public IFormFile? DuongDanHinhAnh { get; set; }
