@@ -9,20 +9,21 @@ namespace MUS.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BaiNhacController : ControllerBase
+    public class NhacSiController : ControllerBase
     {
-        public readonly IBaiNhacServices _baiNhacServices;
-        public BaiNhacController(IBaiNhacServices baiNhacServices)
+        public readonly INhacsiServices _nhacsiServices;
+
+        public NhacSiController(INhacsiServices nhacsiServices)
         {
-            _baiNhacServices = baiNhacServices;
+            _nhacsiServices = nhacsiServices;
         }
 
-        [HttpGet("getallbainhac")]
-        public async Task<IActionResult> GetAllBaiNhac()
+        [HttpGet("getallNhacSi")]
+        public async Task<IActionResult> GetAllNhacSi()
         {
             try
             {
-                List<BaiNhacDTO> result = await _baiNhacServices.GetAllBaiNhac();
+                List<NhacSiDTO> result = await _nhacsiServices.GetAllNhacSi();
                 return Ok(result);
             }
             catch (ArgumentException ex)
@@ -31,12 +32,12 @@ namespace MUS.Controllers
             }
         }
 
-        [HttpGet("getbainhacbyid")]
-        public async Task<IActionResult> GetBaiNhacById(Guid Id)
+        [HttpGet("getnhacsibyid")]
+        public async Task<IActionResult> GetNhacSiById(Guid Id)
         {
             try
             {
-                BaiNhacDTO result = await _baiNhacServices.GetBaiNhacById(Id);
+                NhacSiDTO result = await _nhacsiServices.GetNhacSiById(Id);
                 return Ok(result);
             }
             catch (ArgumentException ex)
@@ -45,12 +46,25 @@ namespace MUS.Controllers
             }
         }
 
-        [HttpPost("addbainhac")]
-        public async Task<IActionResult> AddChuDe([FromForm] BaiNhacModel modal)
+        [HttpPost("addnhacsi")]
+        public async Task<IActionResult> AddNhacSi([FromForm] NhacsiModel modal)
         {
             try
             {
-                ResultModel result = await _baiNhacServices.AddBaiNhac(modal);
+                ResultModel result = await _nhacsiServices.AddNhacSi(modal);
+                return Ok(result);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpPut("updatenhacsi")]
+        public async Task<IActionResult> UpdateNhacSi([FromForm] NhacsiModel modal)
+        {
+            try
+            {
+                ResultModel result = await _nhacsiServices.UpdateNhacSi(modal);
                 return Ok(result);
             }
             catch (ArgumentException ex)
@@ -59,27 +73,12 @@ namespace MUS.Controllers
             }
         }
 
-
-        [HttpPut("updatebainhac")]
-        public async Task<IActionResult> UpdateBaiNhac(BaiNhacModel modal)
+        [HttpDelete("deletenhacsi")]
+        public async Task<IActionResult> DeleteNhacSi(Guid id)
         {
             try
             {
-                ResultModel result = await _baiNhacServices.UpdateBaiNhac(modal);
-                return Ok(result);
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [HttpDelete("deletebainhac")]
-        public async Task<IActionResult> Deletebainhac(Guid id)
-        {
-            try
-            {
-                ResultModel result = await _baiNhacServices.DeleteBaiNhac(id);
+                ResultModel result = await _nhacsiServices.DeleteNhacSi(id);
                 return Ok(result);
             }
             catch (ArgumentException ex)

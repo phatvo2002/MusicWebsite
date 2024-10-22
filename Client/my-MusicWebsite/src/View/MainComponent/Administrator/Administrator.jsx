@@ -5,6 +5,8 @@ import PersonPinIcon from '@mui/icons-material/PersonPin';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import HeadphonesIcon from '@mui/icons-material/Headphones';
 import { Link as RouterLink } from 'react-router-dom';
+import AudiotrackIcon from '@mui/icons-material/Audiotrack';
+import ExplicitIcon from '@mui/icons-material/Explicit';
 const stylesBox = {
    border:"1px solid #f010ae",
    margin:"20px",
@@ -21,7 +23,7 @@ const Administrator = () => {
                 <Box sx={stylesBox}>
                   <MusicNoteIcon/>
                   <Typography >
-                  <Link component={RouterLink} to="/Administrator/BaiNhac"> Quản lý bài nhạc</Link>
+                  <Link component={RouterLink} to="/Administrator/BaiNhac">Bài nhạc</Link>
                    </Typography>
                 </Box>
             </Grid2>
@@ -29,7 +31,7 @@ const Administrator = () => {
                 <Box sx={stylesBox}>
                   <LibraryMusicIcon/>
                    <Typography >
-                     Quản lý albums
+                   <Link component={RouterLink} to="/Administrator/Album">Album</Link>
                    </Typography>
                 </Box>
             </Grid2>
@@ -37,7 +39,7 @@ const Administrator = () => {
                 <Box sx={stylesBox}>
                   <PersonPinIcon/>
                   <Typography >
-                      Quản lý nhạc sĩ
+                  <Link component={RouterLink} to="/Administrator/NhacSi">Nhạc sĩ</Link>
                    </Typography>
                 </Box>
             </Grid2>
@@ -51,9 +53,25 @@ const Administrator = () => {
             </Grid2>
             <Grid2 size={3}>
                 <Box sx={stylesBox}>
+                  <AudiotrackIcon/>
+                   <Typography >
+                   <Link component={RouterLink} to="/Administrator/TamTrang">Tâm trạng</Link>
+                   </Typography>
+                </Box>
+            </Grid2>
+            <Grid2 size={3}>
+                <Box sx={stylesBox}>
                    <HeadphonesIcon/>
                    <Typography >
-                    <Link component={RouterLink} to="/Administrator/TheLoaiNhac"> Quản lý thể loại</Link>
+                    <Link component={RouterLink} to="/Administrator/TheLoaiNhac">Thể loại</Link>
+                   </Typography>
+                </Box>
+            </Grid2>
+            <Grid2 size={3}>
+                <Box sx={stylesBox}>
+                   <ExplicitIcon/>
+                   <Typography >
+                    <Link component={RouterLink} to="/Administrator/Chude">Chủ đề</Link>
                    </Typography>
                 </Box>
             </Grid2>

@@ -12,7 +12,7 @@ namespace MUS.Repository.Interface
 
         public Task<NhacSiDTO> GetNhacSiById(Guid id);
 
-        public Task<ResultModel> UpdateNhacSi(ChuDeModal model);
+        public Task<ResultModel> UpdateNhacSi(NhacsiModel model);
 
         public Task<ResultModel> DeleteNhacSi(Guid id);
     }

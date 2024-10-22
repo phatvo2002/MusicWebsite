@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid2, IconButton, TextField, Typography } from '@mui/material'
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid2, TextField, Typography } from '@mui/material'
 import  { useState } from 'react'
 import CustomImageUpload from '../../../../../Components/CustomUploadImage/CusTomUploadImages'
 import Swal from 'sweetalert2';
@@ -7,8 +7,8 @@ import dayjs from 'dayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'; 
 import { DatePicker } from '@mui/x-date-pickers';
-import { Label } from '@mui/icons-material';
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import { toast } from 'react-toastify';
 import axios from 'axios';
 const ThemMoiBaiNhac = ({openModal,handleClose}) => {
     ThemMoiBaiNhac.propTypes = {
@@ -46,12 +46,8 @@ const ThemMoiBaiNhac = ({openModal,handleClose}) => {
     const handleFileChange = (e) => {
       if (Array.from(e.target.files).some((arr) => arr?.size < 30000000)) {
         // Get the selected files
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Thêm file thành công",
-          showConfirmButton: false,
-          timer: 1500
+        toast.success("Thêm file thành công", {
+          toastId: "alert-add-image",
         });
         const selectedFiles = Array.from(e.target.files);
         setFiles([...files, ...selectedFiles]); 
@@ -92,23 +88,15 @@ const ThemMoiBaiNhac = ({openModal,handleClose}) => {
     //convert image
     const handleImageConvert = (base64String) => {
         setBase64String(base64String);
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Thêm ảnh thành công",
-          showConfirmButton: false,
-          timer: 1500
+        toast.success("Thêm ảnh thành công", {
+          toastId: "alert-add-image",
         });
       };
     //convert banner 
     const handleBannerConvert = (base64StringBanner) => {
       setBase64StringBanner(base64StringBanner);
-      Swal.fire({
-        position: "center",
-        icon: "success",
-        title: "Thêm banner thành công",
-        showConfirmButton: false,
-        timer: 1500
+      toast.success("Thêm banner thành công", {
+        toastId: "alert-add-image",
       });
     };
 
@@ -146,21 +134,14 @@ const ThemMoiBaiNhac = ({openModal,handleClose}) => {
       if (response.status== 200)
       {
         if (response.status === 200) {
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Thêm bài hát thành công",
-            showConfirmButton: false,
-            timer: 1500
+          toast.success("Thêm bài hát thành công", {
+            toastId: "alert-add-baihats",
           });
           //  setLoading(true)
             handleClose(); 
         } else {
-          Swal.fire({
-            position: "center",
-            icon: "error",
-            title: "Có lỗi đã xảy ra",
-            showConfirmButton: false,
+          toast.error("Có lỗi đã xảy ra", {
+            toastId: "alert-add-baihats",
           });
         }
       }

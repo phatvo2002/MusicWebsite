@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using MUS.Entities;
 using MUS.Entities.DTO;
 using MUS.Helper;
@@ -11,9 +12,11 @@ namespace MUS.Repository
     public class BaiNhacRepository : IBaiNhacRepository
     {
         public readonly MusDbConText _musDbConText;
-        public BaiNhacRepository(MusDbConText musDbConText)
+        public readonly IMapper _mapper;
+        public BaiNhacRepository(MusDbConText musDbConText , IMapper mapper)
         {
             _musDbConText = musDbConText;
+            _mapper = mapper;
         }
         public async Task<ResultModel> AddBaiNhac(BaiNhacModel model)
         {
@@ -72,23 +75,79 @@ namespace MUS.Repository
             } 
         }
 
-        public Task<ResultModel> DeleteBaiNhac(Guid id)
+        public async Task<ResultModel> DeleteBaiNhac(Guid id)
         {
-            throw new NotImplementedException();
+            var db = _musDbConText.BaiNhacs.Where(r => r.Id == id).FirstOrDefault();
+            if (db != null)
+            {
+                if (!string.IsNullOrEmpty(db.DuongDanBanner))
+                {
+                    try
+                    {
+                        var deletebanner = Untils.DeleteFile(db.DuongDanBanner!);
+                    }
+                    catch { }
+                }
+                if (!string.IsNullOrEmpty(db.DuongDanHinhAnh))
+                {
+                    try
+                    {
+                        var deleteHinhAnh= Untils.DeleteFile(db.DuongDanHinhAnh!);
+                    }
+                    catch { }
+                }
+                if (!string.IsNullOrEmpty(db.DuongDanFileAmNhac))
+                {
+                    try
+                    {
+                        var deleteFileAmNhac = Untils.DeleteFile(db.DuongDanFileAmNhac!);
+                    }
+                    catch { }
+                }
+                _musDbConText.BaiNhacs.Remove(db);
+                await _musDbConText.SaveChangesAsync();
+                return new ResultModel() { Status = 200, Message = "Xóa thành công", Success = true };
+            }
+            return new ResultModel() { Status = 202, Message = "Không tìm thấy dữ liệu", Success = false };
         }
 
-        public Task<List<BaiNhacDTO>> GetAllBaiNhac()
+        public async Task<List<BaiNhacDTO>> GetAllBaiNhac()
         {
-            throw new NotImplementedException();
+            var db = await _musDbConText.BaiNhacs.AsNoTracking().ToListAsync();
+            return _mapper.Map<List<BaiNhacDTO>>(db);
         }
 
-        public Task<BaiNhacDTO> GetBaiNhacById(Guid id)
+        public async Task<BaiNhacDTO> GetBaiNhacById(Guid id)
         {
-            throw new NotImplementedException();
+            var db =await _musDbConText.BaiNhacs.Where(r => r.Id == id).FirstOrDefaultAsync();
+            return _mapper.Map<BaiNhacDTO>(db);
         }
 
-        public Task<ResultModel> UpdateBaiNhac(BaiNhacModel model)
+        public async Task<ResultModel> UpdateBaiNhac(BaiNhacModel model)
         {
+            var db = _musDbConText.BaiNhacs.FirstOrDefault(r => r.Id == model.Id);
+            try
+            {
+                if (db != null)
+                {
+                    db.TenBaiNhac = model.TenBaiNhac;
+                    db.NgayPhatHanh = model.NgayPhatHanh;
+                    db.LoiBaiHat = model.LoiBaiHat;
+                    db.ThoiLuong = model.ThoiLuong;
+                    db.AlbumId = model.AlbumId;
+                    db.TheLoaiId = model.TheLoaiId;
+                    db.NhacSiId = model.NhacSiId;
+                    db.ChudeId = model.ChudeId;
+                    _musDbConText.BaiNhacs.Update(db);
+                    await _musDbConText.SaveChangesAsync();
+                    return new ResultModel() { Status = 200, Message = "Chỉnh sửa thành công", Success = true };
+                }
+                return new ResultModel() { Status = 202, Message = "Không tìm thấy dữ liệu", Success = false };
+            }
+            catch (Exception ex)
+            {
+                return new ResultModel() { Status = 500, Message = ex.Message, Success = false };
+            }
             throw new NotImplementedException();
         }
     }

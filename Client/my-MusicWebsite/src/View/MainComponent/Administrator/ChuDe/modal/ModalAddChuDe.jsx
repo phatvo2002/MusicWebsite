@@ -1,18 +1,16 @@
-import { useState } from 'react'
+import PropTypes from 'prop-types';
+import { useState } from 'react';
+import { toast } from 'react-toastify';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { Button, Grid2, TextField } from '@mui/material';
 import CustomImageUpload from '../../../../../Components/CustomUploadImage/CusTomUploadImages';
-import Button from '@mui/material/Button';
-import PropTypes from 'prop-types';
-import { Grid2, TextField } from '@mui/material';
 import axios from 'axios';
-import Swal from 'sweetalert2';
-import { toast } from 'react-toastify';
-const ModalAddTheLoai = ({ openModal, handleClose ,setLoading }) => {
-      ModalAddTheLoai.propTypes = {
+const ModalAddChuDe = ({ openModal, handleClose ,setLoading }) => {
+    ModalAddChuDe.propTypes = {
         openModal: PropTypes.bool.isRequired,  
         handleClose: PropTypes.func.isRequired, 
         setLoading : PropTypes.func.isRequired
@@ -20,34 +18,38 @@ const ModalAddTheLoai = ({ openModal, handleClose ,setLoading }) => {
       const [base64String, setBase64String] = useState("");
       const [imageDataBasic, setImageDataBasic] = useState("");
       const [obj , setObj] = useState({
-        tenTheLoai : "",
+        tenChude : "",
         file :"",
      })
      const resetForm = () => {
-      setObj({
-        tenTheLoai : "",
-      })    // Reset the text field
-      setBase64String('');       // Clear the image preview
-      setImageDataBasic(null);   // Reset any other state related to image
-    };
+        setObj({
+          tenChude : "",
+        })    // Reset the text field
+        setBase64String('');       // Clear the image preview
+        setImageDataBasic(null);   // Reset any other state related to image
+      };
+      // handle change modal
       const handleChange = (name) => (event) => {
         setObj({ ...obj, [name]: event.target.value });
       }
       const handleImageConvert = (base64String) => {
         setBase64String(base64String);
         toast.success("Thêm ảnh thành công", {
-          toastId: "alert-add-image",
-        });
+            toastId: "alert-add-image",
+          });
       };
 
+      const handleCloseModal = () => {
+        resetForm();               
+        handleClose()    
+      };
+
+
       const handelSave = async () => {
-        if (!obj?.tenTheLoai || !imageDataBasic) {
-          Swal.fire({
-            position: "center",
-            icon: "warning",
-            title: "Vui lòng nhập đầy đủ dữ liệu",
-            showConfirmButton: false,
-          });
+        if (!obj?.tenChude || !imageDataBasic) {
+            toast.warning("Vui lòng nhập đầy đủ dữ liệu", {
+                toastId: "alert-add-save-warning",
+              });
             return;
         }
     
@@ -57,36 +59,23 @@ const ModalAddTheLoai = ({ openModal, handleClose ,setLoading }) => {
                 "Content-Type": "multipart/form-data",
             },
         };
-        formData.append("tenTheLoai", obj?.tenTheLoai);
-        formData.append("file", imageDataBasic);
-            const response = await axios.post("https://localhost:7280/api/TheLoai/AddTheLoai", formData, config);
+        formData.append("TenChuDe", obj?.tenChude);
+        formData.append("File", imageDataBasic);
+            const response = await axios.post("https://localhost:7280/api/ChuDe/addchude", formData, config);
     
             if (response.status === 200) {
-              Swal.fire({
-                position: "center",
-                icon: "success",
-                title: "Thêm thể loại thành công",
-                showConfirmButton: false,
-                timer: 1500
-              });
+                toast.success("Thêm mới thành công", {
+                    toastId: "alert-add-save-success",
+                  });
                setLoading(true)
                 handleClose(); 
             } else {
-              Swal.fire({
-                position: "center",
-                icon: "error",
-                title: "Có lỗi đã xảy ra",
-                showConfirmButton: false,
-              });
+                toast.warn("đã có lỗi khi xảy ra", {
+                    toastId: "alert-add-save-warrn",
+                  });
             }
        
     };
-
-    const handleCloseModal = () => {
-      resetForm();               
-      handleClose()    
-    };
-    
   return (
     <Dialog
     open={openModal}
@@ -94,14 +83,14 @@ const ModalAddTheLoai = ({ openModal, handleClose ,setLoading }) => {
    // onClose={handleClose}
     aria-describedby="alert-dialog-slide-description"
   >
-    <DialogTitle>{"Thêm mới thể loại nhạc"}</DialogTitle>
+    <DialogTitle>{"Thêm mới chủ đề"}</DialogTitle>
     <DialogContent >
       <DialogContentText id="alert-dialog-slide-description">
-        <Grid2 container spacing={2} >
-            <Grid2 size={12}>
-              <TextField id="standard-basic" onChange={handleChange("tenTheLoai")} label="Tên thể loại" variant="standard" />
+        <Grid2 container sx={{width:"500px"}} spacing={2} >
+            <Grid2 sx={{width:"500px"}}>
+              <TextField id="standard-basic" onChange={handleChange("tenChude")} label="Tên chủ đề" variant="standard" fullWidth />
             </Grid2>
-            <Grid2 size={12}> 
+            <Grid2 > 
                 <CustomImageUpload
              onImageConvert={handleImageConvert}
              // removeImage={removeImage}
@@ -123,10 +112,10 @@ const ModalAddTheLoai = ({ openModal, handleClose ,setLoading }) => {
     </DialogContent>
     <DialogActions>
       <Button onClick={handleCloseModal}>Đóng</Button>
-      <Button onClick={handelSave}>Lưu</Button>
+      <Button onClick={()=> handelSave()} >Lưu</Button>
     </DialogActions>
   </Dialog>
   )
 }
 
-export default ModalAddTheLoai
+export default ModalAddChuDe
