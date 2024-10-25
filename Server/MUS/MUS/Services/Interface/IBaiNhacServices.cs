@@ -10,7 +10,7 @@ namespace MUS.Services.Interface
 
          Task<BaiNhacDTO> GetBaiNhacById(Guid id);
 
-         Task<ResultModel> UpdateBaiNhac(BaiNhacModel model);
+         Task<ResultModel> UpdateBaiNhac(UpdateBaiNhacModel model);
 
          Task<ResultModel> DeleteBaiNhac(Guid id);
     }

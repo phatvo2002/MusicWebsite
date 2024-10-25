@@ -123,7 +123,7 @@ namespace MUS.Repository
             return _mapper.Map<BaiNhacDTO>(db);
         }
 
-        public async Task<ResultModel> UpdateBaiNhac(BaiNhacModel model)
+        public async Task<ResultModel> UpdateBaiNhac(UpdateBaiNhacModel model)
         {
             var db = _musDbConText.BaiNhacs.FirstOrDefault(r => r.Id == model.Id);
             try
@@ -134,10 +134,10 @@ namespace MUS.Repository
                     db.NgayPhatHanh = model.NgayPhatHanh;
                     db.LoiBaiHat = model.LoiBaiHat;
                     db.ThoiLuong = model.ThoiLuong;
-                    db.AlbumId = model.AlbumId;
-                    db.TheLoaiId = model.TheLoaiId;
-                    db.NhacSiId = model.NhacSiId;
-                    db.ChudeId = model.ChudeId;
+                    db.AlbumId = null;
+                    db.TheLoaiId = null;
+                    db.NhacSiId = null;
+                    db.ChudeId = null;
                     _musDbConText.BaiNhacs.Update(db);
                     await _musDbConText.SaveChangesAsync();
                     return new ResultModel() { Status = 200, Message = "Chỉnh sửa thành công", Success = true };

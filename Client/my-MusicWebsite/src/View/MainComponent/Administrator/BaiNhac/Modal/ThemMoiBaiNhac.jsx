@@ -252,7 +252,7 @@ const ThemMoiBaiNhac = ({openModal,handleClose}) => {
     </DialogContent>
     <DialogActions>
       <Button onClick={handleCloseModal}>Đóng</Button>
-      <Button onClick={()=> handelSubmit()}>Lưu</Button>
+      <Button onClick={ handelSubmit}>Lưu</Button>
     </DialogActions>
   </Dialog>
   )

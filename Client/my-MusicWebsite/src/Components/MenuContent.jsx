@@ -7,34 +7,38 @@ import ListItemText from '@mui/material/ListItemText';
 import Stack from '@mui/material/Stack';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import AnalyticsRoundedIcon from '@mui/icons-material/AnalyticsRounded';
-import PeopleRoundedIcon from '@mui/icons-material/PeopleRounded';
-import AssignmentRoundedIcon from '@mui/icons-material/AssignmentRounded';
+import AudiotrackIcon from '@mui/icons-material/Audiotrack';
+import RadioIcon from '@mui/icons-material/Radio';
+import AddIcon from '@mui/icons-material/Add';
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
-import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
-import HelpRoundedIcon from '@mui/icons-material/HelpRounded';
 import { Typography } from '@mui/material';
+import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import PlaylistPlayIcon from '@mui/icons-material/PlaylistPlay';
+import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import {Link} from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 const mainListItems = [
-  { text: 'Home', icon: <HomeRoundedIcon />  },
-  { text: 'Discover', icon: <AnalyticsRoundedIcon /> },
-  { text: 'Albums', icon: <PeopleRoundedIcon /> },
-  { text: 'Artits', icon: <AssignmentRoundedIcon /> },
+  { text: 'Trang chủ', icon: <HomeRoundedIcon />  },
+  { text: 'Khám phá', icon: <AnalyticsRoundedIcon /> },
+  { text: 'Albums', icon: <LibraryMusicIcon /> },
+  { text: 'Nhạc sĩ', icon: <AudiotrackIcon /> },
 ];
 
 const secondaryListItems = [
-  { text: 'Recently Added', icon: <SettingsRoundedIcon /> },
-  { text: 'Most played', icon: <InfoRoundedIcon /> },
+  { text: 'Thêm gần đây', icon: <AddIcon /> },
+  { text: 'Nghe gần đây', icon: <RadioIcon /> },
 ];
 
 const thirdListItems = [
-  { text: 'Your favotites', icon: <SettingsRoundedIcon /> },
-  { text: 'Your playlist', icon: <InfoRoundedIcon /> },
-  { text: 'Add playlist', icon: <HelpRoundedIcon /> },
+  { text: 'Đã thích', icon: <FavoriteIcon /> },
+  { text: 'Danh sách phát', icon: <PlaylistPlayIcon /> },
+  { text: 'Thêm danh sách phát', icon: <PlaylistAddIcon /> },
 ];
 const fordListItems = [
-  { text: 'Settings', icon: <SettingsRoundedIcon /> , url : "/"  },
-  { text: 'Administrator', icon: <InfoRoundedIcon /> , url : "/Administrator" },
+  { text: 'Cài đặt ', icon: <SettingsRoundedIcon /> , url : "/"  },
+  { text: 'Quản trị hệ thống', icon: <ManageAccountsIcon /> , url : "/Administrator" },
 ];
 export default function MenuContent() {
   return (
@@ -50,7 +54,7 @@ export default function MenuContent() {
         ))}
       </List>
       <Typography style={{color :"#f010ae", paddingLeft:20}}>
-         Libary
+         Thư viện
       </Typography>
       <List dense>
         {secondaryListItems.map((item, index) => (
@@ -63,7 +67,7 @@ export default function MenuContent() {
         ))}
       </List>
       <Typography style={{color :"#f010ae", paddingLeft:20}}>
-         Laylist and Favorites
+         Danh sách phát
       </Typography>
       <List dense>
         {thirdListItems.map((item, index) => (

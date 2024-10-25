@@ -6,7 +6,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import EditIcon from '@mui/icons-material/Edit'; 
 import DeleteIcon from '@mui/icons-material/Delete'; 
 import Swal from "sweetalert2";
-
+import ModalUpdateChuDe from "./modal/ModalUpdateChuDe";
 
 const ChuDe = () => {
     const [openModalChuDe , setOpenModalChuDe] = useState(false)
@@ -71,7 +71,7 @@ const ChuDe = () => {
         renderCell: (params) => (
           <div>
             <Button
-             // onClick={() => handleEdit(params.row)}
+              onClick={() => handelOpenModalUpdate(params.row.id)}
               startIcon={<EditIcon />}
               variant="contained"
               color="primary"
@@ -99,6 +99,14 @@ const ChuDe = () => {
   }
   const handelCloseModalAddChuDe= () => {
     setOpenModalChuDe(false)
+  }
+  const handelOpenModalUpdate = (id)=>{
+    setSelectedId(id)
+    setOpenModalUpdateChuDe(true)
+  }
+  const handleCloseModalUpdate = () => {
+    setSelectedId('')
+    setOpenModalUpdateChuDe(false)
   }
 
   const getdata = async () => {
@@ -139,14 +147,15 @@ const ChuDe = () => {
           },
         }}
         pageSizeOptions={[5, 10, 25]}
-        onRowSelectionModelChange={(newRowSelectionModel) => {
-          setSelectedId(newRowSelectionModel);
-        }}
-        rowSelectionModel={selectedId}
+        // onRowSelectionModelChange={(newRowSelectionModel) => {
+        //   setSelectedId(newRowSelectionModel);
+        // }}
+        // rowSelectionModel={selectedId}
         checkboxSelection
       />
     </Box>
       <ModalAddChuDe openModal={openModalChuDe} handleClose={handelCloseModalAddChuDe} setLoading={setLoading}/>
+      <ModalUpdateChuDe openModal={openModalUpdateChuDe} handleClose={handleCloseModalUpdate} setLoading={setLoading} selectedId={selectedId}/>
     </Grid2>
   )
 }

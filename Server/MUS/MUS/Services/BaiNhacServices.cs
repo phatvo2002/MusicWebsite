@@ -31,7 +31,7 @@ namespace MUS.Services
             return await _baiNhacRepository.GetBaiNhacById(id);
         }
 
-        public async Task<ResultModel> UpdateBaiNhac(BaiNhacModel model)
+        public async Task<ResultModel> UpdateBaiNhac(UpdateBaiNhacModel model)
         {
             return await _baiNhacRepository.UpdateBaiNhac(model);
         }

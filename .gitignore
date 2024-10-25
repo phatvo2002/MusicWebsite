@@ -354,4 +354,4 @@ MigrationBackup/
 .cache/
 
 wwwroot/UploadFiles/
-/Server/MUS/MUS/wwwroot/UploadFiles
+Server/MUS/MUS/wwwroot/UploadFiles

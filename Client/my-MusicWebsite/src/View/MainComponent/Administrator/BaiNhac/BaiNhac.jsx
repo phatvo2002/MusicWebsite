@@ -1,13 +1,16 @@
 import { Box, Grid2, IconButton } from '@mui/material'
 import { useEffect, useState } from 'react'
 import ThemMoiBaiNhac from './Modal/ThemMoiBaiNhac'
+import ModalChinhSuaBaiNhac from './Modal/ModalChinhSuaBaiNhac';
 import EditIcon from '@mui/icons-material/Edit'; 
 import DeleteIcon from '@mui/icons-material/Delete'; 
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import axios from 'axios';
 import { DataGrid } from '@mui/x-data-grid';
+import Swal from 'sweetalert2';
 const BaiNhac = () => {
     const [openModalThemMoiBaiNhac, setOpenModalThemMoiBaiNhac]= useState(false)
+    const [openModalChinhSuaBaiNhac, setOpenModalChinhSuaBaiNhac]= useState(false)
     const [selectedId , setSelectedId] = useState([])
     const [data,setData] = useState([])
     const [loading, setLoading] = useState(true)
@@ -16,6 +19,14 @@ const BaiNhac = () => {
     }
     const handleCloseModalThemMoiBaiNhac = () =>{
       setOpenModalThemMoiBaiNhac(false)
+    }
+    const handleOpenModalChinhSua = (id) => {
+      setSelectedId(id)
+      setOpenModalChinhSuaBaiNhac(true)
+    }
+    const handleCloseModalUpdateBaiNhac = () => {
+      setSelectedId("")
+      setOpenModalChinhSuaBaiNhac(false)
     }
     const columns = [
       {
@@ -91,7 +102,7 @@ const BaiNhac = () => {
               <CloudDownloadIcon />
             </IconButton>
             <IconButton
-             // onClick={() => handleEdit(params.row)}
+             onClick={() => handleOpenModalChinhSua(params.row.id)}
             
               variant="contained"
               color="primary"
@@ -101,7 +112,7 @@ const BaiNhac = () => {
               <EditIcon />
             </IconButton>
             <IconButton
-             // onClick={() => handleDelete(params.row.id)}
+               onClick={() => handleDelete(params.row.id)}
         
               sx={{backgroundColor: "#f010ae"}}
               size="small"
@@ -126,9 +137,37 @@ const BaiNhac = () => {
         setLoading(false);
       }
     };
-  
-  
-  
+    const handleDelete = (baiNhacId) => {
+      Swal.fire({
+        title: "Bạn có muốn xóa bài nhạc này không",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "có "
+      }).then( async(result) => {
+        if (result.isConfirmed) {
+          const response = await axios.delete(`https://localhost:7280/api/BaiNhac/deletebainhac?id=${baiNhacId}`)
+          if(response.status === 200)
+          {
+            Swal.fire({
+              title: "Thành công",
+              text: "Bạn đã xóa dữ liệu thành công",
+              icon: "success"
+            });
+            setLoading(true)
+          }else
+          {
+            Swal.fire({
+              title: "Lỗi",
+              text: "Đã xảy ra lỗi trong quá trình xóa",
+              icon: "error"
+            });
+          }
+         
+        }
+      });
+    }
     useEffect(() => {
       if(loading)
       getdata(); // Gọi hàm getdata khi trang load
@@ -151,14 +190,15 @@ const BaiNhac = () => {
           },
         }}
         pageSizeOptions={[5, 10, 25]}
-        onRowSelectionModelChange={(newRowSelectionModel) => {
-          setSelectedId(newRowSelectionModel);
-        }}
-        rowSelectionModel={selectedId}
+        // onRowSelectionModelChange={(newRowSelectionModel) => {
+        //   setSelectedId(newRowSelectionModel);
+        // }}
+       // rowSelectionModel={selectedId}
         checkboxSelection
       />
     </Box>
       <ThemMoiBaiNhac openModal={openModalThemMoiBaiNhac} handleClose={handleCloseModalThemMoiBaiNhac}/>
+      <ModalChinhSuaBaiNhac openModal={openModalChinhSuaBaiNhac} handleClose={handleCloseModalUpdateBaiNhac} setLoading={setLoading} baiNhacId={selectedId}/>
     </Grid2>
   )
 }

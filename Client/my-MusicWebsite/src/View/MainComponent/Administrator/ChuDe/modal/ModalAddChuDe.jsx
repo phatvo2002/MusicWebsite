@@ -24,9 +24,9 @@ const ModalAddChuDe = ({ openModal, handleClose ,setLoading }) => {
      const resetForm = () => {
         setObj({
           tenChude : "",
-        })    // Reset the text field
-        setBase64String('');       // Clear the image preview
-        setImageDataBasic(null);   // Reset any other state related to image
+        })   
+        setBase64String('');      
+        setImageDataBasic(null);   
       };
       // handle change modal
       const handleChange = (name) => (event) => {

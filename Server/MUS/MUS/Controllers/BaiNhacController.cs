@@ -61,7 +61,7 @@ namespace MUS.Controllers
 
 
         [HttpPut("updatebainhac")]
-        public async Task<IActionResult> UpdateBaiNhac(BaiNhacModel modal)
+        public async Task<IActionResult> UpdateBaiNhac([FromForm]  UpdateBaiNhacModel modal)
         {
             try
             {

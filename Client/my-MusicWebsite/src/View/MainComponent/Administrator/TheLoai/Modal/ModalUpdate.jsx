@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -75,7 +75,6 @@ const ModalUpdateTheLoai = ({ openModal, handleClose, setLoading, theLoaiId }) =
     }
   }, [openModal, theLoaiId]);
 
-  console.log(base64String)
 
   // Function to handle updating
   const handleUpdate = async () => {
