@@ -9,21 +9,21 @@ namespace MUS.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class NhacSiController : ControllerBase
+    public class TamTrangController : ControllerBase
     {
-        public readonly INhacsiServices _nhacsiServices;
+        public readonly ITamTrangServices _tamTrangServices;
 
-        public NhacSiController(INhacsiServices nhacsiServices)
+        public TamTrangController(ITamTrangServices tamTrangServices)
         {
-            _nhacsiServices = nhacsiServices;
+            _tamTrangServices = tamTrangServices;
         }
 
-        [HttpGet("getallnhacsi")]
-        public async Task<IActionResult> GetAllNhacSi()
+        [HttpGet("getalltamtrang")]
+        public async Task<IActionResult> GetAllTamTrang()
         {
             try
             {
-                List<NhacSiDTO> result = await _nhacsiServices.GetAllNhacSi();
+                List<TamTrangDTO> result = await _tamTrangServices.GetAllTamTrang();
                 return Ok(result);
             }
             catch (ArgumentException ex)
@@ -32,12 +32,12 @@ namespace MUS.Controllers
             }
         }
 
-        [HttpGet("getnhacsibyid")]
-        public async Task<IActionResult> GetNhacSiById(Guid Id)
+        [HttpGet("gettamtrangbyid")]
+        public async Task<IActionResult> GetTamTrangById(Guid Id)
         {
             try
             {
-                NhacSiDTO result = await _nhacsiServices.GetNhacSiById(Id);
+                TamTrangDTO result = await _tamTrangServices.GetTamTrangById(Id);
                 return Ok(result);
             }
             catch (ArgumentException ex)
@@ -46,12 +46,12 @@ namespace MUS.Controllers
             }
         }
 
-        [HttpPost("addnhacsi")]
-        public async Task<IActionResult> AddNhacSi([FromForm] NhacsiModel modal)
+        [HttpPost("addtamtrang")]
+        public async Task<IActionResult> AddTamTrang([FromForm] TamTrangModal modal)
         {
             try
             {
-                ResultModel result = await _nhacsiServices.AddNhacSi(modal);
+                ResultModel result = await _tamTrangServices.AddTamTrang(modal);
                 return Ok(result);
             }
             catch (ArgumentException ex)
@@ -59,12 +59,12 @@ namespace MUS.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpPut("updatenhacsi")]
-        public async Task<IActionResult> UpdateNhacSi([FromForm] NhacsiModel modal)
+        [HttpPut("updateTamTrang")]
+        public async Task<IActionResult> UpdateTamTrang([FromForm] TamTrangModal modal)
         {
             try
             {
-                ResultModel result = await _nhacsiServices.UpdateNhacSi(modal);
+                ResultModel result = await _tamTrangServices.UpdateTamTrang(modal);
                 return Ok(result);
             }
             catch (ArgumentException ex)
@@ -73,12 +73,12 @@ namespace MUS.Controllers
             }
         }
 
-        [HttpDelete("deletenhacsi")]
-        public async Task<IActionResult> DeleteNhacSi(Guid id)
+        [HttpDelete("deletetamtrang")]
+        public async Task<IActionResult> DeleteTamTrang(Guid id)
         {
             try
             {
-                ResultModel result = await _nhacsiServices.DeleteNhacSi(id);
+                ResultModel result = await _tamTrangServices.DeleteTamTrang(id);
                 return Ok(result);
             }
             catch (ArgumentException ex)

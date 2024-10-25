@@ -8,41 +8,40 @@ using MUS.Repository.Interface;
 
 namespace MUS.Repository
 {
-    public class NhacSiRepository : INhacsiRepository
+    public class TamTrangRepository : ITamTrangRepository
     {
         public readonly MusDbConText _musDbConText;
         public readonly IMapper _mapper;
-        public NhacSiRepository(MusDbConText musDbConText , IMapper mapper) {
-            _musDbConText = musDbConText;
-            _mapper = mapper;   
-        }
-        public async Task<ResultModel> AddNhacSi(NhacsiModel model)
+
+        public TamTrangRepository(MusDbConText conText , IMapper mapper)
         {
-            var db = _musDbConText.NhacSis.FirstOrDefault(r=> r.Id == model.Id);
+            _musDbConText = conText;
+            _mapper = mapper;
+        }
+
+        public async Task<ResultModel> AddTamTrang(TamTrangModal modal)
+        {
             try
             {
+                var db = _musDbConText.TamTrangs.FirstOrDefault(r => r.Id == modal.Id);
                 if (db == null)
                 {
-                    NhacSi nhacSi = new NhacSi();
-                    nhacSi.Id = Guid.NewGuid();
-                    nhacSi.TenNhacSi = model.TenNhacSi;
-                    nhacSi.NickName = model.NickName;
-                    if (model.Url != null && model.Url.Length > 0)
+                    TamTrang tamTrang = new TamTrang();
+                    tamTrang.Id = Guid.NewGuid(); ;
+                    tamTrang.TenTamTrang = modal.TenTamTrang;
+                    if (modal.Url != null && modal.Url.Length > 0)
                     {
-                        var res = Untils.UploadFileImage(model.Url);
+                        var res = Untils.UploadFileImage(modal.Url);
                         if (!string.IsNullOrEmpty(res))
                         {
-                            nhacSi.Url = res;
+                            tamTrang.Url = res;
                         }
                     }
-                    _musDbConText.NhacSis.Add(nhacSi);
+                    _musDbConText.TamTrangs.Add(tamTrang);
                     await _musDbConText.SaveChangesAsync();
-                    return new ResultModel() { Status = 200, Message = "Thêm nhạc sĩ thành công", Success = true };
+                    return new ResultModel() { Status = 200, Message = "Thêm mới thành công", Success = true };
                 }
-                else
-                {
-                    return new ResultModel() { Status = 202, Message = "Nhạc sĩ đã tồn tại trong hệ thống", Success = false };
-                }
+                return new ResultModel() { Status = 202, Message = "Dữ liệu đã tồn tại trong hệ thống", Success = true };
             }
             catch (Exception ex)
             {
@@ -50,10 +49,10 @@ namespace MUS.Repository
             }
         }
 
-        public async Task<ResultModel> DeleteNhacSi(Guid id)
+        public async Task<ResultModel> DeleteTamTrang(Guid id)
         {
-           var db =  _musDbConText.NhacSis.FirstOrDefault(r => r.Id == id);
-            if(db != null)
+            var db = _musDbConText.TamTrangs.Where(r => r.Id == id).FirstOrDefault();
+            if (db != null)
             {
                 if (!string.IsNullOrEmpty(db.Url))
                 {
@@ -63,28 +62,28 @@ namespace MUS.Repository
                     }
                     catch { }
                 }
-                _musDbConText.NhacSis.Remove(db);
+                _musDbConText.TamTrangs.Remove(db);
                 await _musDbConText.SaveChangesAsync();
-                return new ResultModel() { Status = 200, Message = "Xóa thành công ", Success = true };
+                return new ResultModel() { Status = 200, Message = "Xóa thành công", Success = true };
             }
             return new ResultModel() { Status = 202, Message = "Không tìm thấy dữ liệu", Success = false };
         }
 
-        public async Task<List<NhacSiDTO>> GetAllNhacSi()
+        public async Task<List<TamTrangDTO>> GetAllTamTrang()
         {
-            var db = await _musDbConText.NhacSis.AsNoTracking().ToListAsync();
-            return _mapper.Map<List<NhacSiDTO>>(db);
+            var db = await _musDbConText.TamTrangs.AsNoTracking().ToListAsync();
+            return _mapper.Map<List<TamTrangDTO>>(db);
         }
 
-        public async Task<NhacSiDTO> GetNhacSiById(Guid id)
+        public async Task<TamTrangDTO> GetTamTrangById(Guid id)
         {
-            var db = await _musDbConText.NhacSis.Where(r => r.Id == id).AsNoTracking().FirstOrDefaultAsync();
-                return _mapper.Map<NhacSiDTO>(db);
+            var db = await _musDbConText.TamTrangs.Where(r => r.Id == id).AsNoTracking().FirstOrDefaultAsync();
+            return _mapper.Map<TamTrangDTO>(db);
         }
 
-        public async Task<ResultModel> UpdateNhacSi(NhacsiModel model)
+        public async Task<ResultModel> UpdateTamTrang(TamTrangModal modal)
         {
-            var db = _musDbConText.NhacSis.FirstOrDefault(r => r.Id ==model.Id);
+            var db = _musDbConText.TamTrangs.FirstOrDefault(r => r.Id == modal.Id);
             try
             {
                 if (db != null)
@@ -98,24 +97,20 @@ namespace MUS.Repository
                         }
                         catch { }
                     }
-                    var res = Untils.UploadFileImage(model.Url!);
+                    var res = Untils.UploadFileImage(modal.Url!);
                     if (!string.IsNullOrEmpty(res))
                         url = res;
-                    db.TenNhacSi = model.TenNhacSi;
-                    db.NickName = model.NickName;
-
-                    _musDbConText.NhacSis.Update(db);
+                    db.TenTamTrang = modal.TenTamTrang;
+                    _musDbConText.TamTrangs.Update(db);
                     await _musDbConText.SaveChangesAsync();
-
                     return new ResultModel() { Status = 200, Message = "Chỉnh sửa thành công", Success = true };
                 }
                 return new ResultModel() { Status = 202, Message = "Không tìm thấy dữ liệu", Success = false };
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return new ResultModel() { Status = 500, Message = ex.Message, Success = false };
             }
-           
         }
     }
 }

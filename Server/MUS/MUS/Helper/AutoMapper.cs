@@ -11,6 +11,7 @@ namespace MUS.Helper
             CreateMap<ChuDe, ChuDeDTO>();
             CreateMap<BaiNhac, BaiNhacDTO>();
             CreateMap<NhacSi, NhacSiDTO>();
+            CreateMap<TamTrang, TamTrangDTO>();
         }
     }
     

@@ -29,6 +29,13 @@ builder.Services.AddScoped<IChudeServices, ChuDeServices>();
 builder.Services.AddScoped<IBaiNhacRepository, BaiNhacRepository>();
 builder.Services.AddScoped<IBaiNhacServices, BaiNhacServices>();
 
+builder.Services.AddScoped<INhacsiRepository, NhacSiRepository>();
+builder.Services.AddScoped<INhacsiServices, NhacsiServices>();
+
+builder.Services.AddScoped<ITamTrangRepository, TamTrangRepository>();
+builder.Services.AddScoped<ITamTrangServices, TamTrangServices>();
+
+
 builder.Services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();

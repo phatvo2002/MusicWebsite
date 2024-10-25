@@ -15,7 +15,7 @@ namespace MUS.Entities
 
         public virtual DbSet<TheLoai> TheLoais { get; set; }
 
-        public virtual DbSet<TamTrang> TamTrang { get; set; }
+        public virtual DbSet<TamTrang> TamTrangs { get; set; }
 
         public virtual DbSet<ChuDe> ChuDes { get; set; }
         public virtual DbSet<NhacSi> NhacSis { get; set; }
