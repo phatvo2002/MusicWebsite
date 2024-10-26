@@ -7,14 +7,16 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete'; 
 import Swal from "sweetalert2";
 import ModalUpdateTamTrang from "./Modal/ModalUpdateTamTrang";
-
+import "../../../../css/main.css"
+import { useNavigate } from "react-router-dom";
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 const TamTrang = () => {
     const [openModalAdd , setOpenModalAdd] = useState(false)
     const [openModalUpdate , setOpenModalUpdate] = useState(false)
     const [selectedId , setSelectedId] = useState([])
     const [data,setData] = useState([])
     const [loading, setLoading] = useState(true)
-
+    const navigate = useNavigate()
     const handleDelete = (selectedId) => {
       Swal.fire({
         title: "Bạn có muốn xóa dữ liệu này ?",
@@ -25,7 +27,7 @@ const TamTrang = () => {
         confirmButtonText: "có "
       }).then( async(result) => {
         if (result.isConfirmed) {
-          const response = await axios.delete(`https://localhost:7280/api/TamTrang/deletenhacsi?id=${selectedId}`)
+          const response = await axios.delete(`https://localhost:7280/api/TamTrang/deletetamtrang?id=${selectedId}`)
           if(response.status === 200)
           {
             Swal.fire({
@@ -46,16 +48,13 @@ const TamTrang = () => {
         }
       });
     }
-  
+    const previousLink = ()=>{
+      navigate("/Administrator")
+    }
     const columns = [
       {
-        field: 'tenNhacSi',
-        headerName: 'Tên nhạc sĩ',
-        flex: 1
-      },
-      {
-        field: 'nickName',
-        headerName: 'Nick Name',
+        field: 'tenTamTrang',
+        headerName: 'Tên tâm trạng',
         flex: 1
       },
       {
@@ -117,7 +116,7 @@ const TamTrang = () => {
   const getdata = async () => {
     try {
       setLoading(true);
-      const response = await axios.get("https://localhost:7280/api/NhacSi/getallnhacsi");
+      const response = await axios.get("https://localhost:7280/api/TamTrang/getalltamtrang");
       if (response.status == 200) {
         setData(response.data);
       }
@@ -137,8 +136,11 @@ const TamTrang = () => {
   
   return (
     <Grid2>
-    <IconButton style={{width:"150px" , fontSize:"0.8rem"}} onClick={handelOpenModalAddChuDe}>
-          Thêm mới nhạc sĩ
+      <IconButton sx={{margin:"0 10px"}} onClick={previousLink}>
+         <KeyboardBackspaceIcon/>
+      </IconButton>
+     <IconButton style={{width:"180px" , fontSize:"0.8rem"}} className="animated-button" onClick={handelOpenModalAddChuDe}>
+          Thêm mới tâm trạng
       </IconButton>
       <Box sx={{ height: 400, width: '100%' , marginTop:3}}>
       <DataGrid

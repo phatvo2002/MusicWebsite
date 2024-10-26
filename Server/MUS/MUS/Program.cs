@@ -18,7 +18,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<MusDbConText>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserServices, UserServices>();
 
 builder.Services.AddScoped<ITheLoaiRepository, TheLoaiRepository>();
 builder.Services.AddScoped<ITheLoaiServices, TheLoaiServices>();

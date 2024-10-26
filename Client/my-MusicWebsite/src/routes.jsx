@@ -7,10 +7,14 @@ import TamTrang from './View/MainComponent/Administrator/TamTrang/TamTrang';
 import NhacSi from './View/MainComponent/Administrator/NhacSI/NhacSi';
 import Album from './View/MainComponent/Administrator/Album/Album';
 import ChuDe from './View/MainComponent/Administrator/ChuDe/ChuDe';
+import Login from './View/MainComponent/session/Login';
+import Register from './View/MainComponent/session/Register';
 const AppRoutes = () => {
     return (
       <Routes>
         <Route path="/" element={<Dashboard />}>
+         <Route path="/Login" element={<Login/>} />
+         <Route path="/Register" element={<Register/>} />
         <Route path="/Administrator" element={<Administrator />} />
         <Route path="/Administrator/TheLoaiNhac" element={<TheLoaiNhac />} />
         <Route path="/Administrator/BaiNhac" element={<BaiNhac />} />

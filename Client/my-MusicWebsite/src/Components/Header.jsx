@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Stack from '@mui/material/Stack';
 import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded';
 import CustomDatePicker from './CustomDatePicker';
@@ -7,7 +6,8 @@ import MenuButton from './MenuButton';
 import ColorModeIconDropdown from '../Theme/shared-theme/ColorModeIconDropdown';
 import Search from './Search';
 import { Typography,Button } from '@mui/material';
-
+import { Link as RouterLink } from 'react-router-dom';
+import {Link} from '@mui/material';
 export default function Header() {
   return (
     <Stack
@@ -31,12 +31,12 @@ export default function Header() {
         </MenuButton>
         <Button>
         <Typography>
-             Login
+          <Link component={RouterLink} to="/Login">Đăng nhập</Link>
           </Typography>
         </Button>
         <Button>
         <Typography>
-             Sign Up
+        <Link component={RouterLink} to="/Register">Đăng kí</Link>
          </Typography>
         </Button>
         <ColorModeIconDropdown />

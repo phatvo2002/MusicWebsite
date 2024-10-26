@@ -38,8 +38,14 @@ const thirdListItems = [
 ];
 const fordListItems = [
   { text: 'Cài đặt ', icon: <SettingsRoundedIcon /> , url : "/"  },
-  { text: 'Quản trị hệ thống', icon: <ManageAccountsIcon /> , url : "/Administrator" },
+  //{ text: 'Quản trị hệ thống', icon: <ManageAccountsIcon /> , url : "/Administrator" },
 ];
+const AdministratorItem =[
+  { text: 'Cài đặt ', icon: <SettingsRoundedIcon /> , url : "/"  },
+  { text: 'Quản trị hệ thống', icon: <ManageAccountsIcon /> , url : "/Administrator" },
+]
+
+const token = localStorage.getItem('token')
 export default function MenuContent() {
   return (
     <Stack sx={{ flexGrow: 1, p: 1, justifyContent: 'space-between' }}>
@@ -83,7 +89,7 @@ export default function MenuContent() {
          General
       </Typography>
       <List dense>
-        {fordListItems.map((item, index) => (
+        {token ?  (AdministratorItem.map((item, index) => (
           <ListItem key={index} disablePadding sx={{ display: 'block' }}>
             <ListItemButton>
               <ListItemIcon>{item.icon}</ListItemIcon>
@@ -92,7 +98,20 @@ export default function MenuContent() {
               </ListItemText>
             </ListItemButton>
           </ListItem>
-        ))}
+        )))
+         :(
+          fordListItems.map((item, index) => (
+            <ListItem key={index} disablePadding sx={{ display: 'block' }}>
+              <ListItemButton>
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemText>
+                      <Link component={RouterLink} to={item.url}>{item.text}</Link>
+                </ListItemText>
+              </ListItemButton>
+            </ListItem>
+          ))
+         )
+      }
       </List>
     </Stack>
   );

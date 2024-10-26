@@ -1,0 +1,36 @@
+.container {
+    border: 1px solid #f010ae;
+    margin: 20px;
+    border-radius: 5px;
+    text-align: center;
+    padding: 20px;
+    box-shadow: rgba(240, 46, 170, 0.4) 5px 5px, rgba(240, 46, 170, 0.3) 10px 10px, rgba(240, 46, 170, 0.2) 15px 15px, rgba(240, 46, 170, 0.1) 20px 20px, rgba(240, 46, 170, 0.05) 25px 25px;
+    animation: boxAnimation 2s infinite ease-in-out;
+  }
+  
+  @keyframes boxAnimation {
+    0% {
+      transform: scale(1) rotate(0deg);
+    }
+    100% {
+      transform: scale(1) rotate(0deg);
+    }
+  }
+
+
+  .animated-button {
+    padding: 12px 24px;
+    color: #fff;
+    background-color: #f010ae;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    outline: none;
+  }
+  
+  .animated-button:hover {
+    background-color: #ff66cc;
+    transform: scale(1.1);
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+  }

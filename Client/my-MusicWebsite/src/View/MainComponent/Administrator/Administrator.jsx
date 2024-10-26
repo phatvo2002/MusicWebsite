@@ -7,20 +7,15 @@ import HeadphonesIcon from '@mui/icons-material/Headphones';
 import { Link as RouterLink } from 'react-router-dom';
 import AudiotrackIcon from '@mui/icons-material/Audiotrack';
 import ExplicitIcon from '@mui/icons-material/Explicit';
-const stylesBox = {
-   border:"1px solid #f010ae",
-   margin:"20px",
-   borderRadius:"5px",
-   textAlign:"center",
-   padding :"20px",
-}
+import "../../../css/main.css"
+
 
 const Administrator = () => {
   return (
     <Container >
        <Grid2 spacing={2} container >
             <Grid2 size={3}>
-                <Box sx={stylesBox}>
+                <Box className="container">
                   <MusicNoteIcon/>
                   <Typography >
                   <Link component={RouterLink} to="/Administrator/BaiNhac">Bài nhạc</Link>
@@ -28,7 +23,7 @@ const Administrator = () => {
                 </Box>
             </Grid2>
             <Grid2 size={3}>
-                <Box sx={stylesBox}>
+                <Box className="container">
                   <LibraryMusicIcon/>
                    <Typography >
                    <Link component={RouterLink} to="/Administrator/Album">Album</Link>
@@ -36,7 +31,7 @@ const Administrator = () => {
                 </Box>
             </Grid2>
             <Grid2 size={3}>
-                <Box sx={stylesBox}>
+                <Box className="container">
                   <PersonPinIcon/>
                   <Typography >
                   <Link component={RouterLink} to="/Administrator/NhacSi">Nhạc sĩ</Link>
@@ -44,7 +39,7 @@ const Administrator = () => {
                 </Box>
             </Grid2>
             <Grid2 size={3}>
-                <Box sx={stylesBox}>
+                <Box className="container">
                    <AccountCircleIcon/>
                    <Typography >
                      Quản lý người dùng
@@ -52,7 +47,7 @@ const Administrator = () => {
                 </Box>
             </Grid2>
             <Grid2 size={3}>
-                <Box sx={stylesBox}>
+                <Box className="container">
                   <AudiotrackIcon/>
                    <Typography >
                    <Link component={RouterLink} to="/Administrator/TamTrang">Tâm trạng</Link>
@@ -60,7 +55,7 @@ const Administrator = () => {
                 </Box>
             </Grid2>
             <Grid2 size={3}>
-                <Box sx={stylesBox}>
+                <Box className="container">
                    <HeadphonesIcon/>
                    <Typography >
                     <Link component={RouterLink} to="/Administrator/TheLoaiNhac">Thể loại</Link>
@@ -68,7 +63,7 @@ const Administrator = () => {
                 </Box>
             </Grid2>
             <Grid2 size={3}>
-                <Box sx={stylesBox}>
+                <Box className="container">
                    <ExplicitIcon/>
                    <Typography >
                     <Link component={RouterLink} to="/Administrator/Chude">Chủ đề</Link>

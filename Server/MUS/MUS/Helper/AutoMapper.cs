@@ -12,6 +12,8 @@ namespace MUS.Helper
             CreateMap<BaiNhac, BaiNhacDTO>();
             CreateMap<NhacSi, NhacSiDTO>();
             CreateMap<TamTrang, TamTrangDTO>();
+            CreateMap<User, LoginDTO>();
+            CreateMap<User, UserDTO>();
         }
     }
     

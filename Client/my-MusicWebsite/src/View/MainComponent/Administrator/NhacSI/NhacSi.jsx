@@ -7,14 +7,18 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete'; 
 import Swal from "sweetalert2";
 import ModalUpdateNhacSi from "./Modal/ModalUpdateNhacSi";
-
+import { useNavigate } from "react-router-dom";
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 const NhacSi = () => {
     const [openModalAdd , setOpenModalAdd] = useState(false)
     const [openModalUpdate , setOpenModalUpdate] = useState(false)
     const [selectedId , setSelectedId] = useState([])
     const [data,setData] = useState([])
     const [loading, setLoading] = useState(true)
-
+    const navigate = useNavigate()
+    const previousLink = ()=>{
+      navigate("/Administrator")
+    }
     const handleDelete = (selectedId) => {
       Swal.fire({
         title: "Bạn có muốn nhạc sĩ này ?",
@@ -137,7 +141,10 @@ const NhacSi = () => {
   
   return (
     <Grid2>
-    <IconButton style={{width:"150px" , fontSize:"0.8rem"}} onClick={handelOpenModalAddChuDe}>
+       <IconButton sx={{margin:"0 10px"}} onClick={previousLink}>
+         <KeyboardBackspaceIcon/>
+      </IconButton>
+    <IconButton style={{width:"150px" , fontSize:"0.8rem"}} className="animated-button" onClick={handelOpenModalAddChuDe}>
           Thêm mới nhạc sĩ
       </IconButton>
       <Box sx={{ height: 400, width: '100%' , marginTop:3}}>

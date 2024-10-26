@@ -8,12 +8,18 @@ import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import axios from 'axios';
 import { DataGrid } from '@mui/x-data-grid';
 import Swal from 'sweetalert2';
+import { useNavigate } from "react-router-dom";
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 const BaiNhac = () => {
     const [openModalThemMoiBaiNhac, setOpenModalThemMoiBaiNhac]= useState(false)
     const [openModalChinhSuaBaiNhac, setOpenModalChinhSuaBaiNhac]= useState(false)
     const [selectedId , setSelectedId] = useState([])
     const [data,setData] = useState([])
     const [loading, setLoading] = useState(true)
+    const navigate = useNavigate()
+    const previousLink = ()=>{
+      navigate("/Administrator")
+    }
     const handleOpenModalAddbaiNhac = () => {
       setOpenModalThemMoiBaiNhac(true)
     }
@@ -175,7 +181,10 @@ const BaiNhac = () => {
 
   return (
     <Grid2>
-     <IconButton style={{width:"150px" , fontSize:"0.8rem"}} onClick={handleOpenModalAddbaiNhac }>
+      <IconButton sx={{margin:"0 10px"}} onClick={previousLink}>
+         <KeyboardBackspaceIcon/>
+      </IconButton>
+     <IconButton style={{width:"150px" , fontSize:"0.8rem"}} className="animated-button" onClick={handleOpenModalAddbaiNhac }>
           Thêm mới bài nhạc
       </IconButton>
       <Box sx={{ height: 400, width: '100%' , marginTop:3}}>
