@@ -17,7 +17,7 @@ namespace MUS.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login(LoginModal modal)
+        public async Task<IActionResult> Login([FromForm] LoginModal modal)
         {
             try
             {

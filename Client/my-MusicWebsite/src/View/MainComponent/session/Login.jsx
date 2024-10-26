@@ -1,10 +1,51 @@
 import { Box, Button, Grid2, InputAdornment, TextField, Typography } from "@mui/material"
 import logo from "../../../assets/images/logo.png"
-import background from "../../../assets/images/background.jpg"
 import EmailIcon from '@mui/icons-material/Email';
 import HttpsIcon from '@mui/icons-material/Https';
-
+import { useState } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 const Login = () => {
+   const [obj , setObj] = useState({
+      email :"",
+      password :"",
+   })
+   const navigate = useNavigate()
+   const gotolink = ()=>{
+     navigate("/Profile")
+   }
+   const handleChange = (name) => (event) => {
+    setObj({ ...obj, [name]: event.target.value });
+  }
+    const handleSubmit = async () =>{
+      const formData = new FormData();
+      if(!obj.email || !obj.password)
+      {
+        toast.warning("Bạn chưa nhập tài khoản và mật khẩu", {
+          toastId: "alert-add-save-success",
+        });
+        return 
+      }
+      formData.append("email", obj?.email)
+      formData.append("password", obj?.password)
+      const config = {
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
+    };
+      const response = await axios.post("https://localhost:7280/api/Auth/login", formData,config);
+
+      if(response.status === 200)
+      {
+        localStorage.setItem("token", response?.data?.token)
+        localStorage.setItem("role", response?.data?.roleId)
+        toast.success("Đăng nhập thành công", {
+          toastId: "alert-add-save-success",
+        });
+        gotolink()
+      }
+    }
     const styleContainer ={
         display: "flex",
         justifyContent: "center",
@@ -15,7 +56,7 @@ const Login = () => {
       const styleBox = {
         boxShadow:"rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px",
         width:"500px",
-        backgroundImage: `url(${background})`, 
+       // backgroundImage: `url(${background})`, 
         backgroundSize: "cover", 
         backgroundPosition: "center",
         padding:"50px"
@@ -31,6 +72,7 @@ const Login = () => {
            <TextField
             id="input-with-icon-textfield"
             label="Email"
+            onChange={handleChange("email")}
             fullWidth
             sx={{marginTop:5}}
             slotProps={{
@@ -48,6 +90,7 @@ const Login = () => {
             id="input-with-icon-textfield"
             label="Mật khẩu"
             type="password"
+            onChange={handleChange("password")}
             fullWidth
             sx={{marginTop:5}}
             slotProps={{
@@ -61,7 +104,7 @@ const Login = () => {
             }}
              variant="filled"
           />
-          <Button fullWidth sx={{marginTop:5 ,backgroundColor:"#f010ae"}}>
+          <Button fullWidth sx={{marginTop:5 ,backgroundColor:"#f010ae"}} onClick={handleSubmit}>
                Đăng nhập
           </Button>
             </Box>

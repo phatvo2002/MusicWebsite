@@ -5,10 +5,24 @@ import NavbarBreadcrumbs from './NavbarBreadcrumbs';
 import MenuButton from './MenuButton';
 import ColorModeIconDropdown from '../Theme/shared-theme/ColorModeIconDropdown';
 import Search from './Search';
-import { Typography,Button } from '@mui/material';
+import { Typography,Button, Grid2 } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import {Link} from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 export default function Header() {
+  const token = localStorage.getItem('token');
+  const navigate = useNavigate()
+  const gotolink = ()=>{
+    navigate("/Login")
+  }
+  const logout = () => {
+    localStorage.clear();
+    toast.success("Đăng xuất thành công", {
+      toastId: "alert-add-save-success",
+    });
+    gotolink()
+  }
   return (
     <Stack
       direction="row"
@@ -29,7 +43,14 @@ export default function Header() {
         <MenuButton showBadge aria-label="Open notifications">
           <NotificationsRoundedIcon />
         </MenuButton>
-        <Button>
+        <Grid2>
+          {token ? ( <Button>
+        <Typography>
+          <Link onClick={logout}>Đăng xuất</Link>
+          </Typography>
+        </Button>):(
+           <Grid2>
+              <Button>
         <Typography>
           <Link component={RouterLink} to="/Login">Đăng nhập</Link>
           </Typography>
@@ -39,6 +60,10 @@ export default function Header() {
         <Link component={RouterLink} to="/Register">Đăng kí</Link>
          </Typography>
         </Button>
+           </Grid2>
+        )}
+      
+        </Grid2>
         <ColorModeIconDropdown />
       </Stack>
     </Stack>

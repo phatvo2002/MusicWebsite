@@ -9,12 +9,14 @@ import Album from './View/MainComponent/Administrator/Album/Album';
 import ChuDe from './View/MainComponent/Administrator/ChuDe/ChuDe';
 import Login from './View/MainComponent/session/Login';
 import Register from './View/MainComponent/session/Register';
+import Profile from './View/MainComponent/session/Profile';
 const AppRoutes = () => {
     return (
       <Routes>
         <Route path="/" element={<Dashboard />}>
          <Route path="/Login" element={<Login/>} />
          <Route path="/Register" element={<Register/>} />
+         <Route path="/Profile" element={<Profile/>} />
         <Route path="/Administrator" element={<Administrator />} />
         <Route path="/Administrator/TheLoaiNhac" element={<TheLoaiNhac />} />
         <Route path="/Administrator/BaiNhac" element={<BaiNhac />} />
