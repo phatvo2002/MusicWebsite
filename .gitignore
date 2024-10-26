@@ -352,3 +352,6 @@ MigrationBackup/
 
 # Skip cache of npm/yarn
 .cache/
+
+wwwroot/UploadFiles/
+Server/MUS/MUS/wwwroot/UploadFiles

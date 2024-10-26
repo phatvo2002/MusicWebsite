@@ -9,6 +9,12 @@ namespace MUS.Helper
        public AutoMapper() {
             CreateMap<TheLoai, TheLoaiDTO>();
             CreateMap<ChuDe, ChuDeDTO>();
+            CreateMap<BaiNhac, BaiNhacDTO>();
+            CreateMap<NhacSi, NhacSiDTO>();
+            CreateMap<TamTrang, TamTrangDTO>();
+            CreateMap<User, LoginDTO>();
+            CreateMap<User, UserDTO>();
         }
     }
+    
 }

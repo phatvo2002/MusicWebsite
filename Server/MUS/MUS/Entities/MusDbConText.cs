@@ -15,13 +15,18 @@ namespace MUS.Entities
 
         public virtual DbSet<TheLoai> TheLoais { get; set; }
 
-        public virtual DbSet<TamTrang> TamTrang { get; set; }
+        public virtual DbSet<TamTrang> TamTrangs { get; set; }
 
         public virtual DbSet<ChuDe> ChuDes { get; set; }
         public virtual DbSet<NhacSi> NhacSis { get; set; }
         public virtual DbSet<Album> Albums { get; set; }
+        public virtual DbSet<BaiNhac> BaiNhacs { get; set; }
 
         public virtual DbSet<AlbumNhacSi> AlbumNhacSis { get; set; }
+
+        public virtual DbSet<Role> Roles { get; set; }
+
+        public virtual DbSet<User> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
@@ -91,7 +96,8 @@ namespace MUS.Entities
                 entity.Property(e => e.DuongDanHinhAnh).HasMaxLength(300);
                 entity.Property(e => e.DuongDanFileAmNhac).HasMaxLength(300);
                 entity.Property(e => e.LoiBaiHat).HasMaxLength(1000);
-
+                entity.Property(e => e.KichThuoc).HasColumnType("decimal");
+                entity.Property(e => e.TenFile).HasMaxLength(100);
                 entity.HasOne(d => d.NhacSi).WithMany(p => p.BaiNhacs)
                    .HasForeignKey(d => d.NhacSiId)
                    .OnDelete(DeleteBehavior.ClientSetNull)
@@ -125,6 +131,34 @@ namespace MUS.Entities
               .HasOne(aa => aa.Album)
               .WithMany(a => a.AlbumNhacSis)
              .HasForeignKey(aa => aa.AlBumId);
+
+            modelBuilder.Entity<Role>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.ToTable("Role");
+                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.Property(e => e.RoleName).HasMaxLength(100);
+            });
+
+
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.ToTable("User");
+                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.Property(e => e.TenNguoiDung).HasMaxLength(100);
+                entity.Property(e => e.SoDienThoai).HasMaxLength(11);
+                entity.Property(e => e.Email).HasMaxLength(50);
+                entity.Property(e => e.Password).HasMaxLength(100);
+                entity.HasOne(r => r.Role).WithMany(d=> d.Users)
+                      .HasForeignKey(r=> r.RoleId).OnDelete(DeleteBehavior.ClientSetNull)
+                      .HasConstraintName("FK_Role_User");
+            });
         }
+
+
+
+
     }
 }

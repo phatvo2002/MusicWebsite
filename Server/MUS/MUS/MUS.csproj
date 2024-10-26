@@ -23,7 +23,9 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\UploadFiles\Files\" />
+    <Folder Include="wwwroot\UploadFiles\Files\20241019\" />
     <Folder Include="wwwroot\UploadFiles\Images\20241017\" />
+    <Folder Include="wwwroot\UploadFiles\Images\20241019\" />
   </ItemGroup>
 
 </Project>

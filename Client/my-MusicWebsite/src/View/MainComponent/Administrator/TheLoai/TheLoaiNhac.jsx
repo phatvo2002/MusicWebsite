@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Grid2, IconButton, Paper, Table, TableBody, TableCell, tableCellClasses, TableContainer, TableHead, TableRow } from '@mui/material'
 import ModalAddTheLoai from './Modal/ModalAddTheLoai'
 import axios from 'axios'
@@ -49,8 +49,6 @@ useEffect(() => {
     setSelectedId("")
     setOpenModalUpdateTheLoaiNhac(false)
   }
-
-
 
   const handleDelete = (theloaiId) => {
     Swal.fire({

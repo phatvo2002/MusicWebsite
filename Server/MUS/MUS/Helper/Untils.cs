@@ -6,7 +6,7 @@ namespace MUS.Helper
 {
     public static class Untils
     {
-        private static string[] _permittedExtensions = { ".txt", ".zip", ".docx", ".doc", ".mp4", ".pdf" ,"mp3" };
+        private static string[] _permittedExtensions = { ".txt", ".zip", ".docx", ".doc", ".mp4", ".pdf" ,"mp3" , ".wav" };
 
         private static long _fileSizeLimit = 2097152000;
 
@@ -101,6 +101,58 @@ namespace MUS.Helper
                 return "";
             }
         }
+        public static async Task<string> UploadFileMP3(IFormFile file)
+        {
+            try
+            {
+    
+                var permittedExtensions = new[] { ".mp3", ".wav" };  // Add your allowed extensions here
+                var fileSizeLimit = 30 * 1024 * 1024;  // Example: 30 MB size limit
+
+                // Validate file extension
+                var ext = Path.GetExtension(file.FileName).ToLowerInvariant();
+                if (string.IsNullOrEmpty(ext) || !permittedExtensions.Contains(ext))
+                {
+                    throw new Exception("Invalid file type. Only MP3 and WAV files are allowed.");
+                }
+
+                // Validate file size
+                if (file.Length > fileSizeLimit)
+                {
+                    throw new Exception($"File size exceeds the limit of {fileSizeLimit / (1024 * 1024)} MB.");
+                }
+
+                // Create folder path based on current date
+                string folder = $"UploadFiles/Files/{DateTime.Now:yyyyMMdd}/";
+                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", folder);
+
+                // Ensure folder exists
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+
+                // Generate unique file name
+                var uniqueFileName = Guid.NewGuid().ToString() + "_" + CharacterHelper.LocDau(file.FileName).Replace(" ", "");
+                string filePath = Path.Combine(path, uniqueFileName);
+
+                // Save file to the designated folder
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(fileStream);
+                }
+
+                // Return the file path or URL
+                var url = $"{folder}{uniqueFileName}";
+                return url;
+            }
+            catch (Exception ex)
+            {
+                // Log or handle the exception as needed
+                string message = $"File upload failed: {ex.Message}";
+                return message; // Return an empty string or a meaningful error message if needed
+            }
+        }
 
         public static string GetmimeType(string extension)
         {
@@ -133,6 +185,12 @@ namespace MUS.Helper
                     break;
                 case ".doc":
                     mimeType = "application/msword";
+                    break;
+                case ".mp3":
+                    mimeType = "audio/mpeg";
+                    break;
+                case ".wav":
+                    mimeType = "audio/wav";
                     break;
                 default:
                     // no support

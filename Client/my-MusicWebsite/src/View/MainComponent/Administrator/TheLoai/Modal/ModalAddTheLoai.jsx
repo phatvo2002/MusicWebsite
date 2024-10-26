@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -7,10 +7,10 @@ import DialogTitle from '@mui/material/DialogTitle';
 import CustomImageUpload from '../../../../../Components/CustomUploadImage/CusTomUploadImages';
 import Button from '@mui/material/Button';
 import PropTypes from 'prop-types';
-import toastr from 'toastr';
 import { Grid2, TextField } from '@mui/material';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { toast } from 'react-toastify';
 const ModalAddTheLoai = ({ openModal, handleClose ,setLoading }) => {
       ModalAddTheLoai.propTypes = {
         openModal: PropTypes.bool.isRequired,  
@@ -35,12 +35,8 @@ const ModalAddTheLoai = ({ openModal, handleClose ,setLoading }) => {
       }
       const handleImageConvert = (base64String) => {
         setBase64String(base64String);
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Thêm ảnh thành công",
-          showConfirmButton: false,
-          timer: 1500
+        toast.success("Thêm ảnh thành công", {
+          toastId: "alert-add-image",
         });
       };
 

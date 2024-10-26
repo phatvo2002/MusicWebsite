@@ -18,13 +18,24 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<MusDbConText>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserServices, UserServices>();
 
 builder.Services.AddScoped<ITheLoaiRepository, TheLoaiRepository>();
 builder.Services.AddScoped<ITheLoaiServices, TheLoaiServices>();
 
 builder.Services.AddScoped<IChuDeRepository, ChuDeRepository>();
 builder.Services.AddScoped<IChudeServices, ChuDeServices>();
+
+builder.Services.AddScoped<IBaiNhacRepository, BaiNhacRepository>();
+builder.Services.AddScoped<IBaiNhacServices, BaiNhacServices>();
+
+builder.Services.AddScoped<INhacsiRepository, NhacSiRepository>();
+builder.Services.AddScoped<INhacsiServices, NhacsiServices>();
+
+builder.Services.AddScoped<ITamTrangRepository, TamTrangRepository>();
+builder.Services.AddScoped<ITamTrangServices, TamTrangServices>();
+
 
 builder.Services.AddAutoMapper(typeof(Program));
 

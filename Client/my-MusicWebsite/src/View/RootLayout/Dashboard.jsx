@@ -22,7 +22,7 @@ const xThemeComponents = {
 
 export default function Dashboard(props) {
   return (
-    <AppTheme {...props} themeComponents={xThemeComponents}>
+    <AppTheme {...props} themeComponents={xThemeComponents} >
       <CssBaseline enableColorScheme />
       <Box sx={{ display: 'flex' }}>
         <SideMenu />
@@ -49,6 +49,9 @@ export default function Dashboard(props) {
             <Header />
             {/* <MainGrid /> */}
            <Outlet/>
+           {/* <Fab sx={{width:"100px"}} aria-label="like">
+            <CardAlert  />
+           </Fab> */}
           </Stack>
         </Box>
       </Box>

@@ -65,6 +65,9 @@ namespace MUS.Migrations
                     b.Property<Guid?>("ChudeId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("DuongDanBanner")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("DuongDanFileAmNhac")
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
@@ -72,6 +75,9 @@ namespace MUS.Migrations
                     b.Property<string>("DuongDanHinhAnh")
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
+
+                    b.Property<decimal?>("KichThuoc")
+                        .HasColumnType("decimal");
 
                     b.Property<string>("LoiBaiHat")
                         .HasMaxLength(1000)
@@ -90,6 +96,10 @@ namespace MUS.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("TenBaiNhac")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("TenFile")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -155,6 +165,20 @@ namespace MUS.Migrations
                     b.ToTable("NhacSi", (string)null);
                 });
 
+            modelBuilder.Entity("MUS.Entities.Role", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("RoleName")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Role", (string)null);
+                });
+
             modelBuilder.Entity("MUS.Entities.TamTrang", b =>
                 {
                     b.Property<Guid>("Id")
@@ -189,6 +213,37 @@ namespace MUS.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TheLoai", (string)null);
+                });
+
+            modelBuilder.Entity("MUS.Entities.User", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Password")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<Guid?>("RoleId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("SoDienThoai")
+                        .HasMaxLength(11)
+                        .HasColumnType("nvarchar(11)");
+
+                    b.Property<string>("TenNguoiDung")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("User", (string)null);
                 });
 
             modelBuilder.Entity("MUS.Entities.AlbumNhacSi", b =>
@@ -248,6 +303,16 @@ namespace MUS.Migrations
                     b.Navigation("TheLoai");
                 });
 
+            modelBuilder.Entity("MUS.Entities.User", b =>
+                {
+                    b.HasOne("MUS.Entities.Role", "Role")
+                        .WithMany("Users")
+                        .HasForeignKey("RoleId")
+                        .HasConstraintName("FK_Role_User");
+
+                    b.Navigation("Role");
+                });
+
             modelBuilder.Entity("MUS.Entities.Album", b =>
                 {
                     b.Navigation("AlbumNhacSis");
@@ -265,6 +330,11 @@ namespace MUS.Migrations
                     b.Navigation("AlbumNhacSis");
 
                     b.Navigation("BaiNhacs");
+                });
+
+            modelBuilder.Entity("MUS.Entities.Role", b =>
+                {
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("MUS.Entities.TamTrang", b =>
