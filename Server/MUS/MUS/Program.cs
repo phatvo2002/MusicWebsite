@@ -36,6 +36,8 @@ builder.Services.AddScoped<INhacsiServices, NhacsiServices>();
 builder.Services.AddScoped<ITamTrangRepository, TamTrangRepository>();
 builder.Services.AddScoped<ITamTrangServices, TamTrangServices>();
 
+builder.Services.AddScoped<IAlbumRepository, AlbumRepository>();
+builder.Services.AddScoped<IAlbumServices, AlbumServices>();
 
 builder.Services.AddAutoMapper(typeof(Program));
 

@@ -134,10 +134,11 @@ namespace MUS.Repository
                     db.NgayPhatHanh = model.NgayPhatHanh;
                     db.LoiBaiHat = model.LoiBaiHat;
                     db.ThoiLuong = model.ThoiLuong;
-                    db.AlbumId = null;
-                    db.TheLoaiId = null;
-                    db.NhacSiId = null;
-                    db.ChudeId = null;
+                    db.AlbumId = model.AlbumId;
+                    db.TheLoaiId = model.TheLoaiId;
+                    db.NhacSiId = model.NhacSiId;
+                    db.ChudeId = model.ChudeId;
+                    db.TamTrangId = model.TamTrangId;
                     _musDbConText.BaiNhacs.Update(db);
                     await _musDbConText.SaveChangesAsync();
                     return new ResultModel() { Status = 200, Message = "Chỉnh sửa thành công", Success = true };

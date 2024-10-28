@@ -20,24 +20,24 @@ import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import {Link} from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 const mainListItems = [
-  { text: 'Trang chủ', icon: <HomeRoundedIcon />  },
-  { text: 'Khám phá', icon: <AnalyticsRoundedIcon /> },
-  { text: 'Albums', icon: <LibraryMusicIcon /> },
-  { text: 'Nhạc sĩ', icon: <AudiotrackIcon /> },
+  { text: 'Trang chủ', icon: <HomeRoundedIcon />  , url : "/Trangchu"  },
+  { text: 'Khám phá', icon: <AnalyticsRoundedIcon /> ,url : "/Khampha"  },
+  { text: 'Albums', icon: <LibraryMusicIcon /> ,url : "/Albums" },
+  { text: 'Nhạc sĩ', icon: <AudiotrackIcon /> ,url : "/Nhacsi" },
 ];
 
 const secondaryListItems = [
-  { text: 'Thêm gần đây', icon: <AddIcon /> },
-  { text: 'Nghe gần đây', icon: <RadioIcon /> },
+  { text: 'Thêm gần đây', icon: <AddIcon /> ,url : "/Themganday" },
+  { text: 'Nghe gần đây', icon: <RadioIcon /> ,url : "/Ngheganday"},
 ];
 
 const thirdListItems = [
-  { text: 'Đã thích', icon: <FavoriteIcon /> },
-  { text: 'Danh sách phát', icon: <PlaylistPlayIcon /> },
-  { text: 'Thêm danh sách phát', icon: <PlaylistAddIcon /> },
+  { text: 'Đã thích', icon: <FavoriteIcon /> ,url : "/favorite" },
+  { text: 'Danh sách phát', icon: <PlaylistPlayIcon /> ,url : "/Danhsachphat" },
+  { text: 'Thêm danh sách phát', icon: <PlaylistAddIcon /> ,url : "/themdanhsachphat" },
 ];
 const fordListItems = [
-  { text: 'Cài đặt ', icon: <SettingsRoundedIcon /> , url : "/"  },
+  { text: 'Cài đặt ', icon: <SettingsRoundedIcon /> , url : "/caidat"  },
   //{ text: 'Quản trị hệ thống', icon: <ManageAccountsIcon /> , url : "/Administrator" },
 ];
 const AdministratorItem =[
@@ -54,7 +54,9 @@ export default function MenuContent() {
           <ListItem key={index} disablePadding sx={{ display: 'block' }}>
             <ListItemButton selected={index === 0}>
               <ListItemIcon>{item.icon}</ListItemIcon>
-              <ListItemText primary={item.text} />
+              <ListItemText>
+               <Link component={RouterLink} to={item.url}>{item.text}</Link>
+              </ListItemText>
             </ListItemButton>
           </ListItem>
         ))}

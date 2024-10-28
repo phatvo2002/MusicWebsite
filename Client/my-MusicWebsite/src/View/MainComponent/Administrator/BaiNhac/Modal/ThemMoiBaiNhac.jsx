@@ -1,5 +1,5 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid2, TextField, Typography } from '@mui/material'
-import  { useState } from 'react'
+import { Autocomplete, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid2, TextField, Typography } from '@mui/material'
+import  { useEffect, useState } from 'react'
 import CustomImageUpload from '../../../../../Components/CustomUploadImage/CusTomUploadImages'
 import Swal from 'sweetalert2';
 import PropTypes from 'prop-types';
@@ -16,6 +16,10 @@ const ThemMoiBaiNhac = ({openModal,handleClose}) => {
         handleClose: PropTypes.func.isRequired,
      };
     const [base64String, setBase64String] = useState("");
+    const [dataNhacSi ,setDataNhacSi] = useState([]);
+    const [dataTheLoai,setDataTheLoai] = useState([]);
+    const [dataTamTrang,setDataTamTrang] = useState([]);
+    const [dataChuDe,setDataChuDe] = useState([]);
     const [base64StringBanner, setBase64StringBanner] = useState("");
     const [imageDataBasic, setImageDataBasic] = useState("");
     const [bannderDataBasic , setBannersDataBasic] = useState("");
@@ -45,15 +49,12 @@ const ThemMoiBaiNhac = ({openModal,handleClose}) => {
     };
     const handleFileChange = (e) => {
       if (Array.from(e.target.files).some((arr) => arr?.size < 30000000)) {
-        // Get the selected files
         toast.success("Thêm file thành công", {
           toastId: "alert-add-image",
         });
         const selectedFiles = Array.from(e.target.files);
         setFiles([...files, ...selectedFiles]); 
-        // if (handleFileSelect) {
-        //   handleFileSelect([...files, ...selectedFiles]); 
-        // }
+    
       } else {
         Swal.fire({
           position: "center",
@@ -146,6 +147,50 @@ const ThemMoiBaiNhac = ({openModal,handleClose}) => {
         }
       }
     }
+
+    useEffect(()=>{
+      const getNhacSi = async ()=>{
+         const response = await axios.get("https://localhost:7280/api/NhacSi/getallnhacsi")
+          if(response.status === 200)
+          {
+            setDataNhacSi(response?.data)
+          }
+      }
+       getNhacSi()
+    },[])
+    useEffect(()=>{
+      const getTheLoai = async ()=>{
+         const response = await axios.get("https://localhost:7280/api/TheLoai/GetAllTheLoai")
+          if(response.status === 200)
+          {
+            setDataTheLoai(response?.data)
+          }
+      }
+      getTheLoai()
+    },[])
+    useEffect(()=>{
+      const getTamTrang = async ()=>{
+         const response = await axios.get("https://localhost:7280/api/TamTrang/getalltamtrang")
+          if(response.status === 200)
+          {
+            setDataTamTrang(response?.data)
+          }
+      }
+      getTamTrang()
+    },[])
+
+    useEffect(()=>{
+      const getChuDe = async ()=>{
+         const response = await axios.get("https://localhost:7280/api/ChuDe/getallchude")
+          if(response.status === 200)
+          {
+            setDataChuDe(response?.data)
+          }
+      }
+      getChuDe()
+    },[])
+
+
 
   return (
     <Dialog
@@ -245,6 +290,58 @@ const ThemMoiBaiNhac = ({openModal,handleClose}) => {
               onChange={handleFileChange}
             />
           </label>
+        </Grid2>
+        <Grid2 sx={{width:"100%" ,marginTop:2}}>
+        <Autocomplete
+      options={dataNhacSi}
+      getOptionLabel={(option) => option.tenNhacSi}
+      onChange={(event, newValue) => {
+        setObj((prev) => ({
+          ...prev,
+          nhacSiId: newValue ? newValue.id : "", 
+        }));
+      }}
+      renderInput={(params) => <TextField {...params} label="Nhạc sĩ" />}
+    />
+        </Grid2>
+        <Grid2 sx={{width:"100%" ,marginTop:2}}>
+        <Autocomplete
+      options={dataTheLoai}
+      getOptionLabel={(option) => option.tenTheLoai}
+      onChange={(event, newValue) => {
+        setObj((prev) => ({
+          ...prev,
+          theLoaiId: newValue ? newValue.id : "", 
+        }));
+      }}
+      renderInput={(params) => <TextField {...params} label="Thể loại" />}
+    />
+        </Grid2>
+        <Grid2 sx={{width:"100%" ,marginTop:2}}>
+        <Autocomplete
+      options={dataTamTrang}
+      getOptionLabel={(option) => option.tenTamTrang}
+      onChange={(event, newValue) => {
+        setObj((prev) => ({
+          ...prev,
+          tamTrangId: newValue ? newValue.id : "", 
+        }));
+      }}
+      renderInput={(params) => <TextField {...params} label="Tâm trạng" />}
+    />
+        </Grid2>
+        <Grid2 sx={{width:"100%" ,marginTop:2}}>
+        <Autocomplete
+      options={dataChuDe}
+      onChange={(event, newValue) => {
+        setObj((prev) => ({
+          ...prev,
+         chudeId : newValue ? newValue.id : "", 
+        }));
+      }}
+      getOptionLabel={(option) => option.tenChuDe}
+      renderInput={(params) => <TextField {...params} label="Chủ đề" />}
+    />
         </Grid2>
   </Grid2>
 </DialogContentText>

@@ -5,14 +5,14 @@ namespace MUS.Repository.Interface
 {
     public interface IBaiNhacRepository
     {
-        public Task<ResultModel> AddBaiNhac(BaiNhacModel model);
+         Task<ResultModel> AddBaiNhac(BaiNhacModel model);
 
-        public Task<List<BaiNhacDTO>> GetAllBaiNhac();
+         Task<List<BaiNhacDTO>> GetAllBaiNhac();
 
-        public Task<BaiNhacDTO> GetBaiNhacById(Guid id);
+         Task<BaiNhacDTO> GetBaiNhacById(Guid id);
 
-        public Task<ResultModel> UpdateBaiNhac(UpdateBaiNhacModel model);
+         Task<ResultModel> UpdateBaiNhac(UpdateBaiNhacModel model);
 
-        public Task<ResultModel> DeleteBaiNhac(Guid id);
+         Task<ResultModel> DeleteBaiNhac(Guid id);
     }
 }

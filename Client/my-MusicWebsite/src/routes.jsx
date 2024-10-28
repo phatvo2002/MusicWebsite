@@ -10,6 +10,7 @@ import ChuDe from './View/MainComponent/Administrator/ChuDe/ChuDe';
 import Login from './View/MainComponent/session/Login';
 import Register from './View/MainComponent/session/Register';
 import Profile from './View/MainComponent/session/Profile';
+import Trangchu from './View/MainComponent/TrangChu/Trangchu';
 const AppRoutes = () => {
     return (
       <Routes>
@@ -24,6 +25,7 @@ const AppRoutes = () => {
         <Route path="/Administrator/NhacSi" element={<NhacSi />} />
         <Route path="/Administrator/Album" element={<Album />} />
         <Route path="/Administrator/Chude" element={<ChuDe />} />
+        <Route path="/Trangchu" element={<Trangchu/>} />
         {/* Thêm các route con khác */}
        </Route>
       </Routes>

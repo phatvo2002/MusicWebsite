@@ -14,6 +14,7 @@ namespace MUS.Helper
             CreateMap<TamTrang, TamTrangDTO>();
             CreateMap<User, LoginDTO>();
             CreateMap<User, UserDTO>();
+            CreateMap<Album, AlbumDTO>();
         }
     }
     

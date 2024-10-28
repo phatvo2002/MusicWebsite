@@ -82,6 +82,7 @@ namespace MUS.Entities
                 entity.Property(e => e.Id).ValueGeneratedNever();
                 entity.Property(e => e.TenAlbum).HasMaxLength(100);
                 entity.Property(e => e.NgayPhatHanh).HasColumnType("datetime");
+                entity.Property(e => e.Url).HasMaxLength(300);
             });
             modelBuilder.Entity<BaiNhac>(entity =>
             {
