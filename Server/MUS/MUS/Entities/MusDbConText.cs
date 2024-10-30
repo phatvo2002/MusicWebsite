@@ -22,6 +22,8 @@ namespace MUS.Entities
         public virtual DbSet<Album> Albums { get; set; }
         public virtual DbSet<BaiNhac> BaiNhacs { get; set; }
 
+        public virtual DbSet<QuocGia> QuocGias { get; set; }
+
         public virtual DbSet<AlbumNhacSi> AlbumNhacSis { get; set; }
 
         public virtual DbSet<Role> Roles { get; set; }
@@ -42,6 +44,16 @@ namespace MUS.Entities
                 entity.Property(e => e.Id).ValueGeneratedNever();
                 entity.Property(e => e.TenTamTrang).HasMaxLength(100);
                 entity.Property(e => e.Url).HasMaxLength(500);
+
+            });
+            modelBuilder.Entity<QuocGia>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.ToTable("QuocGia");
+
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
+                entity.Property(e => e.TenQuocGia).HasMaxLength(100);
 
             });
             modelBuilder.Entity<TheLoai>(entity =>
@@ -115,6 +127,10 @@ namespace MUS.Entities
                     .HasForeignKey(d => d.TamTrangId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                    .HasConstraintName("FK_TamTrang_BaiNhac");
+                entity.HasOne(d => d.QuocGia).WithMany(p => p.BaiNhacs)
+                    .HasForeignKey(d => d.QuocGiaId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                   .HasConstraintName("FK_QuocGia_BaiNhac");
                 entity.HasOne(d => d.Album).WithMany(p => p.BaiNhacs)
                  .HasForeignKey(d => d.AlbumId)
                  .OnDelete(DeleteBehavior.ClientSetNull)

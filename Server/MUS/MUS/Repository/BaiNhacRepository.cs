@@ -32,11 +32,11 @@ namespace MUS.Repository
                     baiNhac.ThoiLuong = model.ThoiLuong;
                     baiNhac.LuotNghe = model.LuotNghe;
                     baiNhac.LoiBaiHat = model.LoiBaiHat;
-                    baiNhac.NhacSiId = null;
-                    baiNhac.TheLoaiId = null;
-                    baiNhac.TamTrangId = null;
+                    baiNhac.NhacSiId = model.NhacSiId;
+                    baiNhac.TheLoaiId = model.TheLoaiId;
+                    baiNhac.TamTrangId = model.TamTrangId;
                     baiNhac.AlbumId = null;
-                    baiNhac.ChudeId = null;
+                    baiNhac.ChudeId = model.ChudeId;
                     if (model.DuongDanHinhAnh != null && model.DuongDanHinhAnh.Length > 0)
                     {
                         var res = Untils.UploadFileImage(model.DuongDanHinhAnh);

@@ -29,7 +29,7 @@ const Album = () => {
         confirmButtonText: "có "
       }).then( async(result) => {
         if (result.isConfirmed) {
-          const response = await axios.delete(`https://localhost:7280/api/Album/deletechude?id=${selectedId}`)
+          const response = await axios.delete(`https://localhost:7280/api/Album/deleteAlbum?id=${selectedId}`)
           if(response.status === 200)
           {
             Swal.fire({
@@ -53,8 +53,8 @@ const Album = () => {
   
     const columns = [
       {
-        field: 'tenChuDe',
-        headerName: 'Tên chủ đề',
+        field: 'tenAlbum',
+        headerName: 'Tên album',
         flex: 1
       },
       {
@@ -116,7 +116,7 @@ const Album = () => {
   const getdata = async () => {
     try {
       setLoading(true);
-      const response = await axios.get("https://localhost:7280/api/ChuDe/getallchude");
+      const response = await axios.get("https://localhost:7280/api/Album/getallAlbum");
       if (response.status == 200) {
         setData(response.data);
       }
@@ -140,7 +140,7 @@ const Album = () => {
          <KeyboardBackspaceIcon/>
       </IconButton>
     <IconButton style={{width:"150px" , fontSize:"0.8rem"}} className="animated-button" onClick={handelOpenModalAdd}>
-          Thêm mới chủ đề
+          Thêm mới album
       </IconButton>
       <Box sx={{ height: 400, width: '100%' , marginTop:3}}>
       <DataGrid

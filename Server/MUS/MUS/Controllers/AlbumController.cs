@@ -43,7 +43,7 @@ namespace MUS.Controllers
             }
         }
 
-        [HttpPost("albumchude")]
+        [HttpPost("addalbum")]
         public async Task<IActionResult> AddAlbum([FromForm] AlbumModal modal)
         {
             try

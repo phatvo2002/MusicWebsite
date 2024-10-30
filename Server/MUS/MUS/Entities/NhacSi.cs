@@ -7,6 +7,6 @@
         public string? NickName { get; set; }
         public string? Url { get; set; }
         public virtual ICollection<BaiNhac> BaiNhacs { get; set; } = new List<BaiNhac>();
-        public ICollection<AlbumNhacSi>? AlbumNhacSis { get; set; } = new List<AlbumNhacSi>();
+        public virtual ICollection<AlbumNhacSi>? AlbumNhacSis { get; set; } = new List<AlbumNhacSi>();
     }
 }

@@ -18,10 +18,12 @@
         public Guid? TamTrangId {  get; set; }
         public Guid? ChudeId {  get; set; }
         public Guid? AlbumId { get; set; }
+        public int? QuocGiaId { get; set; }
         public virtual Album? Album { get; set; }
         public virtual NhacSi? NhacSi { get; set; } 
         public virtual TheLoai? TheLoai { get; set; }
         public virtual ChuDe? ChuDe { get; set; }
         public virtual TamTrang? TamTrang { get; set; }
+        public virtual QuocGia? QuocGia { get; set;}
     }
 }
