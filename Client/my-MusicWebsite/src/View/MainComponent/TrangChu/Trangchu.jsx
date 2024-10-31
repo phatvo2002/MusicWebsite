@@ -115,9 +115,9 @@ const Trangchu = () => {
         <Grid2 sx={{padding: '20px'}}>
             <Stack  direction={{ xs: 'column', sm: 'row' }}  spacing={{ xs: 1, sm: 2, md: 4 }} >
               {songsTopView.map((item , index)=>(
-                  <Box sx={{background:"#212121" ,borderRadius:"5px" ,color:"text.secondary" }} key={item.id} className='animated-product' >
-                  <img src={`https://localhost:7280/api/File/image?path=${item.duongDanHinhAnh}`} style={{width:"100%" ,height:"200px" ,padding:"3px 5px",borderRadius:"5px"}}/> 
-                    <Link to={`/bainhac/${item.tenBaiNhac}/${item.id}`} style={{padding:"1px 10px"}}>{item.tenBaiNhac}</Link>
+                  <Box sx={{background:"#212121" ,borderRadius:"5px" ,width:"200px" ,color:"text.secondary" }} key={item.id} className='animated-product' >
+                  <img src={`https://localhost:7280/api/File/image?path=${item.duongDanHinhAnh}`} style={{width:"100%" ,padding:"3px 5px",borderRadius:"5px"}}/> 
+                    <Link to={`/bainhac/${item.tenBaiNhac}/${item.id}`} style={{padding:"1px 10px" ,textDecoration:"none",color:"text.secondary"}}>{item.tenBaiNhac}</Link>
                  <Typography variant='body1' component="p" sx={{padding:"3px 10px"}}>{item.nhacSi.tenNhacSi}</Typography>
               </Box>
               ))}
@@ -136,8 +136,8 @@ const Trangchu = () => {
         <Grid2 sx={{padding: '20px'}}>
             <Stack  direction={{ xs: 'column', sm: 'row' }}  spacing={{ xs: 1, sm: 2, md: 4 }} >
               {songs.map((item , index)=>(
-                  <Box sx={{background:"#212121" ,borderRadius:"5px" ,color:"text.secondary" }} key={index} className='animated-product'>
-                  <img src={product} style={{width:"100%" ,height:"200px" ,padding:"3px 5px",borderRadius:"5px"}}/> 
+                  <Box sx={{background:"#212121" ,width:"200px",borderRadius:"5px" ,color:"text.secondary" }} key={index} className='animated-product'>
+                  <img src={product} style={{width:"100%"  ,padding:"3px 5px",borderRadius:"5px"}}/> 
                   <Link to={`/bainhac/${item.tenBaiNhac}/${item.id}`}>{item.title}</Link>
                   <Typography variant='body1' component="p" sx={{padding:"3px 10px"}}>{item.artist}</Typography>
               </Box>
