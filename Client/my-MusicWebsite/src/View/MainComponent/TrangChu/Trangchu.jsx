@@ -1,4 +1,4 @@
-import  { useState } from 'react'
+import  { useEffect, useState } from 'react'
 import banner from "../../../assets/images/banner.jpg"
 import {
     Table,
@@ -11,10 +11,28 @@ import {
   } from '@mui/material';
   import FavoriteIcon from '@mui/icons-material/Favorite';
   import { styled } from '@mui/system';
+import { useNavigate ,Link } from 'react-router-dom';
 import { Box, Button, Grid2, Stack, Typography } from '@mui/material';
 import product from '../../../assets/images/product.jpg'
+import axios from 'axios';
 const Trangchu = () => {
+   const [songsTopView, setSongs] = useState([])
+   const navigate = useNavigate();
+   useEffect(()=>{
+    const getSongs = async ()=>{
+       const response = await axios.get("https://localhost:7280/api/BaiNhac/getallbainhac")
+        if(response.status === 200)
+        {
+          setSongs(response?.data)
+        }
+    }
+    getSongs()
+  },[])
 
+  const goToLinkDetail = (name,id)=>{
+  }
+
+  
 
     const songs = [
         { id: 1, title: "Sorforce", artist: "The Neighbourhood", releaseDate: "Nov 4, 2023", album: "Hard to Imagine the Neighbourhood Ever Changing", time: "3:26" },
@@ -92,15 +110,15 @@ const Trangchu = () => {
         </Stack>
         </Grid2>
         <Typography variant="h4" component="div" style={{ color: 'white', fontWeight: 'bold', marginTop: '20px' ,padding:"0px 30px" }}>
-          Top nhạc<span style={{ color: '#FF69B4' }}> hàng tuần</span>
+          Top <span style={{ color: '#FF69B4' }}> lượt nghe</span>
         </Typography>
         <Grid2 sx={{padding: '20px'}}>
             <Stack  direction={{ xs: 'column', sm: 'row' }}  spacing={{ xs: 1, sm: 2, md: 4 }} >
-              {songs.map((item , index)=>(
-                  <Box sx={{background:"#212121" ,borderRadius:"5px" ,color:"text.secondary" }} key={index} className='animated-product'>
-                  <img src={product} style={{width:"100%" ,height:"200px" ,padding:"3px 5px",borderRadius:"5px"}}/> 
-                  <Typography variant='h5' component="p" sx={{padding:"1px 10px"}}>{item.title}</Typography>
-                  <Typography variant='body1' component="p" sx={{padding:"3px 10px"}}>{item.artist}</Typography>
+              {songsTopView.map((item , index)=>(
+                  <Box sx={{background:"#212121" ,borderRadius:"5px" ,color:"text.secondary" }} key={item.id} className='animated-product' >
+                  <img src={`https://localhost:7280/api/File/image?path=${item.duongDanHinhAnh}`} style={{width:"100%" ,height:"200px" ,padding:"3px 5px",borderRadius:"5px"}}/> 
+                    <Link to={`/bainhac/${item.tenBaiNhac}/${item.id}`} style={{padding:"1px 10px"}}>{item.tenBaiNhac}</Link>
+                 <Typography variant='body1' component="p" sx={{padding:"3px 10px"}}>{item.nhacSi.tenNhacSi}</Typography>
               </Box>
               ))}
             </Stack>
@@ -120,7 +138,7 @@ const Trangchu = () => {
               {songs.map((item , index)=>(
                   <Box sx={{background:"#212121" ,borderRadius:"5px" ,color:"text.secondary" }} key={index} className='animated-product'>
                   <img src={product} style={{width:"100%" ,height:"200px" ,padding:"3px 5px",borderRadius:"5px"}}/> 
-                  <Typography variant='h5' component="p" sx={{padding:"1px 10px"}}>{item.title}</Typography>
+                  <Link to={`/bainhac/${item.tenBaiNhac}/${item.id}`}>{item.title}</Link>
                   <Typography variant='body1' component="p" sx={{padding:"3px 10px"}}>{item.artist}</Typography>
               </Box>
               ))}
@@ -133,7 +151,6 @@ const Trangchu = () => {
             
         </Grid2>
 
-        
         <Typography variant="h4" component="div" style={{ color: 'white', fontWeight: 'bold',  marginTop: '20px' ,padding:"0px 30px"  }}>
           Nhạc<span style={{ color: '#FF69B4' }}> Xu hướng</span>
         </Typography>

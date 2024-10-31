@@ -35,5 +35,10 @@ namespace MUS.Services
         {
             return await _baiNhacRepository.UpdateBaiNhac(model);
         }
+
+        public async Task<ResultModel> UpdateView(Guid id)
+        {
+           return await _baiNhacRepository.UpdateView(id);  
+        }
     }
 }

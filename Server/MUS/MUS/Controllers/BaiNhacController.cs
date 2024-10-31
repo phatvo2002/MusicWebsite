@@ -73,6 +73,19 @@ namespace MUS.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [HttpPut("updateview")]
+        public async Task<IActionResult> UpdateView(Guid id)
+        {
+            try
+            {
+                ResultModel result = await _baiNhacServices.UpdateView(id);
+                return Ok(result);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
         [HttpDelete("deletebainhac")]
         public async Task<IActionResult> Deletebainhac(Guid id)

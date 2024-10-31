@@ -14,5 +14,7 @@ namespace MUS.Repository.Interface
          Task<ResultModel> UpdateBaiNhac(UpdateBaiNhacModel model);
 
          Task<ResultModel> DeleteBaiNhac(Guid id);
+
+         Task<ResultModel> UpdateView(Guid id);
     }
 }

@@ -35,8 +35,9 @@ namespace MUS.Repository
                     baiNhac.NhacSiId = model.NhacSiId;
                     baiNhac.TheLoaiId = model.TheLoaiId;
                     baiNhac.TamTrangId = model.TamTrangId;
-                    baiNhac.AlbumId = null;
-                    baiNhac.ChudeId = model.ChudeId;
+                    baiNhac.AlbumId = model.AlbumId ?? null;
+                    baiNhac.QuocGiaId = model.QuocGiaId;
+                    baiNhac.ChudeId = model.ChudeId ?? null;
                     if (model.DuongDanHinhAnh != null && model.DuongDanHinhAnh.Length > 0)
                     {
                         var res = Untils.UploadFileImage(model.DuongDanHinhAnh);
@@ -113,13 +114,13 @@ namespace MUS.Repository
 
         public async Task<List<BaiNhacDTO>> GetAllBaiNhac()
         {
-            var db = await _musDbConText.BaiNhacs.AsNoTracking().ToListAsync();
+            var db = await _musDbConText.BaiNhacs.AsNoTracking().Include(r => r.NhacSi).ToListAsync();
             return _mapper.Map<List<BaiNhacDTO>>(db);
         }
 
         public async Task<BaiNhacDTO> GetBaiNhacById(Guid id)
         {
-            var db =await _musDbConText.BaiNhacs.Where(r => r.Id == id).FirstOrDefaultAsync();
+            var db =await _musDbConText.BaiNhacs.Where(r => r.Id == id).Include(r=> r.NhacSi).FirstOrDefaultAsync();
             return _mapper.Map<BaiNhacDTO>(db);
         }
 
@@ -150,6 +151,23 @@ namespace MUS.Repository
                 return new ResultModel() { Status = 500, Message = ex.Message, Success = false };
             }
             throw new NotImplementedException();
+        }
+
+        public async Task<ResultModel> UpdateView(Guid id)
+        {
+            var db = _musDbConText.BaiNhacs.FirstOrDefault(r => r.Id == id);
+            if(db != null)
+            {
+                db.LuotNghe += 1;
+                _musDbConText.BaiNhacs.Update(db);
+                await _musDbConText.SaveChangesAsync();
+              return new ResultModel() { Status = 200, Message = "Chỉnh sửa thành công", Success = true };
+            }
+            else
+            {
+                return new ResultModel() { Status = 202, Message = "Không tìm thấy dữ liệu", Success = true };
+            } 
+                
         }
     }
 }

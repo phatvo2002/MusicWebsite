@@ -20,6 +20,7 @@ const ThemMoiBaiNhac = ({openModal,handleClose}) => {
     const [dataTheLoai,setDataTheLoai] = useState([]);
     const [dataTamTrang,setDataTamTrang] = useState([]);
     const [dataChuDe,setDataChuDe] = useState([]);
+    const [dataQuocGia,setDataQuocGia] = useState([]);
     const [base64StringBanner, setBase64StringBanner] = useState("");
     const [imageDataBasic, setImageDataBasic] = useState("");
     const [bannderDataBasic , setBannersDataBasic] = useState("");
@@ -33,10 +34,11 @@ const ThemMoiBaiNhac = ({openModal,handleClose}) => {
       duongDanFileAmNhac:"",
       loiBaiHat :"",
       nhacSiId :"",
-      theLoaiId :"",
-      tamTrangId :"",
-      chudeId :"",
-      albumId :"",
+        theLoaiId :"",
+        tamTrangId :"",
+        chudeId :"",
+        albumId :"",
+        quocgiaId : "",
     });
     //handle Changes values obj
     const handleChange = (name) => (event) => {
@@ -79,6 +81,7 @@ const ThemMoiBaiNhac = ({openModal,handleClose}) => {
         tamTrangId :"",
         chudeId :"",
         albumId :"",
+        quocgiaId : "",
       })    
       setBase64String('');     
       setBase64StringBanner('')
@@ -130,6 +133,12 @@ const ThemMoiBaiNhac = ({openModal,handleClose}) => {
       formData.append("DuongDanBanner" , bannderDataBasic)
       formData.append("DuongDanBanner" , bannderDataBasic)
       formData.append("DuongDanFileAmNhac" , files[0])
+      formData.append("NhacSiId" , obj.nhacSiId)
+      formData.append("TheLoaiId" , obj.theLoaiId)
+      formData.append("TamTrangId" , obj.tamTrangId)
+      formData.append("ChudeId" , obj.chudeId)
+      formData.append("AlbumId" , obj.albumId)
+      formData.append("QuocGiaId" , obj.quocgiaId)
 
       const response = await axios.post("https://localhost:7280/api/BaiNhac/addbainhac", formData, config);
       if (response.status== 200)
@@ -188,6 +197,17 @@ const ThemMoiBaiNhac = ({openModal,handleClose}) => {
           }
       }
       getChuDe()
+    },[])
+
+    useEffect(()=>{
+      const getQuocGia = async ()=>{
+         const response = await axios.get("https://localhost:7280/api/QuocGia/getallquocgia")
+          if(response.status === 200)
+          {
+            setDataQuocGia(response?.data)
+          }
+      }
+      getQuocGia()
     },[])
 
 
@@ -341,6 +361,19 @@ const ThemMoiBaiNhac = ({openModal,handleClose}) => {
       }}
       getOptionLabel={(option) => option.tenChuDe}
       renderInput={(params) => <TextField {...params} label="Chủ đề" />}
+    />
+        </Grid2>
+        <Grid2 sx={{width:"100%" ,marginTop:2}}>
+        <Autocomplete
+      options={dataQuocGia}
+      onChange={(event, newValue) => {
+        setObj((prev) => ({
+          ...prev,
+         quocgiaId : newValue ? newValue.id : "", 
+        }));
+      }}
+      getOptionLabel={(option) => option.tenQuocGia}
+      renderInput={(params) => <TextField {...params} label="Quốc gia" />}
     />
         </Grid2>
   </Grid2>
