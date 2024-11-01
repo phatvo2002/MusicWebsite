@@ -29,8 +29,6 @@ const Trangchu = () => {
     getSongs()
   },[])
 
-  const goToLinkDetail = (name,id)=>{
-  }
 
   
 

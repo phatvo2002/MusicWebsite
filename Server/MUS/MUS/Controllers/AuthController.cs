@@ -30,7 +30,7 @@ namespace MUS.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register(RegisterModal modal)
+        public async Task<IActionResult> Register([FromForm]  RegisterModal modal)
         {
             try
             {

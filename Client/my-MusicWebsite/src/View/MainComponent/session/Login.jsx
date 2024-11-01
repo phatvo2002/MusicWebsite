@@ -6,6 +6,7 @@ import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import hadLogin from "../../../assets/images/haslogin.png"
 const Login = () => {
    const [obj , setObj] = useState({
       email :"",
@@ -36,7 +37,7 @@ const Login = () => {
     };
       const response = await axios.post("https://localhost:7280/api/Auth/login", formData,config);
 
-      if(response.status === 200)
+      if(response?.data.status === 200)
       {
         localStorage.setItem("token", response?.data?.token)
         localStorage.setItem("role", response?.data?.roleId)
@@ -45,7 +46,14 @@ const Login = () => {
         });
         gotolink()
       }
+      else
+      {
+        toast.error("Tài khoản hoặc mật khẩu không đúng", {
+          toastId: "alert-add-save-success",
+        });
+      }
     }
+    const token = localStorage.getItem("token")
     const styleContainer ={
         display: "flex",
         justifyContent: "center",
@@ -63,6 +71,17 @@ const Login = () => {
       }
       return (
         <Grid2 sx={styleContainer}>
+          {token ? (
+            <Box display={"flex"} alignItems={"center"} textAlign={"center"}>
+              <div>
+
+              <img src={hadLogin} style={{width:"300px" ,height:"300px" ,color:"#fff"}}></img>
+              </div>
+              <Typography variant="h3" >
+                Bạn đã đăng nhập vui lòng chuyển trang để nghe nhạc
+              </Typography>
+            </Box>
+          ):(
             <Box sx={styleBox}>
             <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "15vh" }}>
                      <img style={{ width: "50%" }} src={logo} alt="Logo" />
@@ -108,6 +127,7 @@ const Login = () => {
                Đăng nhập
           </Button>
             </Box>
+          )}
         </Grid2>
       )
 }

@@ -4,8 +4,63 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import EmailIcon from '@mui/icons-material/Email';
 import PhoneEnabledIcon from '@mui/icons-material/PhoneEnabled';
 import HttpsIcon from '@mui/icons-material/Https';
+import { toast } from "react-toastify";
+import { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 const Register = () => {
+  const navigate = useNavigate();
+  const [obj , setObj] = useState({
+    tenNguoiDung :"",
+    email :"",
+    soDienThoai :"",
+    password :""
+  })
   
+  const gotoLink = ()=>
+  {
+    navigate("/Login")
+  }
+
+  const handleChange = (name) => (event) => {
+    setObj({ ...obj, [name]: event.target.value });
+  }
+  
+  const handelSubmit = async ()=>
+  {
+    if(!obj.tenNguoiDung || !obj.email || !obj.password || !obj.soDienThoai)
+    {
+         toast.warning("Bạn chưa nhập đủ thông tin ")
+         return 
+    }
+     const formData = new FormData()
+
+     formData.append("tenNguoiDung",obj.tenNguoiDung)
+     formData.append("email",obj.email)
+     formData.append("soDienThoai",obj.soDienThoai)
+     formData.append("password",obj.password)
+
+     const response = await axios.post("https://localhost:7280/api/Auth/register", formData);
+     console.log(response)
+     if(response?.data?.status == 200)
+     {
+      toast.success("Đăng kí thành công", {
+        toastId: "alert-save-user",
+      });
+      gotoLink()
+     }else if (response?.data?.status == 202) {
+      toast.warning("Tài khoản đã tồn tại trong hệ thống", {
+        toastId: "alert-save-user",
+      });
+     }
+     else
+     {
+      toast.error("Đã có lỗi xảy ra", {
+        toastId: "alert-save-user",
+      });
+     }
+  }
+
   const styleContainer ={
     display: "flex",
     justifyContent: "center",
@@ -30,8 +85,9 @@ const Register = () => {
              <Typography align="center" variant="h5" sx={{padding:3}}>Đăng kí tài khoản</Typography>
              <TextField
         id="input-with-icon-textfield"
-        label="Tên người dùng"
+        label="Họ và tên"
         fullWidth
+        onChange={handleChange("tenNguoiDung")}
         slotProps={{
           input: {
             startAdornment: (
@@ -48,6 +104,7 @@ const Register = () => {
         label="Email"
         fullWidth
         sx={{marginTop:5}}
+        onChange={handleChange("email")}
         slotProps={{
           input: {
             startAdornment: (
@@ -63,6 +120,7 @@ const Register = () => {
         id="input-with-icon-textfield"
         label="Số điện thoại"
         fullWidth
+        onChange={handleChange("soDienThoai")}
         sx={{marginTop:5}}
         slotProps={{
           input: {
@@ -79,6 +137,7 @@ const Register = () => {
         id="input-with-icon-textfield"
         label="Mật khẩu"
         type="password"
+        onChange={handleChange("password")}
         fullWidth
         sx={{marginTop:5}}
         slotProps={{
@@ -92,7 +151,7 @@ const Register = () => {
         }}
          variant="filled"
       />
-      <Button fullWidth sx={{marginTop:5 ,backgroundColor:"#f010ae"}}>
+      <Button fullWidth onClick={handelSubmit} sx={{marginTop:5 ,backgroundColor:"#f010ae"}}>
            Đăng kí
       </Button>
         </Box>

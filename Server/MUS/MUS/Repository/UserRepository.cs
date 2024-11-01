@@ -55,16 +55,17 @@ namespace MUS.Repository
 
         public async Task<ResultModel> Resgister(RegisterModal modal)
         {
-            var db = _musDbConText.Users.FirstOrDefault(r=> r.Id == modal.Id);
+            var db = _musDbConText.Users.FirstOrDefault(r=> r.Email == modal.Email || r.TenNguoiDung == modal.TenNguoiDung);
             try
             {
                 if (db == null)
                 {
                     User user = new User();
-                    user.Id = new Guid();
+                    user.Id = Guid.NewGuid();
                     user.TenNguoiDung = modal.TenNguoiDung;
                     user.SoDienThoai = modal.SoDienThoai;
                     user.Email = modal.Email;
+                    user.Password = modal.Password;
                     user.RoleId = new Guid("ef7717b2-2f55-43fb-a7cd-c0e27bbbd365");
                     _musDbConText.Users.Add(user);
                     await _musDbConText.SaveChangesAsync();
