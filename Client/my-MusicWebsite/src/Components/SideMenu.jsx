@@ -1,6 +1,5 @@
 
 import { styled } from '@mui/material/styles';
-import Avatar from '@mui/material/Avatar';
 import MuiDrawer, { drawerClasses } from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -44,11 +43,13 @@ export default function SideMenu() {
           display: 'flex',
           mt: 'calc(var(--template-frame-height, 0px) + 4px)',
           p: 1.5,
+          alignItems: 'center',
+          alignContent: 'center',
         }}
       >
          <img
         src={logo}
-        style={{width: '100%', height: '100px'}}
+        style={{width: '200px', height: ''}}
         loading="lazy"
       />
       </Box>

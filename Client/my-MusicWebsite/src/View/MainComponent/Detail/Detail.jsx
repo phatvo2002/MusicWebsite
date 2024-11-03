@@ -107,7 +107,7 @@ useEffect(() => {
     <img src={`https://localhost:7280/api/File/image?path=${dataBaiNhac.duongDanHinhAnh}`} alt="Disk" className="disk" />
   </div>
   <Stack direction="row" spacing={2} sx={{
-    width:"70%"
+    width:"50%"
   }}>
     <Box>
        <Typography variant='h3' component="h3" sx={{width:"600px"}}>{dataBaiNhac.tenBaiNhac}</Typography>
@@ -129,14 +129,13 @@ useEffect(() => {
         // barWidth={1}
          gap={1}
          visualise={true}
-         backgroundColor="rgba(0, 0, 0, 0.2)"
-         barColor="rgba(0, 0, 0, 0)"
-         barPlayedColor="white"
+       
+         barPlayedColor="pink"
          skipDuration={2}
          showLoopOption={true}
          showVolumeControl={true}
          volumeControlColor={true}
-         seekBarColor="white"
+         seekBarColor="pink"
          hideSeekBar={true}
          hideTrackKnobWhenPlaying={true}
          onplay={()=>setStartAudio(true)}

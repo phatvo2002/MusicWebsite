@@ -21,6 +21,7 @@ export default function Header() {
     toast.success("Đăng xuất thành công", {
       toastId: "alert-add-save-success",
     });
+    window.location.reload();
     gotolink()
   }
   return (

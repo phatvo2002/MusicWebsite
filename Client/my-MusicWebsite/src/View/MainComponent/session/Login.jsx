@@ -41,9 +41,11 @@ const Login = () => {
       {
         localStorage.setItem("token", response?.data?.token)
         localStorage.setItem("role", response?.data?.roleId)
+        localStorage.setItem("userId", response?.data?.id)
         toast.success("Đăng nhập thành công", {
           toastId: "alert-add-save-success",
         });
+        window.location.reload();
         gotolink()
       }
       else

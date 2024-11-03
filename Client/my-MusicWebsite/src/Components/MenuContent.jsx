@@ -14,11 +14,15 @@ import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
 import { Typography } from '@mui/material';
 import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import ModalAddPlaylist from './Modal/ModalAddPlaylist';
 import PlaylistPlayIcon from '@mui/icons-material/PlaylistPlay';
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import {Link} from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+import axios from 'axios';
 const mainListItems = [
   { text: 'Trang chủ', icon: <HomeRoundedIcon />  , url : "/Trangchu"  },
   { text: 'Khám phá', icon: <AnalyticsRoundedIcon /> ,url : "/Khampha"  },
@@ -31,11 +35,11 @@ const secondaryListItems = [
   { text: 'Nghe gần đây', icon: <RadioIcon /> ,url : "/Ngheganday"},
 ];
 
-const thirdListItems = [
-  { text: 'Đã thích', icon: <FavoriteIcon /> ,url : "/favorite" },
-  { text: 'Danh sách phát', icon: <PlaylistPlayIcon /> ,url : "/Danhsachphat" },
-  { text: 'Thêm danh sách phát', icon: <PlaylistAddIcon /> ,url : "/themdanhsachphat" },
-];
+// const thirdListItems = [
+//   { text: 'Đã thích', icon: <FavoriteIcon /> ,url : "/favorite" },
+//   { text: 'Danh sách phát', icon: <PlaylistPlayIcon /> ,url : "/Danhsachphat" },
+//   { text: 'Thêm danh sách phát', icon: <PlaylistAddIcon /> ,url : "/themdanhsachphat" },
+// ];
 const fordListItems = [
   { text: 'Cài đặt ', icon: <SettingsRoundedIcon /> , url : "/caidat"  },
   //{ text: 'Quản trị hệ thống', icon: <ManageAccountsIcon /> , url : "/Administrator" },
@@ -46,7 +50,28 @@ const AdministratorItem =[
 ]
 
 const token = localStorage.getItem('token')
+const userId = localStorage.getItem('userId')
 export default function MenuContent() {
+  const [openmodal, setOpenModal] = useState(false)
+  const [danhSachPhat , setDanhSachPhat] = useState([])
+  const handleOpenModal = () =>{
+    setOpenModal(true)
+  }
+  const handleCloseModal = () => {
+    setOpenModal(false)
+  }
+  useEffect(()=>{
+    const getdanhsachphat = async ()=>{
+       const response = await axios.get(`https://localhost:7280/api/DanhSachPhat/getdanhsachphatbyuserid?userId=${userId}`)
+        if(response.status === 200)
+        {
+          setDanhSachPhat(response?.data)
+        }
+    }
+    getdanhsachphat()
+  },[])
+ console.log(danhSachPhat)
+
   return (
     <Stack sx={{ flexGrow: 1, p: 1, justifyContent: 'space-between' }}>
       <List dense>
@@ -78,14 +103,40 @@ export default function MenuContent() {
          Danh sách phát
       </Typography>
       <List dense>
-        {thirdListItems.map((item, index) => (
-          <ListItem key={index} disablePadding sx={{ display: 'block' }}>
-            <ListItemButton>
-              <ListItemIcon>{item.icon}</ListItemIcon>
-              <ListItemText primary={item.text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
+        {token && userId ? (
+           <ListItem  disablePadding sx={{ display: 'block' }}>
+             {danhSachPhat.map((item ,index)=>{
+              {console.log(item)}
+            <ListItemButton key={index}>
+            <ListItemIcon><PlaylistPlayIcon /></ListItemIcon>
+            ádadds
+            <p>{item.tenDanhSachPhat}</p>
+            <ListItemText primary={item.tenDanhSachPhat} />
+          </ListItemButton>
+           })}
+           <ListItemButton>
+             <ListItemIcon><PlaylistAddIcon /></ListItemIcon>
+             <ListItemText onClick={handleOpenModal}  primary="Thêm danh sách phát" />
+           </ListItemButton>
+         </ListItem>
+        ) : (
+          <ListItem  disablePadding sx={{ display: 'block' }}>
+          <ListItemButton>
+            <ListItemIcon><PlaylistPlayIcon /></ListItemIcon>
+            <ListItemText primary="Danh sách phát" />
+          </ListItemButton>
+          <ListItemButton>
+            <ListItemIcon><PlaylistAddIcon /></ListItemIcon>
+            <ListItemText onClick={() => {
+                toast.warning("Vui lòng đăng nhập để thực hiện chức năng", {
+                  toastId: "alert-add-warning",
+                });
+            }} primary="Thêm danh sách phát" />
+          </ListItemButton>
+        </ListItem>
+        )}
+         
+
       </List>
       <Typography style={{color :"#f010ae", paddingLeft:20}} >
          General
@@ -115,6 +166,7 @@ export default function MenuContent() {
          )
       }
       </List>
+      <ModalAddPlaylist openModal={openmodal} handleClose={handleCloseModal} userId={userId} />
     </Stack>
   );
 }

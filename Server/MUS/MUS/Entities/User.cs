@@ -14,6 +14,8 @@
 
         public Guid? RoleId { get; set; }
 
-       public virtual Role? Role { get; set; }
+         public virtual Role? Role { get; set; }
+
+        public virtual ICollection<DanhSachPhat> DanhSachPhats { get; set; } = new List<DanhSachPhat>();
     }
 }

@@ -7,46 +7,47 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Button, Grid2, TextField } from '@mui/material';
-import CustomImageUpload from '../../../../../Components/CustomUploadImage/CusTomUploadImages';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'; 
+import { DatePicker } from '@mui/x-date-pickers';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import dayjs from 'dayjs';
 import axios from 'axios';
-const ModalAddChuDe = ({ openModal, handleClose ,setLoading }) => {
-    ModalAddChuDe.propTypes = {
+const ModalAddPlaylist = ({openModal, handleClose ,userId }) => {
+  ModalAddPlaylist.propTypes = {
         openModal: PropTypes.bool.isRequired,  
         handleClose: PropTypes.func.isRequired, 
-        setLoading : PropTypes.func.isRequired
+        userId: PropTypes.string.isRequired,  
       };
-      const [base64String, setBase64String] = useState("");
-      const [imageDataBasic, setImageDataBasic] = useState("");
-      const [obj , setObj] = useState({
-        tenChude : "",
-        file :"",
+   const [selectedDate, setSelectedDate] = useState(null);
+    const [obj , setObj] = useState({
+        tenDanhSachPhat : "",
+        ngayPhatHanh :"",
      })
      const resetForm = () => {
         setObj({
-          tenChude : "",
+          tenDanhSachPhat : "",
+          ngayPhatHanh :"",
         })   
-        setBase64String("")
-        setImageDataBasic("")
       };
       // handle change modal
       const handleChange = (name) => (event) => {
         setObj({ ...obj, [name]: event.target.value });
       }
-      const handleImageConvert = (base64String) => {
-        setBase64String(base64String);
-        toast.success("Thêm ảnh thành công", {
-            toastId: "alert-add-image",
-          });
+
+      const handleDateChange = (field) => (newValue) => {
+        // Convert the new date to the required format or just store it
+        setSelectedDate(newValue);
+        console.log(`${field} updated to`, newValue ? dayjs(newValue).format("YYYY-MM-DD") : "null");
       };
+ 
 
       const handleCloseModal = () => {
         resetForm();               
         handleClose()    
       };
-  console.log(imageDataBasic)
-
+      console.log(userId)
       const handelSave = async () => {
-        if (!obj?.tenChude || !imageDataBasic) {
+        if (!obj?.tenDanhSachPhat) {
             toast.warning("Vui lòng nhập đầy đủ dữ liệu", {
                 toastId: "alert-add-save-warning",
               });
@@ -54,20 +55,15 @@ const ModalAddChuDe = ({ openModal, handleClose ,setLoading }) => {
         }
     
         const formData = new FormData();
-        const config = {
-            headers: {
-                "Content-Type": "multipart/form-data",
-            },
-        };
-        formData.append("TenChuDe", obj?.tenChude);
-        formData.append("File", imageDataBasic);
-            const response = await axios.post("https://localhost:7280/api/ChuDe/addchude", formData, config);
+        formData.append("TenDanhSachPhat", obj?.tenDanhSachPhat);
+        formData.append("NgayPhatHanh",selectedDate );
+        formData.append("UserId",userId );
+            const response = await axios.post("https://localhost:7280/api/DanhSachPhat/adddanhsachphat", formData);
     
             if (response.status === 200) {
                 toast.success("Thêm mới thành công", {
                     toastId: "alert-add-save-success",
                   });
-               setLoading(true)
                 handleClose(); 
             } else {
                 toast.warn("đã có lỗi khi xảy ra", {
@@ -83,30 +79,23 @@ const ModalAddChuDe = ({ openModal, handleClose ,setLoading }) => {
    // onClose={handleClose}
     aria-describedby="alert-dialog-slide-description"
   >
-    <DialogTitle>{"Thêm mới chủ đề"}</DialogTitle>
+    <DialogTitle>{"Thêm mới playlist"}</DialogTitle>
     <DialogContent >
       <DialogContentText id="alert-dialog-slide-description">
         <Grid2 container sx={{width:"500px"}} spacing={2} >
             <Grid2 sx={{width:"500px"}}>
-              <TextField id="standard-basic" onChange={handleChange("tenChude")} label="Tên chủ đề" variant="standard" fullWidth value={obj?.tenChude} />
+              <TextField id="standard-basic" onChange={handleChange("tenDanhSachPhat")} label="Tên danh sách phát" variant="standard" fullWidth value={obj?.tenDanhSachPhat} />
             </Grid2>
-            <Grid2 > 
-                <CustomImageUpload
-             onImageConvert={handleImageConvert}
-             // removeImage={removeImage}
-             setImageDataBasic={setImageDataBasic}
-           />
-               {base64String && (
-                  <div style={{ textAlign: "center" }}>
-                    <img
-                      src={base64String}
-                      alt="Converted"
-                      style={{ maxWidth: "100%", maxHeight: "300px" }}
-                    />
-                  </div>
-                )}
-           </Grid2>
         </Grid2>
+        <Grid2 sx={{width:"50%" , marginTop:2}}>
+    <LocalizationProvider dateAdapter={AdapterDayjs}> {/* Wrap your date picker inside this */}
+     <DatePicker
+      label="Ngày tạo"
+       renderInput={(params) => <TextField {...params} />}
+       onChange={handleDateChange("ngayPhatHanh")}
+     />
+</LocalizationProvider>
+    </Grid2>
          
       </DialogContentText>
     </DialogContent>
@@ -118,4 +107,4 @@ const ModalAddChuDe = ({ openModal, handleClose ,setLoading }) => {
   )
 }
 
-export default ModalAddChuDe
+export default ModalAddPlaylist

@@ -29,10 +29,13 @@ namespace MUS.Entities
         public virtual DbSet<Role> Roles { get; set; }
 
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<DanhSachPhat> DanhSachPhats { get; set; }
+
+        public virtual DbSet<DanhSachPhat_BaiNhac> DanhSachPhat_BaiNhacs { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-     => optionsBuilder.UseSqlServer("Server=DESKTOP-7IV23S1;Database=MUS;Integrated Security=True;Encrypt=True;Trusted_Connection=True;TrustServerCertificate=true;Connection Timeout=1000;");
+     => optionsBuilder.UseSqlServer("Server=MSI\\SQLEXPRESS;Database=MUS;Integrated Security=True;Encrypt=True;Trusted_Connection=True;TrustServerCertificate=true;Connection Timeout=1000;");
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<TamTrang>(entity =>
@@ -172,6 +175,33 @@ namespace MUS.Entities
                       .HasForeignKey(r=> r.RoleId).OnDelete(DeleteBehavior.ClientSetNull)
                       .HasConstraintName("FK_Role_User");
             });
+
+
+            modelBuilder.Entity<DanhSachPhat>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.ToTable("DanhSachPhat");
+                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.Property(e => e.TenDanhSachPhat).HasMaxLength(100);
+                entity.Property(e => e.NgayPhatHanh).HasColumnType("datetime");
+                entity.HasOne(r => r.User).WithMany(d => d.DanhSachPhats)
+                      .HasForeignKey(r => r.UserId).OnDelete(DeleteBehavior.ClientSetNull)
+                      .HasConstraintName("FK_User_DanhSachPhat");
+            });
+
+            modelBuilder.Entity<DanhSachPhat_BaiNhac>()
+            .HasKey(d => new { d.DanhSachPhatId, d.BaiNhacId });
+
+            modelBuilder.Entity<DanhSachPhat_BaiNhac>()
+           .HasOne(d => d.DanhSachPhat)
+           .WithMany(dd => dd.DanhSachPhat_BaiNhacs)
+           .HasForeignKey(dd => dd.DanhSachPhatId);
+
+            modelBuilder.Entity<DanhSachPhat_BaiNhac>()
+            .HasOne(d => d.BaiNhac)
+            .WithMany(b => b.DanhSachPhat_BaiNhacs)
+            .HasForeignKey(d => d.BaiNhacId);
         }
 
 

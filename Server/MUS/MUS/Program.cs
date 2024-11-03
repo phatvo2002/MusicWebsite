@@ -42,6 +42,9 @@ builder.Services.AddScoped<IAlbumServices, AlbumServices>();
 builder.Services.AddScoped<IQuocGiaRepository, QuocGiaRepository>();
 builder.Services.AddScoped<IQuocGiaServices, QuocGiaServices>();
 
+builder.Services.AddScoped<IDanhSachPhatRepository, DanhSachPhatRepository>();
+builder.Services.AddScoped<IDanhSachPhatServices, DanhSachPhatServices>();
+
 builder.Services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();

@@ -25,5 +25,6 @@
         public virtual ChuDe? ChuDe { get; set; }
         public virtual TamTrang? TamTrang { get; set; }
         public virtual QuocGia? QuocGia { get; set;}
+        public virtual ICollection<DanhSachPhat_BaiNhac> DanhSachPhat_BaiNhacs { get; set; } = new List<DanhSachPhat_BaiNhac>();
     }
 }
