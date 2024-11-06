@@ -13,6 +13,7 @@ import Profile from './View/MainComponent/session/Profile';
 import Trangchu from './View/MainComponent/TrangChu/Trangchu';
 import Detail from './View/MainComponent/Detail/Detail';
 import KhamPha from './View/MainComponent/KhamPha/KhamPha';
+import DanhSachPhatDetail from './View/MainComponent/DanhSachPhat/DanhsachPhatDetail/DanhSachPhatDetail';
 const AppRoutes = () => {
     return (
       <Routes>
@@ -29,6 +30,7 @@ const AppRoutes = () => {
         <Route path="/Administrator/Chude" element={<ChuDe />} />
         <Route path="/Trangchu" element={<Trangchu/>} />
         <Route path="/bainhac/:tenbainhac/:id"  element={<Detail/>} />
+        <Route path="/DanhSachPhat/:id" element={<DanhSachPhatDetail/>} />
         <Route path="/KhamPha" element={<KhamPha/>} />
         {/* Thêm các route con khác */}
        </Route>

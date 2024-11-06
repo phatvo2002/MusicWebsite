@@ -9,18 +9,27 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
+import ModalAddDanhSachPhat from "./Modal/ModalAddDanhSachPhat";
 const Detail = () => {
   const { id } = useParams();
   const [dataBaiNhac , setDataBaiNhac]  = useState({})
   const [fileName ,setFileName] = useState('') 
   const [filePath ,setFilePath] = useState('') 
   const [spinning, setSpinning] = useState(false);
+  const [modal,setModal] = useState(false);
   const [startAudio , setStartAudio] = useState(false);
   const [url, setUrl] = useState('');
   const navigate = useNavigate();
   const handleBack = () => {
     navigate(-1); // Quay trở về trang trước đó
   };
+  console.log(dataBaiNhac)
+  const handelOpenModalAddDanhSachPhat = () =>{
+    setModal(true)
+  }
+  const handelcloseModalAddDanhSachPhat = () =>{
+    setModal(false)
+  }
 
   useEffect(()=>{
     const getSongDetail = async ()=>{
@@ -55,7 +64,6 @@ useEffect(() => {
   if (filePath && fileName) {
     const newUrl = `https://localhost:7280/api/File/file?path=${encodeURIComponent(filePath)}&filename=${encodeURIComponent(fileName)}`;
     setUrl(newUrl);
-    console.log('Generated URL:', newUrl); // Kiểm tra URL
   }
 }, [filePath, fileName]);
   return (
@@ -115,7 +123,9 @@ useEffect(() => {
     </Box>
     <Box>
           <FavoriteBorderIcon/>
+          <IconButton onClick={handelOpenModalAddDanhSachPhat}>
           <PlaylistAddIcon/>
+          </IconButton>
     </Box>
   </Stack>
   <Box marginTop={5}>
@@ -148,7 +158,8 @@ useEffect(() => {
 </Box>
         </Box>
         <Box>
-
+          {/* modal */}
+           <ModalAddDanhSachPhat openModal={modal} handleClose={handelcloseModalAddDanhSachPhat} bainhacId={id}/>
         </Box>
     </Grid2>
   )

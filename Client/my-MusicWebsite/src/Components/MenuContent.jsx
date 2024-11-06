@@ -70,7 +70,6 @@ export default function MenuContent() {
     }
     getdanhsachphat()
   },[])
- console.log(danhSachPhat)
 
   return (
     <Stack sx={{ flexGrow: 1, p: 1, justifyContent: 'space-between' }}>
@@ -105,15 +104,14 @@ export default function MenuContent() {
       <List dense>
         {token && userId ? (
            <ListItem  disablePadding sx={{ display: 'block' }}>
-             {danhSachPhat.map((item ,index)=>{
-              {console.log(item)}
+             {danhSachPhat.map((item ,index)=>(
             <ListItemButton key={index}>
             <ListItemIcon><PlaylistPlayIcon /></ListItemIcon>
-            ádadds
-            <p>{item.tenDanhSachPhat}</p>
-            <ListItemText primary={item.tenDanhSachPhat} />
+            <ListItemText>
+                      <Link component={RouterLink} to={`/DanhSachPhat/${item?.id}`}>{item.tenDanhSachPhat}</Link>
+                </ListItemText>
           </ListItemButton>
-           })}
+           ))}
            <ListItemButton>
              <ListItemIcon><PlaylistAddIcon /></ListItemIcon>
              <ListItemText onClick={handleOpenModal}  primary="Thêm danh sách phát" />

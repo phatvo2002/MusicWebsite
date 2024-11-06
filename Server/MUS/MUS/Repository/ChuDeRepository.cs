@@ -25,7 +25,7 @@ namespace MUS.Repository
                 var db = _musDbConText.ChuDes.FirstOrDefault(r => r.Id == modal.Id);
                 if (db == null)
                 {
-                    ChuDe chuDe = new ChuDe();
+                    ChuDe chuDe = new ChuDe(); 
                     chuDe.Id = Guid.NewGuid(); ;
                     chuDe.TenChuDe = modal.TenChuDe;
                     if (modal.File != null && modal.File.Length > 0)

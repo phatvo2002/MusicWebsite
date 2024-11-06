@@ -91,7 +91,7 @@ namespace MUS.Repository
         }
         public async Task<ResultModel> AddDanhSachphatBaiNhac(DanhSachPhatBaiNhacModal modal)
         {
-            var db = _musDbConText.DanhSachPhat_BaiNhacs.FirstOrDefault(r=> r.BaiNhacId == modal.BaiNhacId  && r.DanhSachPhatId == modal.DanhSachPhatId);
+            var db = _musDbConText.DanhSachPhat_BaiNhac.FirstOrDefault(r=> r.BaiNhacId == modal.BaiNhacId  && r.DanhSachPhatId == modal.DanhSachPhatId);
             try
             {
                 if (db == null)
@@ -99,7 +99,7 @@ namespace MUS.Repository
                     DanhSachPhat_BaiNhac item = new DanhSachPhat_BaiNhac();
                     item.DanhSachPhatId = modal.DanhSachPhatId;
                     item.BaiNhacId = modal.BaiNhacId;
-                    _musDbConText.DanhSachPhat_BaiNhacs.Add(item);
+                    _musDbConText.DanhSachPhat_BaiNhac.Add(item);
                     await _musDbConText.SaveChangesAsync();
                     return new ResultModel() { Status = 200, Message = "Thêm mới thành công", Success = true };
                 }
@@ -114,15 +114,15 @@ namespace MUS.Repository
       
         public async Task<List<DanhSachPhatBaiNhacDTO>> GetDanhSachPhatBaiNhacByDanhSachPhatId(Guid danhSachPhatId)
         {
-            var db = await _musDbConText.DanhSachPhat_BaiNhacs.Where(r => r.DanhSachPhatId == danhSachPhatId).AsNoTracking().ToListAsync();
+            var db = await _musDbConText.DanhSachPhat_BaiNhac.Where(r => r.DanhSachPhatId == danhSachPhatId).Include(r=> r.BaiNhac).AsNoTracking().ToListAsync();
             return _mapper.Map<List<DanhSachPhatBaiNhacDTO>>(db);
         }
         public async Task<ResultModel> DeleteDanhSachPhatBaiNhac(Guid baiNhacId, Guid danhSachPhatId)
         {
-            var db = _musDbConText.DanhSachPhat_BaiNhacs.FirstOrDefault(r=> r.DanhSachPhatId == danhSachPhatId && r.BaiNhacId == baiNhacId);
+            var db = _musDbConText.DanhSachPhat_BaiNhac.FirstOrDefault(r=> r.DanhSachPhatId == danhSachPhatId && r.BaiNhacId == baiNhacId);
             if(db!= null)
             {
-                _musDbConText.DanhSachPhat_BaiNhacs.Remove(db);
+                _musDbConText.DanhSachPhat_BaiNhac.Remove(db);
                 await _musDbConText.SaveChangesAsync();
                 return new ResultModel() { Status = 200, Message = "Xóa dữ liệu thành công", Success = true };
             }

@@ -174,18 +174,6 @@ namespace MUS.Helper
                 case ".pdf":
                     mimeType = "application/pdf";
                     break;
-                case ".xlsx":
-                    mimeType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-                    break;
-                case ".xls":
-                    mimeType = "application/vnd.ms-excel";
-                    break;
-                case ".docx":
-                    mimeType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
-                    break;
-                case ".doc":
-                    mimeType = "application/msword";
-                    break;
                 case ".mp3":
                     mimeType = "audio/mpeg";
                     break;

@@ -5,5 +5,7 @@
         public Guid DanhSachPhatId { get; set; }
 
         public Guid BaiNhacId { get; set; }
+
+        public BaiNhacDTO? BaiNhac { get; set; }
     }
 }
