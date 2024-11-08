@@ -65,7 +65,7 @@ export default function SideMenu() {
           borderColor: 'divider',
         }}
       >
-        {token ? (
+        {token  ? (
     <Box sx={{ mr: 'auto' }}>
     <Typography variant="body2" sx={{ fontWeight: 500, lineHeight: '16px' }}>
       Admin

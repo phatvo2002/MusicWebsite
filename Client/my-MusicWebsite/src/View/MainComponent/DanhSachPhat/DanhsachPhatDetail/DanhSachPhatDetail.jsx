@@ -8,6 +8,8 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { AudioPlayer } from 'react-audio-player-component';
 const PlaylistDetail = () => {
   // Dữ liệu mẫu cho danh sách phát và bài hát
   const { id } = useParams();
@@ -47,7 +49,6 @@ const PlaylistDetail = () => {
 
   const handleDeleteDanhSachPhatBainhac = async (danhSachPhatId , bainhacId) =>{
       const response = await axios.delete(`https://localhost:7280/api/DanhSachPhat/deletedanhsachphatbainhac?bainhacId=${bainhacId}&danhSachPhatId=${danhSachPhatId}`)
-      console.log(response)
       if(response.status === 200)
       {
         window.location.reload()
@@ -60,6 +61,32 @@ const PlaylistDetail = () => {
       }
   }
 
+  const handleDeleteDanhSachPhat = async (danhsachphatid) =>{
+      if(danhSachPhatBaiNhac.length > 0)
+      {
+        toast.warning("Không thể xóa danh sách phát khi còn bài hát", {
+          toastId: "alert-danhsachphat-delete",
+        });
+      }
+      else
+      {
+        const response = await axios.delete(`https://localhost:7280/api/DanhSachPhat/deletedanhsachphat?id=${danhsachphatid}`)
+        if(response.status === 200)
+        {
+          toast.success("Xóa danh sách phát thành công", {
+            toastId: "alert-danhsachphat-delete",
+          });
+          navigate("/Trangchu")
+          window.location.reload()
+        }
+        else
+        {
+          toast.error("Đã có lỗi xảy ra vui lòng liên hệ với quản trị hệ thống", {
+            toastId: "alert-danhsachphat-delete",
+          });
+        }
+      }
+  }
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', color: '#ffffff', backgroundColor: '#2a2a2a', padding: '20px' }}>
       <Card sx={{ display: 'flex', width: '100%', maxWidth: 800, backgroundColor: '#3c3c3c', color: '#ffffff' }}>
@@ -83,6 +110,9 @@ const PlaylistDetail = () => {
         <IconButton sx={{ color: '#ffffff' }}>
           <PlaylistAddIcon />
         </IconButton>
+        <IconButton sx={{ color: '#ffffff' }} onClick={() => handleDeleteDanhSachPhat(id)}>
+          <DeleteIcon />
+        </IconButton>
       </Card>
 
       <Typography variant="h6" sx={{ marginTop: 3 }}>BÀI HÁT</Typography>
@@ -99,7 +129,27 @@ const PlaylistDetail = () => {
                 </TableCell>
                 <TableCell>
                   <Typography>{song?.baiNhac?.tenBaiNhac}</Typography>
-                  <Typography variant="body2" color="text.secondary">{song.artist}</Typography>
+                  <Typography variant="body2" color="text.secondary">{}</Typography>
+                </TableCell>
+                <TableCell>
+                <AudioPlayer
+         src={`https://localhost:7280/api/File/file?path=${encodeURIComponent(song?.baiNhac?.duongDanFileAmNhac)}&filename=${encodeURIComponent(song?.baiNhac?.tenFile)}`}
+         minimal={true}
+         width={350}
+         trackHeight={20}
+         barWidth={1}
+         gap={1}
+         visualise={false}
+         barPlayedColor="pink"
+         skipDuration={2}
+         showLoopOption={true}
+         showVolumeControl={true}
+         volumeControlColor={true}
+         seekBarColor="pink"
+         hideSeekBar={true}
+         hideTrackKnobWhenPlaying={true}
+         allowSkip={true}
+       />
                 </TableCell>
                 <TableCell align="center">{song.album}</TableCell>
                 <TableCell align="right">{song?.baiNhac?.thoiLuong }</TableCell>
@@ -115,7 +165,7 @@ const PlaylistDetail = () => {
         </Table>
       </TableContainer>
 
-      <Typography variant="body2" sx={{ marginTop: 2 }}>{songs.length} bài hát • {songs.reduce((acc, song) => acc + parseFloat(song.duration.split(":")[0]) + parseFloat(song.duration.split(":")[1]) / 60, 0).toFixed(2)} phút</Typography>
+      {/* <Typography variant="body2" sx={{ marginTop: 2 }}>{songs.length} bài hát • {songs.reduce((acc, song) => acc + parseFloat(song.duration.split(":")[0]) + parseFloat(song.duration.split(":")[1]) / 60, 0).toFixed(2)} phút</Typography> */}
     </div>
   );
 };

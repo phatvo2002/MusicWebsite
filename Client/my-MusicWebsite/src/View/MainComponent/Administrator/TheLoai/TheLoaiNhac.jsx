@@ -101,9 +101,15 @@ useEffect(() => {
       border: 0,
     },
   }));
-
+  
+  // const previousLink = ()=>{
+  //   navigate("/Administrator")
+  // }
   return (
     <Grid2>
+        {/* <IconButton sx={{margin:"0 10px"}} onClick={previousLink}>
+         <KeyboardBackspaceIcon/>
+      </IconButton> */}
       <IconButton style={{width:"150px" , fontSize:"0.8rem"}} onClick={handelOpenModalAddTheLoai}>
           Thêm mới thể loại
       </IconButton>

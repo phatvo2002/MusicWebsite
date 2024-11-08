@@ -51,6 +51,8 @@ const AdministratorItem =[
 
 const token = localStorage.getItem('token')
 const userId = localStorage.getItem('userId')
+const roleId =  localStorage.getItem("role")
+
 export default function MenuContent() {
   const [openmodal, setOpenModal] = useState(false)
   const [danhSachPhat , setDanhSachPhat] = useState([])
@@ -140,7 +142,7 @@ export default function MenuContent() {
          General
       </Typography>
       <List dense>
-        {token ?  (AdministratorItem.map((item, index) => (
+        {token && roleId=="3612c2e3-bf45-408e-9eda-ea94c81b55b4" ?  (AdministratorItem.map((item, index) => (
           <ListItem key={index} disablePadding sx={{ display: 'block' }}>
             <ListItemButton>
               <ListItemIcon>{item.icon}</ListItemIcon>
