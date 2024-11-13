@@ -117,8 +117,8 @@ useEffect(() => {
   <Stack direction="row" spacing={2} sx={{
     width:"50%"
   }}>
-    <Box>
-       <Typography variant='h3' component="h3" sx={{width:"600px"}}>{dataBaiNhac.tenBaiNhac}</Typography>
+    <Box >
+       <Typography  variant='h3' component="h3" sx={{width:"600px"}}>{dataBaiNhac.tenBaiNhac}</Typography>
        <Typography variant='caption' component="p" >{dataBaiNhac.nhacSi?.tenNhacSi}</Typography>
     </Box>
     <Box>

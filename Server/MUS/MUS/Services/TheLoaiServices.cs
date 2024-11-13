@@ -8,7 +8,7 @@ namespace MUS.Services
 {
     public class TheLoaiServices : ITheLoaiServices
     {
-        public readonly ITheLoaiRepository _theLoaiRepository;
+        private readonly ITheLoaiRepository _theLoaiRepository;
         public TheLoaiServices(ITheLoaiRepository theLoaiRepository) {
             _theLoaiRepository = theLoaiRepository;
         }

@@ -7,7 +7,7 @@ namespace MUS.Services
 {
     public class TamTrangServices : ITamTrangServices
     {
-        public readonly ITamTrangRepository _tamTrangRepository;
+        private readonly ITamTrangRepository _tamTrangRepository;
 
         public TamTrangServices(ITamTrangRepository tamTrangRepository)
         {

@@ -7,7 +7,7 @@ namespace MUS.Services
 {
     public class ChuDeServices : IChudeServices
     {
-        public readonly IChuDeRepository _chuDeRepository;
+        private readonly IChuDeRepository _chuDeRepository;
 
         public ChuDeServices(IChuDeRepository chuDeRepository)
         {

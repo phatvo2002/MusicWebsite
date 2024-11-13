@@ -10,8 +10,8 @@ namespace MUS.Repository
 {
     public class TamTrangRepository : ITamTrangRepository
     {
-        public readonly MusDbConText _musDbConText;
-        public readonly IMapper _mapper;
+        private readonly MusDbConText _musDbConText;
+        private readonly IMapper _mapper;
 
         public TamTrangRepository(MusDbConText conText , IMapper mapper)
         {

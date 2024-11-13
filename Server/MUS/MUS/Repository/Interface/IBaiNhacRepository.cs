@@ -16,5 +16,11 @@ namespace MUS.Repository.Interface
          Task<ResultModel> DeleteBaiNhac(Guid id);
 
          Task<ResultModel> UpdateView(Guid id);
+
+        Task<List<BaiNhacDTO>> GetBaiNhacByNhacSiId(Guid nhacSiId);
+        Task<List<BaiNhacDTO>> GetBainhacByTheLoaiId(Guid theLoaiId);
+        Task<List<BaiNhacDTO>> GetBaiNhacByTamTrangid(Guid tamTrangId);
+        Task<List<BaiNhacDTO>> GetBaiNhacByAlBumId(Guid albumId);
+        Task<List<BaiNhacDTO>> GetBaiNhacByQuocGiaId(int quocGiaId);
     }
 }

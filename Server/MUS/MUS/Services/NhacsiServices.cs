@@ -7,7 +7,7 @@ namespace MUS.Services
 {
     public class NhacsiServices : INhacsiServices
     {
-        public readonly INhacsiRepository _nhacsiRepository;
+        private readonly INhacsiRepository _nhacsiRepository;
 
         public NhacsiServices(INhacsiRepository nhacsiRepository) {
             _nhacsiRepository = nhacsiRepository;

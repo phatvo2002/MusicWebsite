@@ -9,8 +9,8 @@ namespace MUS.Repository
 {
     public class DanhSachPhatRepository : IDanhSachPhatRepository
     {
-        public readonly MusDbConText _musDbConText;
-        public readonly IMapper _mapper;
+        private readonly MusDbConText _musDbConText;
+        private readonly IMapper _mapper;
         public DanhSachPhatRepository(MusDbConText conText , IMapper mapper)
         {
             _musDbConText = conText;

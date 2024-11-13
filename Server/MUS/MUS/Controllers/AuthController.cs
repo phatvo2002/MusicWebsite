@@ -41,5 +41,18 @@ namespace MUS.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [HttpPut("resetpassword")]
+        public async Task<IActionResult> ResetPassword(Guid id , string newPassword)
+        {
+            try
+            {
+                ResultModel result = await _userServices.ResetPassword( id , newPassword);
+                return Ok(result);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

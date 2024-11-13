@@ -6,7 +6,7 @@ namespace MUS.Services
 {
     public class QuocGiaServices : IQuocGiaServices
     {
-        public readonly IQuocGiaRepository _quocGiaRepository;
+        private readonly IQuocGiaRepository _quocGiaRepository;
         public QuocGiaServices(IQuocGiaRepository quocGiaRepository)
         {
             _quocGiaRepository = quocGiaRepository;

@@ -13,13 +13,15 @@ namespace MUS.Repository
 {
     public class UserRepository : IUserRepository
     {
-        public readonly MusDbConText _musDbConText;
-        public readonly IMapper _mapper;
+        private readonly MusDbConText _musDbConText;
+        private readonly IMapper _mapper;
         public UserRepository(MusDbConText musDbConText , IMapper mapper)
         {
             _musDbConText = musDbConText;
             _mapper = mapper;
         }
+
+     
 
         public async Task<LoginDTO> Login(LoginModal modal)
         {
@@ -53,6 +55,8 @@ namespace MUS.Repository
             return result;
         }
 
+   
+
         public async Task<ResultModel> Resgister(RegisterModal modal)
         {
             var db = _musDbConText.Users.FirstOrDefault(r=> r.Email == modal.Email || r.TenNguoiDung == modal.TenNguoiDung);
@@ -79,5 +83,42 @@ namespace MUS.Repository
             }
          
         }
+
+        public async Task<ResultModel> ResetPassword(Guid id, string newPasword)
+        {
+            var db = _musDbConText.Users.FirstOrDefault( r=> r.Id == id );
+            if (db != null)
+            {
+                db.Password = newPasword;
+                _musDbConText.Users.Update(db);
+                await _musDbConText.SaveChangesAsync();
+                return new ResultModel() { Message = "Đổi mật khẩu thành công", Status = 200, Success = true };
+            }
+            else
+            {
+                return new ResultModel() { Message = "Không tìm thấy dữ liệu", Status = 202, Success = false };
+            }    
+        }
+        public async Task<ResultModel> DeleteUser(Guid Id)
+        {
+            var db = _musDbConText.Users.FirstOrDefault(r=> r.Id == Id);
+            if(db!= null)
+            {
+                _musDbConText.Users.Remove(db);
+                await _musDbConText.SaveChangesAsync();
+                return new ResultModel() { Message = "Xóa dữ liệu thành công", Status = 200, Success = true };
+            }
+            else
+            {
+                return new ResultModel() { Message = "Không tìm thấy dữ liệu", Status = 202, Success = false };
+            }
+        }
+
+        public async Task<List<UserDTO>> GetAllUser()
+        {
+            var db = await _musDbConText.Users.AsNoTracking().ToListAsync();
+            return  _mapper.Map<List<UserDTO>>(db);
+        }
+
     }
 }

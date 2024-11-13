@@ -10,8 +10,8 @@ namespace MUS.Repository
 {
     public class NhacSiRepository : INhacsiRepository
     {
-        public readonly MusDbConText _musDbConText;
-        public readonly IMapper _mapper;
+        private readonly MusDbConText _musDbConText;
+        private readonly IMapper _mapper;
         public NhacSiRepository(MusDbConText musDbConText , IMapper mapper) {
             _musDbConText = musDbConText;
             _mapper = mapper;   

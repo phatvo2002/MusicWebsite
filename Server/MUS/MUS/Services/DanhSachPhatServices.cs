@@ -7,7 +7,7 @@ namespace MUS.Services
 {
     public class DanhSachPhatServices : IDanhSachPhatServices
     {
-        public readonly IDanhSachPhatRepository _danhSachPhatRepository;
+        private readonly IDanhSachPhatRepository _danhSachPhatRepository;
         public DanhSachPhatServices(IDanhSachPhatRepository danhSachPhatRepository)
         {
             _danhSachPhatRepository = danhSachPhatRepository;

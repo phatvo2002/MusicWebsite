@@ -10,8 +10,8 @@ namespace MUS.Repository
 {
     public class AlbumRepository : IAlbumRepository
     {
-        public readonly MusDbConText _musDbConText;
-        public readonly IMapper _mapper;
+        private readonly MusDbConText _musDbConText;
+        private readonly IMapper _mapper;
 
         public AlbumRepository( MusDbConText musDbConText, IMapper mapper)
         {

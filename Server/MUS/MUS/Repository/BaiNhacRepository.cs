@@ -118,12 +118,15 @@ namespace MUS.Repository
             return _mapper.Map<List<BaiNhacDTO>>(db);
         }
 
+       
+
         public async Task<BaiNhacDTO> GetBaiNhacById(Guid id)
         {
             var db =await _musDbConText.BaiNhacs.Where(r => r.Id == id).Include(r=> r.NhacSi).FirstOrDefaultAsync();
             return _mapper.Map<BaiNhacDTO>(db);
         }
 
+    
         public async Task<ResultModel> UpdateBaiNhac(UpdateBaiNhacModel model)
         {
             var db = _musDbConText.BaiNhacs.FirstOrDefault(r => r.Id == model.Id);
@@ -169,5 +172,34 @@ namespace MUS.Repository
             } 
                 
         }
+        public async Task<List<BaiNhacDTO>> GetBaiNhacByAlBumId(Guid albumId)
+        {
+            var db = await _musDbConText.BaiNhacs.Where(r=> r.AlbumId == albumId).AsNoTracking().ToListAsync();
+            return _mapper.Map<List<BaiNhacDTO>>(db);
+        }
+        public async Task<List<BaiNhacDTO>> GetBaiNhacByNhacSiId(Guid nhacSiId)
+        {
+            var db = await _musDbConText.BaiNhacs.Where(r => r.NhacSiId == nhacSiId).AsNoTracking().ToListAsync();
+            return _mapper.Map<List<BaiNhacDTO>>(db);
+        }
+
+        public async Task<List<BaiNhacDTO>> GetBaiNhacByQuocGiaId(int quocGiaId)
+        {
+            var db = await _musDbConText.BaiNhacs.Where(r => r.QuocGiaId == quocGiaId).AsNoTracking().ToListAsync();
+            return _mapper.Map<List<BaiNhacDTO>>(db);
+        }
+
+        public async Task<List<BaiNhacDTO>> GetBaiNhacByTamTrangid(Guid tamTrangId)
+        {
+            var db = await _musDbConText.BaiNhacs.Where(r => r.TamTrangId == tamTrangId).AsNoTracking().ToListAsync();
+            return _mapper.Map<List<BaiNhacDTO>>(db);
+        }
+
+        public async Task<List<BaiNhacDTO>> GetBainhacByTheLoaiId(Guid theLoaiId)
+        {
+            var db = await _musDbConText.BaiNhacs.Where(r => r.TheLoaiId == theLoaiId).AsNoTracking().ToListAsync();
+            return _mapper.Map<List<BaiNhacDTO>>(db);
+        }
+
     }
 }

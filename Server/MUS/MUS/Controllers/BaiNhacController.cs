@@ -11,7 +11,7 @@ namespace MUS.Controllers
     [ApiController]
     public class BaiNhacController : ControllerBase
     {
-        public readonly IBaiNhacServices _baiNhacServices;
+        private readonly IBaiNhacServices _baiNhacServices;
         public BaiNhacController(IBaiNhacServices baiNhacServices)
         {
             _baiNhacServices = baiNhacServices;
@@ -37,6 +37,71 @@ namespace MUS.Controllers
             try
             {
                 BaiNhacDTO result = await _baiNhacServices.GetBaiNhacById(Id);
+                return Ok(result);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpGet("getbainhacbyalbumid")]
+        public async Task<IActionResult> GetBaiNhacByAlbumId(Guid albumId)
+        {
+            try
+            {
+                List<BaiNhacDTO> result = await _baiNhacServices.GetBaiNhacByAlBumId(albumId);
+                return Ok(result);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpGet("getbainhacbynhacsiid")]
+        public async Task<IActionResult> GetBaiNhacByNhacSiId(Guid nhacSiId)
+        {
+            try
+            {
+                List<BaiNhacDTO> result = await _baiNhacServices.GetBaiNhacByNhacSiId(nhacSiId);
+                return Ok(result);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpGet("getbainhacbytheloaiid")]
+        public async Task<IActionResult> GetBaiNhacByTheLoaiId(Guid theloaiid)
+        {
+            try
+            {
+                List<BaiNhacDTO> result = await _baiNhacServices.GetBainhacByTheLoaiId(theloaiid);
+                return Ok(result);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpGet("getbainhacbyquocgiaid")]
+        public async Task<IActionResult> GetBaiNhacByQuocGiaId(int quocgiaid)
+        {
+            try
+            {
+                List<BaiNhacDTO> result = await _baiNhacServices.GetBaiNhacByQuocGiaId(quocgiaid);
+                return Ok(result);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpGet("getbainhacbytamtrangid")]
+        public async Task<IActionResult> GetBaiNhacByTamTrangId(Guid tamTrangId)
+        {
+            try
+            {
+                List<BaiNhacDTO> result = await _baiNhacServices.GetBaiNhacByTamTrangid(tamTrangId);
                 return Ok(result);
             }
             catch (ArgumentException ex)

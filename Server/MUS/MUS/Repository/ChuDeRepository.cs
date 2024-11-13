@@ -10,8 +10,8 @@ namespace MUS.Repository
 {
     public class ChuDeRepository : IChuDeRepository
     {
-        public readonly MusDbConText _musDbConText;
-        public readonly IMapper _mapper;
+        private readonly MusDbConText _musDbConText;
+        private readonly IMapper _mapper;
 
         public ChuDeRepository(MusDbConText conText, IMapper mapper)
         {

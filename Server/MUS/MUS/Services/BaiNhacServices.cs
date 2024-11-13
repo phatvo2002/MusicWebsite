@@ -7,7 +7,7 @@ namespace MUS.Services
 {
     public class BaiNhacServices : IBaiNhacServices
     {
-        public readonly IBaiNhacRepository _baiNhacRepository;
+        private readonly IBaiNhacRepository _baiNhacRepository;
         public BaiNhacServices(IBaiNhacRepository baiNhacRepository) {
             _baiNhacRepository = baiNhacRepository;
         }
@@ -26,9 +26,34 @@ namespace MUS.Services
             return await _baiNhacRepository.GetAllBaiNhac();
         }
 
+        public async Task<List<BaiNhacDTO>> GetBaiNhacByAlBumId(Guid albumId)
+        {
+           return await _baiNhacRepository.GetBaiNhacByAlBumId(albumId);
+        }
+
         public async Task<BaiNhacDTO> GetBaiNhacById(Guid id)
         {
             return await _baiNhacRepository.GetBaiNhacById(id);
+        }
+
+        public async Task<List<BaiNhacDTO>> GetBaiNhacByNhacSiId(Guid nhacSiId)
+        {
+            return await _baiNhacRepository.GetBaiNhacByNhacSiId(nhacSiId);
+        }
+
+        public async Task<List<BaiNhacDTO>> GetBaiNhacByQuocGiaId(int quocGiaId)
+        {
+          return await _baiNhacRepository.GetBaiNhacByQuocGiaId(quocGiaId);
+        }
+
+        public async Task<List<BaiNhacDTO>> GetBaiNhacByTamTrangid(Guid tamTrangId)
+        {
+            return await _baiNhacRepository.GetBaiNhacByTamTrangid(tamTrangId);
+        }
+
+        public async Task<List<BaiNhacDTO>> GetBainhacByTheLoaiId(Guid theLoaiId)
+        {
+            return await _baiNhacRepository.GetBainhacByTheLoaiId(theLoaiId);
         }
 
         public async Task<ResultModel> UpdateBaiNhac(UpdateBaiNhacModel model)
