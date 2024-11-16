@@ -31,6 +31,8 @@ namespace MUS.Entities
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<DanhSachPhat> DanhSachPhats { get; set; }
 
+        public virtual DbSet<LichSuNgheNhac> LichSuNgheNhacs { get; set; }
+
         public virtual DbSet<DanhSachPhat_BaiNhac> DanhSachPhat_BaiNhac { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -202,6 +204,18 @@ namespace MUS.Entities
             .HasOne(d => d.BaiNhac)
             .WithMany(b => b.DanhSachPhat_BaiNhacs)
             .HasForeignKey(d => d.BaiNhacId);
+
+            modelBuilder.Entity<LichSuNgheNhac>()
+             .HasOne(d => d.BaiNhac)
+             .WithMany(b => b.LichSuNgheNhacs)
+             .HasForeignKey(d => d.BaiNhacId);
+
+            modelBuilder.Entity<LichSuNgheNhac>()
+           .HasOne(d => d.User)
+           .WithMany(b => b.LichSuNgheNhacs)
+           .HasForeignKey(d => d.UserId);
+
+
         }
 
 

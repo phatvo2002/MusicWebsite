@@ -7,6 +7,10 @@ import {
   Typography,
   IconButton,
   Tooltip,
+  Chip,
+  Tab,
+  Tabs,
+  Paper,
 } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
@@ -14,6 +18,16 @@ import product from "../../../assets/images/product.jpg";
 import Banner1 from "../../../assets/images/banner1.jpg"
 import Banner2 from "../../../assets/images/banner2.jpg"
 import Banner3 from "../../../assets/images/banner3.jpg"
+import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
+import { useState } from "react";
+const songsData = [
+  { title: 'chúc ngủ ngon', artist: '52Hz', time: '3 giờ trước', premium: false },
+  { title: 'Sẽ Thế Nào', artist: 'Tuyên', time: '4 giờ trước', premium: false },
+  { title: 'YÊU 0 (feat. Cami)', artist: 'Lil Zpoet, Cami', time: '4 giờ trước', premium: false },
+  { title: 'Because Of You', artist: 'Lauv', time: 'Hôm nay', premium: true },
+  { title: 'Hold On Me', artist: 'Kygo, Sandro Cavazza', time: 'Hôm nay', premium: true },
+  { title: 'The Mountain', artist: 'Shawn Mendes', time: 'Hôm nay', premium: true },
+];
 const songs = [
   {
     id: 1,
@@ -58,6 +72,11 @@ const songs = [
 ];
 
 const KhamPha = () => {
+  const [selectedTab, setSelectedTab] = useState(0);
+
+  const handleTabChange = (event, newValue) => {
+    setSelectedTab(newValue);
+  };
   return (
     <Container
       maxWidth="xl"
@@ -188,6 +207,37 @@ const KhamPha = () => {
           </Box>
         </Grid2>
       </Stack>
+      {/*  */}
+      <Box sx={{ backgroundColor: '#1a1a2e', color: 'white', padding: 3, minHeight: '100vh' }}>
+      <Typography variant="h5" sx={{ fontWeight: 'bold', marginBottom: 2 }}>
+        Mới Phát Hành
+      </Typography>
+      
+      {/* Tabs */}
+      <Tabs
+        value={selectedTab}
+        onChange={handleTabChange}
+        textColor="inherit"
+        indicatorColor="secondary"
+        sx={{ marginBottom: 2 }}
+      >
+        <Tab label="Tất Cả" />
+        <Tab label="Việt Nam" />
+        <Tab label="Quốc Tế" />
+      </Tabs>
+      
+      {/* Song list */}
+      <Grid2 container spacing={2}>
+        
+      </Grid2>
+
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: 2 }}>
+        <Typography variant="body2" sx={{ color: '#b0b0b8', cursor: 'pointer' }}>
+          Tất Cả &gt;
+        </Typography>
+      </Box>
+    </Box>
+      {/*  */}
       <Typography variant="h4" component="div" style={{ color: "white",padding : 20 }}>
         <span style={{ color: "#FF69B4" }}>Gợi ý </span> dành riêng cho bạn
       </Typography>

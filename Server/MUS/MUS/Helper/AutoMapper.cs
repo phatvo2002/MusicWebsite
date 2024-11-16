@@ -16,6 +16,7 @@ namespace MUS.Helper
             CreateMap<User, UserDTO>();
             CreateMap<Album, AlbumDTO>();
             CreateMap<QuocGia, QuocGiaDTO>();
+            CreateMap<LichSuNgheNhac, LichSuNgheNhacDTO>();
             CreateMap<DanhSachPhat, DanhSachPhatDTO>();
             CreateMap<DanhSachPhat_BaiNhac, DanhSachPhatBaiNhacDTO>();
         }

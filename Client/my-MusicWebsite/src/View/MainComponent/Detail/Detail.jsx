@@ -20,6 +20,7 @@ const Detail = () => {
   const [startAudio , setStartAudio] = useState(false);
   const [url, setUrl] = useState('');
   const navigate = useNavigate();
+  const userId = localStorage.getItem('userId');
   const handleBack = () => {
     navigate(-1); // Quay trở về trang trước đó
   };
@@ -49,8 +50,6 @@ const Detail = () => {
     setTimeout(() => {
         setSpinning(false);
     }, 30000);
-
-   
 }
  useEffect(()=>{
       const UpdateView = async ()=>{
@@ -66,6 +65,19 @@ useEffect(() => {
     setUrl(newUrl);
   }
 }, [filePath, fileName]);
+
+//Lưu lịch sử 
+  const handelSaveHistory = async()=>{
+     const formData = new FormData();
+     formData.append("BaiNhacId", dataBaiNhac?.id)
+     formData.append("UserId" , userId)
+     formData.append("TheLoaiId" , dataBaiNhac?.theLoaiId)
+     await axios.post("https://localhost:7280/api/LichSuNgheNhac/addlichsunghenhac", formData);
+  }
+  const handleOnPlay = () => {
+    setStartAudio(true); // Hàm đầu tiên
+    handelSaveHistory(); // Hàm thứ hai
+  };
   return (
     <Grid2 container spacing={2}>
       <Button  onClick={handleBack}>
@@ -148,7 +160,7 @@ useEffect(() => {
          seekBarColor="pink"
          hideSeekBar={true}
          hideTrackKnobWhenPlaying={true}
-         onplay={()=>setStartAudio(true)}
+         onplay={()=>{handleOnPlay()}}
          allowSkip={true}
          barWidth={true}
        />

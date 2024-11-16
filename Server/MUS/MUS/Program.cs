@@ -45,6 +45,9 @@ builder.Services.AddScoped<IQuocGiaServices, QuocGiaServices>();
 builder.Services.AddScoped<IDanhSachPhatRepository, DanhSachPhatRepository>();
 builder.Services.AddScoped<IDanhSachPhatServices, DanhSachPhatServices>();
 
+builder.Services.AddScoped<ILichSuNGheNhacRepository, LichSuNgheNhacRepository>();
+builder.Services.AddScoped<ILichSuNgheNhacServices, LichSuNgheNhacServices>();
+
 builder.Services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();
