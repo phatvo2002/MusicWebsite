@@ -13,6 +13,7 @@ import Profile from './View/MainComponent/session/Profile';
 import Trangchu from './View/MainComponent/TrangChu/Trangchu';
 import Detail from './View/MainComponent/Detail/Detail';
 import KhamPha from './View/MainComponent/KhamPha/KhamPha';
+import User from './View/MainComponent/Administrator/User/User';
 import DanhSachPhatDetail from './View/MainComponent/DanhSachPhat/DanhsachPhatDetail/DanhSachPhatDetail';
 const AppRoutes = () => {
     return (
@@ -28,6 +29,7 @@ const AppRoutes = () => {
         <Route path="/Administrator/NhacSi" element={<NhacSi />} />
         <Route path="/Administrator/Album" element={<Album />} />
         <Route path="/Administrator/Chude" element={<ChuDe />} />
+        <Route path="/Administrator/User" element={<User />} />
         <Route path="/Trangchu" element={<Trangchu/>} />
         <Route path="/bainhac/:tenbainhac/:id"  element={<Detail/>} />
         <Route path="/DanhSachPhat/:id" element={<DanhSachPhatDetail/>} />

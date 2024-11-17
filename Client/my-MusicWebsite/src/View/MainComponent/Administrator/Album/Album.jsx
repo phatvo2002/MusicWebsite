@@ -162,7 +162,7 @@ const Album = () => {
       />
     </Box>
       <ModalAddAlbum openModal={openModal} handleClose={handelCloseModalAdd} setLoading={setLoading}/>
-      <ModalUpdateAlbum openModal={openModalUpdate} handleClose={handleCloseModalUpdate} setLoading={setLoading} selectedId={selectedId}/>
+      <ModalUpdateAlbum openModal={openModalUpdate} handleClose={handleCloseModalUpdate} setLoading={setLoading} alBumId={selectedId}/>
     </Grid2>
   )
 }

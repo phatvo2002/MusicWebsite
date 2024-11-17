@@ -14,5 +14,10 @@ namespace MUS.Services.Interface
         Task<ResultModel> UpdateAlbum(AlbumModal model);
 
         Task<ResultModel> DeleteAlbum(Guid id);
+
+
+        Task<ResultModel> AddAlbumNhacSi(AlbumNhacSiModal modal);
+
+        Task<ResultModel> DeleteAlbumNhacSi(Guid AlbumId, Guid NhacSiId);
     }
 }

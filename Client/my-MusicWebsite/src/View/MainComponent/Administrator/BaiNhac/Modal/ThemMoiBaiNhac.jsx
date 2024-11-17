@@ -10,10 +10,12 @@ import { DatePicker } from '@mui/x-date-pickers';
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { toast } from 'react-toastify';
 import axios from 'axios';
-const ThemMoiBaiNhac = ({openModal,handleClose}) => {
+const ThemMoiBaiNhac = ({openModal,handleClose,setLoading}) => {
     ThemMoiBaiNhac.propTypes = {
         openModal: PropTypes.bool.isRequired,  
         handleClose: PropTypes.func.isRequired,
+        setLoading : PropTypes.func.isRequired
+
      };
     const [base64String, setBase64String] = useState("");
     const [dataNhacSi ,setDataNhacSi] = useState([]);
@@ -21,6 +23,7 @@ const ThemMoiBaiNhac = ({openModal,handleClose}) => {
     const [dataTamTrang,setDataTamTrang] = useState([]);
     const [dataChuDe,setDataChuDe] = useState([]);
     const [dataQuocGia,setDataQuocGia] = useState([]);
+    const [dataAlbum , setDataAlbum] = useState([]);
     const [base64StringBanner, setBase64StringBanner] = useState("");
     const [imageDataBasic, setImageDataBasic] = useState("");
     const [bannderDataBasic , setBannersDataBasic] = useState("");
@@ -39,6 +42,7 @@ const ThemMoiBaiNhac = ({openModal,handleClose}) => {
         chudeId :"",
         albumId :"",
         quocgiaId : "",
+        alBumId :"",
     });
     //handle Changes values obj
     const handleChange = (name) => (event) => {
@@ -82,6 +86,7 @@ const ThemMoiBaiNhac = ({openModal,handleClose}) => {
         chudeId :"",
         albumId :"",
         quocgiaId : "",
+        alBumId :"",
       })    
       setBase64String('');     
       setBase64StringBanner('')
@@ -139,6 +144,7 @@ const ThemMoiBaiNhac = ({openModal,handleClose}) => {
       formData.append("ChudeId" , obj.chudeId)
       formData.append("AlbumId" , obj.albumId)
       formData.append("QuocGiaId" , obj.quocgiaId)
+      formData.append("AlbumId" , obj.alBumId)
 
       const response = await axios.post("https://localhost:7280/api/BaiNhac/addbainhac", formData, config);
       if (response.status== 200)
@@ -147,7 +153,7 @@ const ThemMoiBaiNhac = ({openModal,handleClose}) => {
           toast.success("Thêm bài hát thành công", {
             toastId: "alert-add-baihats",
           });
-          //  setLoading(true)
+            setLoading(true)
             handleClose(); 
         } else {
           toast.error("Có lỗi đã xảy ra", {
@@ -209,6 +215,18 @@ const ThemMoiBaiNhac = ({openModal,handleClose}) => {
       }
       getQuocGia()
     },[])
+
+    useEffect(()=>{
+      const getAlbum = async ()=>{
+         const response = await axios.get("https://localhost:7280/api/Album/getallalbum")
+          if(response.status === 200)
+          {
+            setDataAlbum(response?.data)
+          }
+      }
+      getAlbum()
+    },[])
+
 
 
 
@@ -339,6 +357,19 @@ const ThemMoiBaiNhac = ({openModal,handleClose}) => {
         </Grid2>
         <Grid2 sx={{width:"100%" ,marginTop:2}}>
         <Autocomplete
+      options={dataAlbum}
+      onChange={(event, newValue) => {
+        setObj((prev) => ({
+          ...prev,
+         albumId : newValue ? newValue.id : "", 
+        }));
+      }}
+      getOptionLabel={(option) => option.tenAlbum}
+      renderInput={(params) => <TextField {...params} label="Album" />}
+    />
+        </Grid2>
+        <Grid2 sx={{width:"100%" ,marginTop:2}}>
+        <Autocomplete
       options={dataTamTrang}
       getOptionLabel={(option) => option.tenTamTrang}
       onChange={(event, newValue) => {
@@ -376,6 +407,7 @@ const ThemMoiBaiNhac = ({openModal,handleClose}) => {
       renderInput={(params) => <TextField {...params} label="Quốc gia" />}
     />
         </Grid2>
+      
   </Grid2>
 </DialogContentText>
 

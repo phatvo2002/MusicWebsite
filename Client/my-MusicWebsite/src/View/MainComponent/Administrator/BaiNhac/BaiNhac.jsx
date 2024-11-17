@@ -206,7 +206,7 @@ const BaiNhac = () => {
         checkboxSelection
       />
     </Box>
-      <ThemMoiBaiNhac openModal={openModalThemMoiBaiNhac} handleClose={handleCloseModalThemMoiBaiNhac}/>
+      <ThemMoiBaiNhac openModal={openModalThemMoiBaiNhac} handleClose={handleCloseModalThemMoiBaiNhac}  setLoading={setLoading} />
       <ModalChinhSuaBaiNhac openModal={openModalChinhSuaBaiNhac} handleClose={handleCloseModalUpdateBaiNhac} setLoading={setLoading} baiNhacId={selectedId}/>
     </Grid2>
   )

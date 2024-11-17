@@ -50,6 +50,24 @@ namespace MUS.Repository
             }
         }
 
+        public async Task<ResultModel> AddAlbumNhacSi(AlbumNhacSiModal modal)
+        {
+            var db = _musDbConText.AlbumNhacSis.FirstOrDefault(r => r.AlBumId == modal.AlbumId && r.NhacSiId == modal.NhacSiId);
+            if (db == null)
+            {
+                AlbumNhacSi albumNhacSi = new AlbumNhacSi();
+                albumNhacSi.NhacSiId = modal.NhacSiId;
+                albumNhacSi.AlBumId = modal.AlbumId;
+                _musDbConText.AlbumNhacSis.Add(albumNhacSi);
+                await _musDbConText.SaveChangesAsync();
+                return new ResultModel() { Status = 200, Message = "Thêm mới thành công", Success = true };
+            }
+            else
+            {
+                return new ResultModel() { Status = 202, Message = "Dữ liệu đã tồn tại", Success = false };
+            }    
+        }
+
         public async Task<ResultModel> DeleteAlbum(Guid id)
         {
 
@@ -69,6 +87,21 @@ namespace MUS.Repository
                 return new ResultModel() { Status = 200, Message = "Xóa thành công", Success = true };
             }
             return new ResultModel() { Status = 202, Message = "Không tìm thấy dữ liệu", Success = false };
+        }
+
+        public async Task<ResultModel> DeleteAlbumNhacSi(Guid AlbumId, Guid NhacSiId)
+        {
+            var db = _musDbConText.AlbumNhacSis.FirstOrDefault(r=> r.AlBumId == AlbumId && r.NhacSiId == NhacSiId);
+            if(db != null)
+            {
+                _musDbConText.AlbumNhacSis.Remove(db);
+                await _musDbConText.SaveChangesAsync();
+                return new ResultModel() { Status = 200, Message = "Xóa thành công", Success = true };
+            }    
+            else
+            {
+                return new ResultModel() { Status = 202, Message = "Không tìm thấy dữ liệu", Success = false };
+            }    
         }
 
         public  async Task<AlbumDTO> GetAlbumById(Guid id)

@@ -56,6 +56,20 @@ namespace MUS.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpPost("addalbumnhacsi")]
+        public async Task<IActionResult> AddAlbumNhacSi([FromForm] AlbumNhacSiModal modal)
+        {
+            try
+            {
+                ResultModel result = await _albumServices.AddAlbumNhacSi(modal);
+                return Ok(result);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
         [HttpPut("updateAlbum")]
         public async Task<IActionResult> UpdateAlbum([FromForm] AlbumModal modal)
         {
@@ -76,6 +90,20 @@ namespace MUS.Controllers
             try
             {
                 ResultModel result = await _albumServices.DeleteAlbum(id);
+                return Ok(result);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete("deleteAlbumNhacSi")]
+        public async Task<IActionResult> DeleteAlbumNhacSi (Guid albumId , Guid nhacSiId)
+        {
+            try
+            {
+                ResultModel result = await _albumServices.DeleteAlbumNhacSi(albumId , nhacSiId);
                 return Ok(result);
             }
             catch (ArgumentException ex)

@@ -42,7 +42,7 @@ const Administrator = () => {
                 <Box className="container">
                    <AccountCircleIcon/>
                    <Typography >
-                     Quản lý người dùng
+                   <Link component={RouterLink} to="/Administrator/User">Quản lý người dùng</Link>
                    </Typography>
                 </Box>
             </Grid2>

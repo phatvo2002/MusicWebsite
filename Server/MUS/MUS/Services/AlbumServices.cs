@@ -19,9 +19,19 @@ namespace MUS.Services
             return await _albumRepository.AddAlbum(model);
         }
 
+        public async Task<ResultModel> AddAlbumNhacSi(AlbumNhacSiModal modal)
+        {
+            return await _albumRepository.AddAlbumNhacSi(modal);
+        }
+
         public async Task<ResultModel> DeleteAlbum(Guid id)
         {
             return await _albumRepository.DeleteAlbum(id);  
+        }
+
+        public async Task<ResultModel> DeleteAlbumNhacSi(Guid AlbumId, Guid NhacSiId)
+        {
+            return await _albumRepository.DeleteAlbumNhacSi(AlbumId, NhacSiId);
         }
 
         public async Task<AlbumDTO> GetAlbumById(Guid id)

@@ -1,35 +1,34 @@
 import { Box, Button, Grid2, Paper, Typography } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid';
-import React from 'react'
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
+import { toast } from 'react-toastify';
+const userId = localStorage.getItem('userId')
 
-const rows = [
-    {
-      id: 1,
-      songTitle: "Một Đêm Say",
-      artist: "Thịnh Suy",
-      timestamp: "21:57 - 05/11/2024",
-    },
-    {
-      id: 2,
-      songTitle: "CHẠY NGAY ĐI",
-      artist: "Sơn Tùng M-TP",
-      timestamp: "20:41 - 02/11/2024",
-    },
-  ];
   
-  // Định nghĩa cột
-  const columns = [
+ 
+const LichSu = () => {
+  const [userhsr , setUserHst] = useState([])
+  const date = new Date(userhsr?.ngayNghe);
+
+// Lấy ngày, tháng, năm
+const day = date.getDate(); 
+const month = date.getMonth() + 1; 
+const year = date.getFullYear(); 
+console.log(`Ngày: ${day}, Tháng: ${month}, Năm: ${year}`);
+   // Định nghĩa cột
+   const columns = [
     {
-      field: "songTitle",
+      field: "",
       headerName: "Bài Hát",
       flex: 1,
       renderCell: (params) => (
         <Box>
           <Typography variant="body1" fontWeight="bold">
-            {params.row.songTitle}
+            {params.row.baiNhac?.tenBaiNhac}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            {params.row.artist}
+            {/* {params.row.baiNhac?.} */}
           </Typography>
         </Box>
       ),
@@ -40,7 +39,7 @@ const rows = [
       flex: 0.5,
       renderCell: (params) => (
         <Typography variant="body2" color="text.secondary">
-          {params.row.timestamp}
+          
         </Typography>
       ),
     },
@@ -53,14 +52,14 @@ const rows = [
           <Button
             variant="text"
             color="error"
-            onClick={() => alert(`Xóa bài hát: ${params.row.songTitle}`)}
+            onClick={() => handelDeleteLichSu(params.row.id)}
           >
             Xóa
           </Button>
           <Button
             variant="text"
             color="primary"
-            onClick={() => alert(`Chia sẻ bài hát: ${params.row.songTitle}`)}
+            onClick={() => alert(`Chia sẻ lịch sử: ${params.row.songTitle}`)}
           >
             Chia sẻ
           </Button>
@@ -68,16 +67,38 @@ const rows = [
       ),
     },
   ];
-const LichSu = () => {
- 
-
+  useEffect(()=>{
+     if(userId != null)
+     {
+       const getUserHistory = async () => {
+        const response = await axios.get(`https://localhost:7280/api/LichSuNgheNhac/getlichsubyUserId?Id=${userId}`)
+        if(response.status == 200)
+        {
+         setUserHst(response?.data)
+         }
+       }
+       getUserHistory()
+     }
+  },[userId]) 
+    const handelDeleteLichSu = async(id) => {
+       const response = await axios.delete(`https://localhost:7280/api/LichSuNgheNhac/deletelichsu?id=${id}`)
+       if(response.status == 200)
+       {
+         toast.success("Xóa lịch sử thành công")
+         window.location.reload()
+       }
+       else
+       {
+        toast.error("Đã có lỗi xảy ra , vui lòng liên hệ bộ phân chăm sóc khách hàng để hổ trợ")
+       }
+    }
   return (
     <Box sx={{ height: 400, width: "100%" }}>
      <Typography variant="h5" color="text.secondary" padding={1}>
           Lich sử nghe nhạc
      </Typography>
     <DataGrid
-      rows={rows}
+      rows={userhsr}
       columns={columns}
       pageSize={5}
       rowsPerPageOptions={[5]}

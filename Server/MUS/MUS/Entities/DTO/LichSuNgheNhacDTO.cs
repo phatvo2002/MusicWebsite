@@ -10,6 +10,8 @@
 
         public Guid TheLoaiId { get; set; }
 
+        public DateTime NgayNghe { get; set; }
+
         public BaiNhacDTO? BaiNhac { get; set; }
 
     }
