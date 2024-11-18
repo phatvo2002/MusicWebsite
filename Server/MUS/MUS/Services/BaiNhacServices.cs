@@ -56,6 +56,16 @@ namespace MUS.Services
             return await _baiNhacRepository.GetBainhacByTheLoaiId(theLoaiId);
         }
 
+        public async Task<List<BaiNhacDTO>> GetTop5BaiNhacMoiPhatHanh()
+        {
+           return await _baiNhacRepository.GetTop5BaiNhacMoiPhatHanh();
+        }
+
+        public async Task<List<BaiNhacDTO>> GetTop5BaiNhacNhieuLuotXem()
+        {
+            return await _baiNhacRepository.GetTop5BaiNhacNhieuLuotXem();
+        }
+
         public async Task<ResultModel> UpdateBaiNhac(UpdateBaiNhacModel model)
         {
             return await _baiNhacRepository.UpdateBaiNhac(model);

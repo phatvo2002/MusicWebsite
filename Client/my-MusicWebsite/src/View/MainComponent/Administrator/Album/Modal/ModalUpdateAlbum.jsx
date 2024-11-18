@@ -172,8 +172,7 @@ const  ModalUpdateAlbum = ({ openModal, handleClose, setLoading, alBumId }) => {
                 {/* Wrap your date picker inside this */}
                 <DatePicker
                   label="Ngày phát hành"
-               //   value={obj?.ngayPhatHanh}
-               value={obj?.ngayPhatHanh ? dayjs(obj.ngayPhatHanh) : null}
+                  value={obj?.ngayPhatHanh ? dayjs(obj.ngayPhatHanh) : null}
                   renderInput={(params) => <TextField {...params} />}
                   onChange={handleDateChange("ngayPhatHanh")}
                   sx={{ width: "100%" }}

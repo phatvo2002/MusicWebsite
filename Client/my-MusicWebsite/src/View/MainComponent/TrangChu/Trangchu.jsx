@@ -20,17 +20,29 @@ import product from "../../../assets/images/product.jpg";
 import axios from "axios";
 const Trangchu = () => {
   const [songsTopView, setSongs] = useState([]);
+  const [songMoiPhatHanh ,setSongMoiPhat] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
     const getSongs = async () => {
       const response = await axios.get(
-        "https://localhost:7280/api/BaiNhac/getallbainhac"
+        "https://localhost:7280/api/BaiNhac/gettop5bainhacnhieuluotxem"
       );
       if (response.status === 200) {
         setSongs(response?.data);
       }
     };
     getSongs();
+  }, []);
+   useEffect(() => {
+    const getSongsMoiPhatHanh = async () => {
+      const response = await axios.get(
+        "https://localhost:7280/api/BaiNhac/gettop5bainhacmoiphathanh"
+      );
+      if (response.status === 200) {
+        setSongMoiPhat(response?.data);
+      }
+    };
+    getSongsMoiPhatHanh();
   }, []);
 
   const songs = [
@@ -199,7 +211,7 @@ const Trangchu = () => {
                 component="p"
                 sx={{ padding: "3px 10px" }}
               >
-                {item.nhacSi.tenNhacSi}
+               {item.nhacSi.tenNhacSi}
               </Typography>
               <Stack direction="row" spacing={2} padding={1}>
                 <Tooltip title="Thêm vào thư viện">
@@ -215,8 +227,7 @@ const Trangchu = () => {
               </Stack>
             </Box>
           ))}
-        </Stack>
-        <Box alignItems="center">
+            <Box alignItems="center">
           <Button
             variant="contained"
             style={{
@@ -226,9 +237,11 @@ const Trangchu = () => {
               textTransform: "none",
             }}
           >
-            + View All
+            + Xem tất cả
           </Button>
         </Box>
+        </Stack>
+      
       </Grid2>
 
       <Typography
@@ -248,34 +261,41 @@ const Trangchu = () => {
           direction={{ xs: "column", sm: "row" }}
           spacing={{ xs: 1, sm: 2, md: 4 }}
         >
-          {songs.map((item, index) => (
+          {songMoiPhatHanh.map((item, index) => (
             <Box
               sx={{
                 background: "#212121",
-                width: "200px",
                 borderRadius: "5px",
+                width: "200px",
                 color: "text.secondary",
               }}
-              key={index}
+              key={item.id}
               className="animated-product"
             >
               <img
-                src={product}
+                src={`https://localhost:7280/api/File/image?path=${item.duongDanHinhAnh}`}
                 style={{
                   width: "100%",
                   padding: "3px 5px",
                   borderRadius: "5px",
                 }}
               />
-              <Link to={`/bainhac/${item.tenBaiNhac}/${item.id}`}>
-                {item.title}
+              <Link
+                to={`/bainhac/${item.tenBaiNhac}/${item.id}`}
+                style={{
+                  padding: "1px 10px",
+                  textDecoration: "none",
+                  color: "text.secondary",
+                }}
+              >
+                {item.tenBaiNhac}
               </Link>
               <Typography
                 variant="body1"
                 component="p"
                 sx={{ padding: "3px 10px" }}
               >
-                {item.artist}
+               {item.nhacSi.tenNhacSi}
               </Typography>
               <Stack direction="row" spacing={2} padding={1}>
                 <Tooltip title="Thêm vào thư viện">
@@ -291,8 +311,7 @@ const Trangchu = () => {
               </Stack>
             </Box>
           ))}
-        </Stack>
-        <Box alignItems="center">
+            <Box alignItems="center">
           <Button
             variant="contained"
             style={{
@@ -302,9 +321,11 @@ const Trangchu = () => {
               textTransform: "none",
             }}
           >
-            + View All
+            + Xem tất cả
           </Button>
         </Box>
+        </Stack>
+      
       </Grid2>
 
       <Typography

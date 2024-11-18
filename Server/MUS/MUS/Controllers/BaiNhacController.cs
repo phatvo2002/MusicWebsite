@@ -30,6 +30,33 @@ namespace MUS.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [HttpGet("gettop5bainhacnhieuluotxem")]
+        public async Task<IActionResult> GetTop5BaiNhacNhieuLuotxem()
+        {
+            try
+            {
+                List<BaiNhacDTO> result = await _baiNhacServices.GetTop5BaiNhacNhieuLuotXem();
+                return Ok(result);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("gettop5bainhacmoiphathanh")]
+        public async Task<IActionResult> GetTop5BaiNhacMoiPhathanh()
+        {
+            try
+            {
+                List<BaiNhacDTO> result = await _baiNhacServices.GetTop5BaiNhacMoiPhatHanh();
+                return Ok(result);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
         [HttpGet("getbainhacbyid")]
         public async Task<IActionResult> GetBaiNhacById(Guid Id)

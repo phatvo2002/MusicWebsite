@@ -31,8 +31,8 @@ const mainListItems = [
 ];
 
 const secondaryListItems = [
+  { text: 'Thư viện của bạn', icon: <RadioIcon /> ,url : "/Thuvien"},
   { text: 'Bản xếp hạng nhạc', icon: <AddIcon /> ,url : "/Themganday" },
-  { text: 'Chủ đề và thể loại', icon: <RadioIcon /> ,url : "/Ngheganday"},
   { text: 'Top 100 ', icon: <RadioIcon /> ,url : "/Ngheganday"},
 ];
 

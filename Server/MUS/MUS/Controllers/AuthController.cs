@@ -42,11 +42,11 @@ namespace MUS.Controllers
             }
         }
         [HttpPut("resetpassword")]
-        public async Task<IActionResult> ResetPassword(Guid id , string newPassword)
+        public async Task<IActionResult> ResetPassword(Guid id , string oldPassword, string newPassword)
         {
             try
             {
-                ResultModel result = await _userServices.ResetPassword( id , newPassword);
+                ResultModel result = await _userServices.ResetPassword( id , oldPassword,newPassword);
                 return Ok(result);
             }
             catch (ArgumentException ex)

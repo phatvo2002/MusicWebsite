@@ -29,9 +29,9 @@ namespace MUS.Services
             return await _userRepository.Login(modal);
         }
 
-        public async Task<ResultModel> ResetPassword(Guid id, string newPasword)
+        public async Task<ResultModel> ResetPassword(Guid id, string oldPassword, string newPasword)
         {
-            return await _userRepository.ResetPassword(id, newPasword); 
+            return await _userRepository.ResetPassword(id, oldPassword, newPasword); 
         }
 
         public async Task<ResultModel> Resgister(RegisterModal modal)

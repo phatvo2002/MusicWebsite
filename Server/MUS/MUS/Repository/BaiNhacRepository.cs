@@ -201,5 +201,16 @@ namespace MUS.Repository
             return _mapper.Map<List<BaiNhacDTO>>(db);
         }
 
+        public async Task<List<BaiNhacDTO>> GetTop5BaiNhacNhieuLuotXem()
+        {
+            var db = await _musDbConText.BaiNhacs.OrderByDescending(song => song.LuotNghe).Include(r=>r.NhacSi).Take(5).ToListAsync();
+            return _mapper.Map<List<BaiNhacDTO>>(db);
+        }
+
+        public async Task<List<BaiNhacDTO>> GetTop5BaiNhacMoiPhatHanh()
+        {
+            var db = await _musDbConText.BaiNhacs.OrderByDescending(song => song.NgayPhatHanh).Include(r => r.NhacSi).Take(5).ToListAsync();
+            return _mapper.Map<List<BaiNhacDTO>>(db);
+        }
     }
 }

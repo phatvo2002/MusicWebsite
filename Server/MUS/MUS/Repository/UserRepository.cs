@@ -84,21 +84,57 @@ namespace MUS.Repository
          
         }
 
-        public async Task<ResultModel> ResetPassword(Guid id, string newPasword)
+        public async Task<ResultModel> ResetPassword(Guid id, string oldPassword, string newPassword)
         {
-            var db = _musDbConText.Users.FirstOrDefault( r=> r.Id == id );
-            if (db != null)
+            if (string.IsNullOrEmpty(oldPassword) || string.IsNullOrEmpty(newPassword))
             {
-                db.Password = newPasword;
-                _musDbConText.Users.Update(db);
-                await _musDbConText.SaveChangesAsync();
-                return new ResultModel() { Message = "Đổi mật khẩu thành công", Status = 200, Success = true };
+                return new ResultModel
+                {
+                    Message = "Mật khẩu không được để trống",
+                    Status = 400,
+                    Success = false
+                };
             }
-            else
+
+         
+            var user = await _musDbConText.Users.FirstOrDefaultAsync(r => r.Id == id);
+
+          
+            if (user == null)
             {
-                return new ResultModel() { Message = "Không tìm thấy dữ liệu", Status = 202, Success = false };
-            }    
+                return new ResultModel
+                {
+                    Message = "Không tìm thấy người dùng",
+                    Status = 404,
+                    Success = false
+                };
+            }
+
+           
+            if (user.Password != oldPassword) 
+            {
+                return new ResultModel
+                {
+                    Message = "Mật khẩu cũ không đúng",
+                    Status = 403,
+                    Success = false
+                };
+            }
+
+
+            user.Password = newPassword;
+            _musDbConText.Users.Update(user);
+
+            await _musDbConText.SaveChangesAsync();
+
+            return new ResultModel
+            {
+                Message = "Đổi mật khẩu thành công",
+                Status = 200,
+                Success = true
+            };
         }
+
         public async Task<ResultModel> DeleteUser(Guid Id)
         {
             var db = _musDbConText.Users.FirstOrDefault(r=> r.Id == Id);

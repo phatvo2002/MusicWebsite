@@ -13,6 +13,6 @@ namespace MUS.Repository.Interface
 
         Task<List<UserDTO>> GetAllUser();
 
-        Task<ResultModel> ResetPassword(Guid id, string newPasword);
+        Task<ResultModel> ResetPassword(Guid id,string oldPassword, string newPasword);
     }
 }

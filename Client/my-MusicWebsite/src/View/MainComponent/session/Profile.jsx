@@ -17,6 +17,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
 import LichSu from "./Components/LichSu";
+import ChangePassword from "./Components/ChangePassword";
 const Profile = () => {
   const [tabIndex, setTabIndex] = useState(0);
 
@@ -50,7 +51,7 @@ const Profile = () => {
               <Tab label="Playlist" icon={<QueueMusicIcon/>}/>
               <Tab label="Thư viện" icon={<LibraryMusicIcon/>}/>
               <Tab label="Lịch sử" icon={<HeadsetIcon/>} />
-              <Tab label="Quản lý thiết bị" icon={<ManageAccountsIcon/>}/>
+              <Tab label="Đổi mật khẩu" icon={<ManageAccountsIcon/>}/>
               <Tab label="Đăng xuất"icon={<LogoutIcon/>} />
             </Tabs>
           </Paper>
@@ -106,24 +107,16 @@ const Profile = () => {
 
           {tabIndex === 4 && (
             <Paper variant="outlined" sx={{ padding: 2, mb: 3 }}>
-              <Typography variant="h6">Lịch sử</Typography>
-              <Typography>Hiển thị lịch sử hoạt động của bạn.</Typography>
+                 <ChangePassword/>
             </Paper>
           )}
 
           {tabIndex === 5 && (
             <Paper variant="outlined" sx={{ padding: 2, mb: 3 }}>
-              <Typography variant="h6">Quản lý thiết bị</Typography>
-              <Typography>Hiển thị danh sách thiết bị liên kết.</Typography>
+              
             </Paper>
           )}
 
-          {tabIndex === 6 && (
-            <Paper variant="outlined" sx={{ padding: 2, mb: 3 }}>
-              <Typography variant="h6">Đăng xuất</Typography>
-              <Typography>Bạn có muốn đăng xuất không?</Typography>
-            </Paper>
-          )}
         </Grid2>
       </Grid2>
     </Box>
