@@ -41,6 +41,7 @@ export default function SideMenu() {
       <Box
         sx={{
           display: 'flex',
+          justifyContent:"space-between",
           mt: 'calc(var(--template-frame-height, 0px) + 4px)',
           p: 1.5,
           alignItems: 'center',
@@ -66,14 +67,15 @@ export default function SideMenu() {
         }}
       >
         {token  ? (
-    <Box sx={{ mr: 'auto' }}>
+    <Box sx={{ mr: 'auto' ,gap:2 }}>
     <Typography variant="body2" sx={{ fontWeight: 500, lineHeight: '16px' }}>
       Admin
     </Typography>
     <Typography variant="caption" sx={{ color: 'text.secondary' }}>
       admin@email.com
     </Typography>
-    <OptionsMenu />
+    
+    <OptionsMenu/>
   </Box>
         ):(
   <Box sx={{ mr: 'auto' }} >

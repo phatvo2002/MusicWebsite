@@ -30,13 +30,14 @@ export default function OptionsMenu() {
     navigate("/Profile")
   }
   return (
-    <React.Fragment>
+    <React.Fragment >
       <MenuButton
         aria-label="Open menu"
         onClick={handleClick}
-        sx={{ borderColor: 'transparent' }}
+        sx={{ borderColor: 'transparent'}}
+        style={{marginLeft: 50}}
       >
-        <MoreVertRoundedIcon />
+        <MoreVertRoundedIcon  />
       </MenuButton>
       <Menu
         anchorEl={anchorEl}
