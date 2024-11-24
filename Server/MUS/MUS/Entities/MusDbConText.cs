@@ -31,9 +31,15 @@ namespace MUS.Entities
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<DanhSachPhat> DanhSachPhats { get; set; }
 
+
+
         public virtual DbSet<LichSuNgheNhac> LichSuNgheNhacs { get; set; }
 
         public virtual DbSet<DanhSachPhat_BaiNhac> DanhSachPhat_BaiNhac { get; set; }
+
+        public virtual DbSet<ThuVien> ThuViens { get; set; }
+
+        public virtual DbSet<ThuVienBaiNhac> ThuVienBaiNhacs { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
@@ -176,6 +182,7 @@ namespace MUS.Entities
                 entity.HasOne(r => r.Role).WithMany(d=> d.Users)
                       .HasForeignKey(r=> r.RoleId).OnDelete(DeleteBehavior.ClientSetNull)
                       .HasConstraintName("FK_Role_User");
+                
             });
 
 
@@ -215,7 +222,26 @@ namespace MUS.Entities
            .WithMany(b => b.LichSuNgheNhacs)
            .HasForeignKey(d => d.UserId);
 
+            modelBuilder.Entity<ThuVien>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.ToTable("ThuVien");
+                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.HasOne(d => d.User).WithOne(r => r.ThuVien).HasForeignKey<ThuVien>(d => d.NguoiDungId);
+            });
 
+            modelBuilder.Entity<ThuVienBaiNhac>()
+              .HasKey(sl => new { sl.ThuVienId, sl.BaiNhacId }); 
+
+            modelBuilder.Entity<ThuVienBaiNhac>()
+                .HasOne(sl => sl.ThuVien)
+                .WithMany(l => l.ThuVienBaiNhacs)
+                .HasForeignKey(sl => sl.ThuVienId);
+
+            modelBuilder.Entity<ThuVienBaiNhac>()
+                .HasOne(sl => sl.BaiNhac)
+                .WithMany(s => s.ThuVienBaiNhacs)
+                .HasForeignKey(sl => sl.BaiNhacId);
         }
 
 

@@ -15,6 +15,7 @@ import Detail from './View/MainComponent/Detail/Detail';
 import KhamPha from './View/MainComponent/KhamPha/KhamPha';
 import User from './View/MainComponent/Administrator/User/User';
 import DanhSachPhatDetail from './View/MainComponent/DanhSachPhat/DanhsachPhatDetail/DanhSachPhatDetail';
+import Albums from './View/MainComponent/Albums/Album';
 const AppRoutes = () => {
     return (
       <Routes>
@@ -34,6 +35,7 @@ const AppRoutes = () => {
         <Route path="/bainhac/:tenbainhac/:id"  element={<Detail/>} />
         <Route path="/DanhSachPhat/:id" element={<DanhSachPhatDetail/>} />
         <Route path="/KhamPha" element={<KhamPha/>} />
+        <Route path="/Albums" element={<Albums/>} /> 
         {/* Thêm các route con khác */}
        </Route>
       </Routes>

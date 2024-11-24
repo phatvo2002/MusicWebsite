@@ -48,6 +48,8 @@ builder.Services.AddScoped<IDanhSachPhatServices, DanhSachPhatServices>();
 builder.Services.AddScoped<ILichSuNGheNhacRepository, LichSuNgheNhacRepository>();
 builder.Services.AddScoped<ILichSuNgheNhacServices, LichSuNgheNhacServices>();
 
+builder.Services.AddScoped<IThuVienRepository, ThuVienRepository>();
+builder.Services.AddScoped<IThuVienServices, ThuVienServices>();
 builder.Services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();

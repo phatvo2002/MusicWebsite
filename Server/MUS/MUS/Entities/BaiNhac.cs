@@ -28,5 +28,7 @@
         public virtual ICollection<DanhSachPhat_BaiNhac> DanhSachPhat_BaiNhacs { get; set; } = new List<DanhSachPhat_BaiNhac>();
 
         public virtual ICollection<LichSuNgheNhac> LichSuNgheNhacs { get; set; } = new List<LichSuNgheNhac>();
+
+        public virtual ICollection<ThuVienBaiNhac> ThuVienBaiNhacs { get; set; } = new List<ThuVienBaiNhac>();
     }
 }

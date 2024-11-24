@@ -14,6 +14,7 @@ import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
 import { Typography } from '@mui/material';
 import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 import ModalAddPlaylist from './Modal/ModalAddPlaylist';
 import PlaylistPlayIcon from '@mui/icons-material/PlaylistPlay';
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
@@ -28,22 +29,16 @@ const mainListItems = [
   { text: 'Khám phá', icon: <AnalyticsRoundedIcon /> ,url : "/Khampha"  },
   { text: 'Albums', icon: <LibraryMusicIcon /> ,url : "/Albums" },
   { text: 'Nhạc sĩ', icon: <AudiotrackIcon /> ,url : "/Nhacsi" },
-];
-
-const secondaryListItems = [
-  { text: 'Thư viện của bạn', icon: <RadioIcon /> ,url : "/Thuvien"},
-  { text: 'Bản xếp hạng nhạc', icon: <AddIcon /> ,url : "/Themganday" },
   { text: 'Top 100 ', icon: <RadioIcon /> ,url : "/Ngheganday"},
 ];
 
-// const thirdListItems = [
-//   { text: 'Đã thích', icon: <FavoriteIcon /> ,url : "/favorite" },
-//   { text: 'Danh sách phát', icon: <PlaylistPlayIcon /> ,url : "/Danhsachphat" },
-//   { text: 'Thêm danh sách phát', icon: <PlaylistAddIcon /> ,url : "/themdanhsachphat" },
-// ];
+const secondaryListItems = [
+  { text: 'Thư viện của bạn', icon: <FavoriteIcon /> ,url : "/Thuvien"},
+];
+
+
 const fordListItems = [
   { text: 'Cài đặt ', icon: <SettingsRoundedIcon /> , url : "/caidat"  },
-  //{ text: 'Quản trị hệ thống', icon: <ManageAccountsIcon /> , url : "/Administrator" },
 ];
 const AdministratorItem =[
   { text: 'Cài đặt ', icon: <SettingsRoundedIcon /> , url : "/"  },

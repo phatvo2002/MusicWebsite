@@ -71,7 +71,13 @@ namespace MUS.Repository
                     user.Email = modal.Email;
                     user.Password = modal.Password;
                     user.RoleId = new Guid("ef7717b2-2f55-43fb-a7cd-c0e27bbbd365");
-                    _musDbConText.Users.Add(user);
+
+                    ThuVien thuVien = new ThuVien();
+                    thuVien.Id = Guid.NewGuid();
+                    thuVien.NguoiDungId = user.Id;
+                    
+                    await _musDbConText.Users.AddAsync(user);
+                    await _musDbConText.ThuViens.AddAsync(thuVien);
                     await _musDbConText.SaveChangesAsync();
                     return new ResultModel() { Status = 200, Message = "Đăng kí thành công", Success = true };
                 }

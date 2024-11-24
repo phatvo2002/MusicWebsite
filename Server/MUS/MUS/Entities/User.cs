@@ -16,6 +16,8 @@
 
          public virtual Role? Role { get; set; }
 
+        public virtual ThuVien? ThuVien { get; set; }
+
         public virtual ICollection<DanhSachPhat> DanhSachPhats { get; set; } = new List<DanhSachPhat>();
 
         public virtual ICollection<LichSuNgheNhac> LichSuNgheNhacs { get; set; } = new List<LichSuNgheNhac>();

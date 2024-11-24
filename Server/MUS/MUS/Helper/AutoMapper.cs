@@ -19,6 +19,7 @@ namespace MUS.Helper
             CreateMap<LichSuNgheNhac, LichSuNgheNhacDTO>();
             CreateMap<DanhSachPhat, DanhSachPhatDTO>();
             CreateMap<DanhSachPhat_BaiNhac, DanhSachPhatBaiNhacDTO>();
+            CreateMap<ThuVienBaiNhac, ThuVienBaiNhacDTO>();
         }
     }
     
