@@ -61,10 +61,22 @@ namespace MUS.Repository
             }    
         }
 
+        public async Task<List<ThuVienDTO>> GetAllThuVien()
+        {
+            var db = await _context.ThuViens.AsNoTracking().ToListAsync();
+            return _mapper.Map<List<ThuVienDTO>>(db);
+        }
+
         public async Task<List<ThuVienBaiNhacDTO>> GetThuVienBaiNhacByThuVienId(Guid Id)
         {
-            var db =await _context.ThuVienBaiNhacs.Where(r => r.ThuVienId == Id).ToListAsync();
+            var db =await _context.ThuVienBaiNhacs.Where(r => r.ThuVienId == Id).Include(r => r.BaiNhac).ThenInclude(r=>r.NhacSi).ToListAsync();
             return _mapper.Map<List<ThuVienBaiNhacDTO>>(db);
+        }
+
+        public async Task<ThuVienDTO> GetThuVienByUserId(Guid UserId)
+        {
+            var db = await _context.ThuViens.FirstOrDefaultAsync(r => r.NguoiDungId == UserId);
+            return _mapper.Map<ThuVienDTO>(db);
         }
     }
 }

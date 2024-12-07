@@ -41,7 +41,6 @@ const Register = () => {
      formData.append("password",obj.password)
 
      const response = await axios.post("https://localhost:7280/api/Auth/register", formData);
-     console.log(response)
      if(response?.data?.status == 200)
      {
       toast.success("Đăng kí thành công", {

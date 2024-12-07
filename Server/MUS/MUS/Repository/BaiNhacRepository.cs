@@ -212,5 +212,41 @@ namespace MUS.Repository
             var db = await _musDbConText.BaiNhacs.OrderByDescending(song => song.NgayPhatHanh).Include(r => r.NhacSi).Take(5).ToListAsync();
             return _mapper.Map<List<BaiNhacDTO>>(db);
         }
+
+        public async Task<List<BaiNhacDTO>> GoiYbaiNhacByUserId(Guid userId)
+        {
+            // Lấy lịch sử nghe nhạc của người dùng
+            var history = _musDbConText.LichSuNgheNhacs
+                                        .Where(r => r.UserId == userId)
+                                        .ToList();
+
+            List<BaiNhac> result = new List<BaiNhac>();
+
+            if (history.Any()) 
+            {
+              
+                var mostFrequentCategory = history
+                    .GroupBy(n => n.TheLoaiId)
+                    .Select(group => new
+                    {
+                        TheLoaiId = group.Key,
+                        Count = group.Count()
+                    })
+                    .OrderByDescending(x => x.Count)
+                    .FirstOrDefault();
+
+                // Nếu tìm thấy thể loại phổ biến nhất, lấy danh sách bài nhạc
+                if (mostFrequentCategory != null)
+                {
+                    result = await _musDbConText.BaiNhacs
+                                                .Where(r => r.TheLoaiId == mostFrequentCategory.TheLoaiId).Include(r=> r.NhacSi)
+                                                .AsNoTracking()
+                                                .ToListAsync();
+                }
+            }
+
+            return _mapper.Map<List<BaiNhacDTO>>(result);
+        }
+
     }
 }

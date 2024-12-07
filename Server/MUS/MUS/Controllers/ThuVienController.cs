@@ -12,6 +12,49 @@ namespace MUS.Controllers
     {
         private readonly IThuVienServices _thuVienServices;
 
+        [HttpGet("getallthuvien")]
+        public async Task<IActionResult> GetAllThuVien()
+        {
+            try
+            {
+                List<ThuVienDTO> result = await _thuVienServices.GetAllThuVien();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("getthuvienbainhacbythuvienid")]
+        public async Task<IActionResult> GetThuVienBaiNhacByThuVienId(Guid id)
+        {
+            try
+            {
+                List<ThuVienBaiNhacDTO> result = await _thuVienServices.GetThuVienBaiNhacByThuVienId(id);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("getthuvienbainhacbyuserid")]
+        public async Task<IActionResult> GetThuVienBaiNhacByUserId(Guid id)
+        {
+            try
+            {
+                ThuVienDTO result = await _thuVienServices.GetThuVienByUserId(id);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
         public ThuVienController(IThuVienServices thuVienServices)
         {
             _thuVienServices = thuVienServices;
@@ -44,19 +87,7 @@ namespace MUS.Controllers
             }
         }
 
-        [HttpGet("getthuvienbainhacbythuvienid")]
-        public async Task<IActionResult> GetThuVienBaiNhacByThuVienId(Guid id)
-        {
-            try
-            {
-                List<ThuVienBaiNhacDTO> result = await _thuVienServices.GetThuVienBaiNhacByThuVienId(id);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
+    
         [HttpDelete("deletethuvienbainhac")]
         public async Task<IActionResult> DeleteThuVienBaiNhac(Guid thuVienId , Guid baiNhacId)
         {

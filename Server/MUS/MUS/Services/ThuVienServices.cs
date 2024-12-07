@@ -28,9 +28,19 @@ namespace MUS.Services
             return await _thuVienRepository.DeleteThuVienBaiNhac(ThuVienId, BaiNhacId);
         }
 
+        public async  Task<List<ThuVienDTO>> GetAllThuVien()
+        {
+            return await _thuVienRepository.GetAllThuVien();
+        }
+
         public async Task<List<ThuVienBaiNhacDTO>> GetThuVienBaiNhacByThuVienId(Guid Id)
         {
             return await _thuVienRepository.GetThuVienBaiNhacByThuVienId(Id);
+        }
+
+        public  async Task<ThuVienDTO> GetThuVienByUserId(Guid UserId)
+        {
+            return await _thuVienRepository.GetThuVienByUserId(UserId);
         }
     }
 }

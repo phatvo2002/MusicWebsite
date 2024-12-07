@@ -192,5 +192,19 @@ namespace MUS.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet("goiybaihat")]
+        public async Task<IActionResult> GoiYBaiHat(Guid userId)
+        {
+            try
+            {
+                List<BaiNhacDTO> result = await _baiNhacServices.GoiYbaiNhacByUserId(userId);
+                return Ok(result);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

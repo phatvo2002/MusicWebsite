@@ -61,8 +61,6 @@ export default function OptionsMenu() {
       >
         <MenuItem onClick={gotolink} >Profile</MenuItem>
         <Divider />
-        <MenuItem onClick={handleClose}>Add another account</MenuItem>
-        <MenuItem onClick={handleClose}>Settings</MenuItem>
         <Divider />
         <MenuItem
           onClick={handleClose}
