@@ -19,7 +19,6 @@ import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate } from "react-router-dom";
 import ModalAddDanhSachPhat from "./Modal/ModalAddDanhSachPhat";
-import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import { gray } from "../../../Theme/shared-theme/themePrimitives";
 const Detail = () => {
@@ -85,7 +84,6 @@ const Detail = () => {
     if (startAudio) UpdateView();
   }, [id, startAudio]);
 
-  console.log(dataBaiNhacByNhacSiId);
 
   useEffect(() => {
     if (filePath && fileName) {

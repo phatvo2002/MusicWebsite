@@ -22,12 +22,15 @@ import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import product from "../../../assets/images/product.jpg";
 import axios from "axios";
 import { toast } from "react-toastify";
+import ModalAddDanhSachPhat from "./Modal/ModalAddDanhSachPhat";
 const Trangchu = () => {
   const [songsTopView, setSongs] = useState([]);
   const [songMoiPhatHanh, setSongMoiPhat] = useState([]);
   const [songTopWatch, setSongTopWatch] = useState([]);
+  const [modal, setModal] = useState(false);
   const [nhacSiList, setNhacSiList] = useState([]);
-  const navigate = useNavigate();
+  const [bainhacId , setBaiNhacId] = useState([]);
+  // const navigate = useNavigate();
 
   const userId = localStorage.getItem("userId");
 
@@ -170,6 +173,14 @@ const Trangchu = () => {
       }
     }
   }
+
+  const handelOpenModalAddDanhSachPhat = (id) => {
+    setBaiNhacId(id)
+    setModal(true);
+  };
+  const handelcloseModalAddDanhSachPhat = () => {
+    setModal(false);
+  };
   return (
     <Grid2>
       <Grid2 sx={bannerstyle}>
@@ -282,7 +293,7 @@ const Trangchu = () => {
                             <FavoriteBorderIcon />
                           </IconButton>
                         </Tooltip>
-                        <Tooltip title="Thêm vào danh sách phát">
+                        <Tooltip title="Thêm vào danh sách phát" onClick={()=> handelOpenModalAddDanhSachPhat(item?.id)}>
                           <IconButton>
                             <PlaylistAddIcon />
                           </IconButton>
@@ -506,38 +517,7 @@ const Trangchu = () => {
           Nghệ sĩ phổ biến <span style={{ color: "#FF69B4" }}> phổ biến</span>
         </Typography>
         <Grid2 sx={{ padding: "20px" }}>
-          {/* <Stack
-            direction={{ xs: "column", sm: "row" }}
-            spacing={{ xs: 1, sm: 2, md: 4 }}
-          >
-            {songs.map((item, index) => (
-              <Box key={index}>
-                <img
-                  src={product}
-                  style={{
-                    width: "100%",
-                    height: "200px",
-                    padding: "3px 5px",
-                    borderRadius: "100%",
-                  }}
-                />
-                <Typography
-                  variant="h5"
-                  component="p"
-                  sx={{ padding: "1px 10px" }}
-                >
-                  {item.title}
-                </Typography>
-                <Typography
-                  variant="body1"
-                  component="p"
-                  sx={{ padding: "3px 10px" }}
-                >
-                  {item.artist}
-                </Typography>
-              </Box>
-            ))}
-          </Stack> */}
+         
           <Grid2 sx={{ padding: "20px" }}>
             <Swiper
               modules={[Navigation, Pagination]}
@@ -655,6 +635,15 @@ const Trangchu = () => {
           </Box>
         </Grid2>
       </Grid2>
+
+      <Box>
+        {/* modal */}
+        <ModalAddDanhSachPhat
+          openModal={modal}
+          handleClose={handelcloseModalAddDanhSachPhat}
+          bainhacId={bainhacId}
+        />
+      </Box>
     </Grid2>
   );
 };
