@@ -43,6 +43,19 @@ namespace MUS.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [HttpGet("gettop100bainhacnhieuluotxem")]
+        public async Task<IActionResult> GetTop100BaiNhacNhieuLuotxem()
+        {
+            try
+            {
+                List<BaiNhacDTO> result = await _baiNhacServices.GetTop100BaiNhacNgheNhieuNhat();
+                return Ok(result);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
         [HttpGet("gettop5bainhacmoiphathanh")]
         public async Task<IActionResult> GetTop5BaiNhacMoiPhathanh()
@@ -199,6 +212,19 @@ namespace MUS.Controllers
             try
             {
                 List<BaiNhacDTO> result = await _baiNhacServices.GoiYbaiNhacByUserId(userId);
+                return Ok(result);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpGet("timkiembaihat/keyword")]
+        public async Task<IActionResult> TimKiemBaiHat(string keyword)
+        {
+            try
+            {
+                List<BaiNhacDTO> result = await _baiNhacServices.TimKiemBaiHat(keyword);
                 return Ok(result);
             }
             catch (ArgumentException ex)

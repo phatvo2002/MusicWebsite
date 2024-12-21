@@ -179,7 +179,7 @@ namespace MUS.Repository
         }
         public async Task<List<BaiNhacDTO>> GetBaiNhacByNhacSiId(Guid nhacSiId)
         {
-            var db = await _musDbConText.BaiNhacs.Where(r => r.NhacSiId == nhacSiId).AsNoTracking().ToListAsync();
+            var db = await _musDbConText.BaiNhacs.Where(r => r.NhacSiId == nhacSiId).Include(r=> r.NhacSi).AsNoTracking().ToListAsync();
             return _mapper.Map<List<BaiNhacDTO>>(db);
         }
 
@@ -248,5 +248,17 @@ namespace MUS.Repository
             return _mapper.Map<List<BaiNhacDTO>>(result);
         }
 
+        public async Task<List<BaiNhacDTO>> GetTop100BaiNhacNgheNhieuNhat()
+        {
+           
+                var db = await _musDbConText.BaiNhacs.OrderByDescending(song => song.LuotNghe).Include(r => r.NhacSi).Take(100).ToListAsync();
+                return _mapper.Map<List<BaiNhacDTO>>(db);
+         }
+
+        public async Task<List<BaiNhacDTO>> TimKiemBaiHat(string keyword)
+        {
+            var db = await _musDbConText.BaiNhacs.Where(r => r.TenBaiNhac.Contains(keyword) || r.TheLoai.TenTheLoai.Contains(keyword)|| r.NhacSi.TenNhacSi.Contains(keyword)).ToListAsync();
+            return _mapper.Map<List<BaiNhacDTO>>(db);
+        }
     }
 }

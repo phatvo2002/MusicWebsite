@@ -5,78 +5,57 @@ import {
   Grid2,
   Stack,
   Typography,
-  IconButton,
-  Tooltip,
-  Chip,
-  Tab,
-  Tabs,
-  Paper,
+
+
 } from "@mui/material";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
-import product from "../../../assets/images/product.jpg";
+
 import Banner1 from "../../../assets/images/banner1.jpg"
 import Banner2 from "../../../assets/images/banner2.jpg"
 import Banner3 from "../../../assets/images/banner3.jpg"
-import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
-import { useState } from "react";
-const songsData = [
-  { title: 'chúc ngủ ngon', artist: '52Hz', time: '3 giờ trước', premium: false },
-  { title: 'Sẽ Thế Nào', artist: 'Tuyên', time: '4 giờ trước', premium: false },
-  { title: 'YÊU 0 (feat. Cami)', artist: 'Lil Zpoet, Cami', time: '4 giờ trước', premium: false },
-  { title: 'Because Of You', artist: 'Lauv', time: 'Hôm nay', premium: true },
-  { title: 'Hold On Me', artist: 'Kygo, Sandro Cavazza', time: 'Hôm nay', premium: true },
-  { title: 'The Mountain', artist: 'Shawn Mendes', time: 'Hôm nay', premium: true },
-];
-const songs = [
-  {
-    id: 1,
-    title: "Sorforce",
-    artist: "The Neighbourhood",
-    releaseDate: "Nov 4, 2023",
-    album: "Hard to Imagine the Neighbourhood Ever Changing",
-    time: "3:26",
-  },
-  {
-    id: 2,
-    title: "Skyfall Beats",
-    artist: "Nightmares",
-    releaseDate: "Oct 26, 2023",
-    album: "Nightmares",
-    time: "2:45",
-  },
-  {
-    id: 3,
-    title: "Greedy",
-    artist: "Tate McRae",
-    releaseDate: "Dec 30, 2023",
-    album: "Greedy",
-    time: "2:11",
-  },
-  {
-    id: 4,
-    title: "Lovin On Me",
-    artist: "Jack Harlow",
-    releaseDate: "Dec 30, 2023",
-    album: "Lovin On Me",
-    time: "2:18",
-  },
-  {
-    id: 5,
-    title: "Paint the Town Red",
-    artist: "Doja Cat",
-    releaseDate: "Dec 29, 2023",
-    album: "Paint The Town Red",
-    time: "3:51",
-  },
-];
+import {  Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination } from "swiper/modules";
+import axios from "axios";
 
 const KhamPha = () => {
-  const [selectedTab, setSelectedTab] = useState(0);
-
-  const handleTabChange = (event, newValue) => {
-    setSelectedTab(newValue);
-  };
+  const [songTheoTamTrang, setSongTheoTamTrang] = useState([])
+  const [songTheoTheLoai, setSongTheoTheLoai] = useState([])
+  const [songTheoChuDe, setSongTheoChuDe] = useState([])
+  useEffect(() => {
+    const getSongsTheoTamTrang = async () => {
+      const response = await axios.get(
+        "https://localhost:7280/api/TamTrang/getalltamtrang"
+      );
+      if (response.status === 200) {
+        setSongTheoTamTrang(response?.data);
+      }
+    };
+    getSongsTheoTamTrang();
+  }, []);
+  useEffect(() => {
+    const getSongsTheoTheLoai = async () => {
+      const response = await axios.get(
+        "https://localhost:7280/api/TheLoai/GetAllTheLoai"
+      );
+      if (response.status === 200) {
+        setSongTheoTheLoai(response?.data);
+      }
+    };
+    getSongsTheoTheLoai();
+  }, []);
+  useEffect(() => {
+    const getSongsTheoChuDe = async () => {
+      const response = await axios.get(
+        "https://localhost:7280/api/ChuDe/getallchude"
+      );
+      if (response.status === 200) {
+        setSongTheoChuDe(response?.data);
+      }
+    };
+    getSongsTheoChuDe();
+  }, []);
+   
   return (
     <Container
       maxWidth="xl"
@@ -213,195 +192,164 @@ const KhamPha = () => {
       <Typography variant="h4" component="div" style={{ color: "white",padding : 20 }}>
         <span style={{ color: "#FF69B4" }}>Tâm trạng ,</span>  Cảm xúc 
       </Typography>
-      <Grid2 sx={{ padding: "20px" }}>
+      <Grid2 sx={{ }}>
+          <Swiper
+            modules={[Navigation, Pagination]}
+            spaceBetween={30}
+            slidesPerView={5}
+            navigation
+            pagination={{ clickable: true }}
+          >
+            {songTheoTamTrang.map((item, index) => {
+              return (
+                <SwiperSlide key={index}>
+                  <Box
+                    sx={{
+                      background: "#212121",
+                      borderRadius: "5px",
+                      width: "200px",
+                      color: "text.secondary",
+                    }}
+                    key={item.id}
+                    className="animated-product"
+                  >
+                    <img
+                      src={`https://localhost:7280/api/File/image?path=${item.url}`}
+                      style={{
+                        width: "100%",
+                        padding: "3px 5px",
+                        borderRadius: "5px",
+                      }}
+                    />
+                    <Link
+                      to={`/#`}
+                      style={{
+                        padding: "1px 10px",
+                        textDecoration: "none",
+                        color: "white",
+                        fontSize:"1.2rem"
+                      }}
+                    >
+                      {item.tenTamTrang}
+                    </Link>
+                 
+                  </Box>
+                </SwiperSlide>
+              );
+            })}
+          </Swiper>
+        </Grid2>
+      <Grid2 sx={{ }}>
         <Stack
           direction={{ xs: "column", sm: "row" }}
           spacing={{ xs: 1, sm: 2, md: 4 }}
         >
-          {songs.map((item, index) => (
-            <Box
-              sx={{
-                background: "#212121",
-                borderRadius: "5px",
-                color: "text.secondary",
-                position: "relative",
-              }}
-              key={index}
-              className="animated-product"
-            >
-              <img
-                src={product}
-                style={{
-                  width: "100%",
-                  height: "200px",
-                  borderRadius: "5px",
-                }}
-              />
-              <Typography
-                variant="h5"
-                component="p"
-                sx={{ padding: "1px 10px" }}
-              >
-                {item.title}
-              </Typography>
-              {/* <Typography variant='body1' component="p" sx={{padding:"3px 10px" ,position:"absolute" ,bottom:10}}>{item.artist}</Typography> */}
-              <Stack direction="row" spacing={2} padding={1}>
-                <Tooltip title="Thêm vào thư viện">
-                <IconButton>
-                  <FavoriteBorderIcon />
-                </IconButton>
-                </Tooltip >
-                <Tooltip title="Thêm vào danh sách phát">
-                <IconButton>
-                  <PlaylistAddIcon />
-                </IconButton>
-                </Tooltip>
-              </Stack>
-            </Box>
-          ))}
         </Stack>
-        <Box alignItems="center">
-          <Button
-            variant="contained"
-            style={{
-              marginTop: "20px",
-              backgroundColor: "#f010ae",
-              color: "#FF69B4",
-              textTransform: "none",
-            }}
-          >
-            + Xem thêm
-          </Button>
-        </Box>
+      
       </Grid2>
       <Typography variant="h4" component="div" style={{ color: "white",padding : 20 }}>
-         Thể loại bài hát
+      <span style={{ color: "#FF69B4" }}>Thể loại bài hát</span>
       </Typography>
-      <Grid2 sx={{ padding: "20px" }}>
-        <Stack
-          direction={{ xs: "column", sm: "row" }}
-          spacing={{ xs: 1, sm: 2, md: 4 }}
-        >
-          {songs.map((item, index) => (
-            <Box
-              sx={{
-                background: "#212121",
-                borderRadius: "5px",
-                color: "text.secondary",
-                position: "relative",
-              }}
-              key={index}
-              className="animated-product"
-            >
-              <img
-                src={product}
-                style={{
-                  width: "100%",
-                  height: "200px",
-                  borderRadius: "5px",
-                }}
-              />
-              <Typography
-                variant="h5"
-                component="p"
-                sx={{ padding: "1px 10px" }}
-              >
-                {item.title}
-              </Typography>
-              {/* <Typography variant='body1' component="p" sx={{padding:"3px 10px" ,position:"absolute" ,bottom:10}}>{item.artist}</Typography> */}
-              <Stack direction="row" spacing={2} padding={1}>
-                <Tooltip title="Thêm vào thư viện">
-                <IconButton>
-                  <FavoriteBorderIcon />
-                </IconButton>
-                </Tooltip >
-                <Tooltip title="Thêm vào danh sách phát">
-                <IconButton>
-                  <PlaylistAddIcon />
-                </IconButton>
-                </Tooltip>
-              </Stack>
-            </Box>
-          ))}
-        </Stack>
-        <Box alignItems="center">
-          <Button
-            variant="contained"
-            style={{
-              marginTop: "20px",
-              backgroundColor: "#f010ae",
-              color: "#FF69B4",
-              textTransform: "none",
-            }}
+      <Grid2 >
+          <Swiper
+            modules={[Navigation, Pagination]}
+            spaceBetween={30}
+            slidesPerView={5}
+            navigation
+            pagination={{ clickable: true }}
           >
-            + Xem thêm
-          </Button>
-        </Box>
-      </Grid2>
+            {songTheoTheLoai.map((item, index) => {
+              return (
+                <SwiperSlide key={index}>
+                  <Box
+                    sx={{
+                      background: "#212121",
+                      borderRadius: "5px",
+                      width: "200px",
+                      color: "text.secondary",
+                    }}
+                    key={item.id}
+                    className="animated-product"
+                  >
+                    <img
+                      src={`https://localhost:7280/api/File/image?path=${item.url}`}
+                      style={{
+                        width: "100%",
+                        padding: "3px 5px",
+                        borderRadius: "5px",
+                      }}
+                    />
+                    <Link
+                      to={`/#`}
+                      style={{
+                        padding: "1px 10px",
+                        textDecoration: "none",
+                        color: "white",
+                        fontSize:"1.2rem"
+                      }}
+                    >
+                      {item.tenTheLoai}
+                    </Link>
+                 
+                  </Box>
+                </SwiperSlide>
+              );
+            })}
+          </Swiper>
+        </Grid2>
 
       <Typography variant="h4" component="div" style={{ color: "white",padding : 20 }}>
-         Chủ đề 
+      <span style={{ color: "#FF69B4" }}>Chủ đề</span>
       </Typography>
-      <Grid2 sx={{ padding: "20px" }}>
-        <Stack
-          direction={{ xs: "column", sm: "row" }}
-          spacing={{ xs: 1, sm: 2, md: 4 }}
-        >
-          {songs.map((item, index) => (
-            <Box
-              sx={{
-                background: "#212121",
-                borderRadius: "5px",
-                color: "text.secondary",
-                position: "relative",
-              }}
-              key={index}
-              className="animated-product"
-            >
-              <img
-                src={product}
-                style={{
-                  width: "100%",
-                  height: "200px",
-                  borderRadius: "5px",
-                }}
-              />
-              <Typography
-                variant="h5"
-                component="p"
-                sx={{ padding: "1px 10px" }}
-              >
-                {item.title}
-              </Typography>
-              {/* <Typography variant='body1' component="p" sx={{padding:"3px 10px" ,position:"absolute" ,bottom:10}}>{item.artist}</Typography> */}
-              <Stack direction="row" spacing={2} padding={1}>
-                <Tooltip title="Thêm vào thư viện">
-                <IconButton>
-                  <FavoriteBorderIcon />
-                </IconButton>
-                </Tooltip >
-                <Tooltip title="Thêm vào danh sách phát">
-                <IconButton>
-                  <PlaylistAddIcon />
-                </IconButton>
-                </Tooltip>
-              </Stack>
-            </Box>
-          ))}
-        </Stack>
-        <Box alignItems="center">
-          <Button
-            variant="contained"
-            style={{
-              marginTop: "20px",
-              backgroundColor: "#f010ae",
-              color: "#FF69B4",
-              textTransform: "none",
-            }}
+      <Grid2 >
+      <Grid2>
+          <Swiper
+            modules={[Navigation, Pagination]}
+            spaceBetween={30}
+            slidesPerView={5}
+            navigation
+            pagination={{ clickable: true }}
           >
-            + Xem thêm
-          </Button>
-        </Box>
+            {songTheoChuDe.map((item, index) => {
+              return (
+                <SwiperSlide key={index}>
+                  <Box
+                    sx={{
+                      background: "#212121",
+                      borderRadius: "5px",
+                      width: "200px",
+                      color: "text.secondary",
+                    }}
+                    key={item.id}
+                    className="animated-product"
+                  >
+                    <img
+                      src={`https://localhost:7280/api/File/image?path=${item.url}`}
+                      style={{
+                        width: "100%",
+                        padding: "3px 5px",
+                        borderRadius: "5px",
+                      }}
+                    />
+                    <Link
+                      to={`/#`}
+                      style={{
+                        padding: "1px 10px",
+                        textDecoration: "none",
+                        color: "white",
+                        fontSize:"1.2rem"
+                      }}
+                    >
+                      {item.tenChuDe}
+                    </Link>
+                 
+                  </Box>
+                </SwiperSlide>
+              );
+            })}
+          </Swiper>
+        </Grid2>
+       
       </Grid2>
     </Container>
   );

@@ -15,7 +15,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 import "swiper/swiper-bundle.css";
 import { styled } from "@mui/system";
-import { useNavigate, Link } from "react-router-dom";
+import {  Link } from "react-router-dom";
 import { Box, Button, Grid2, Stack, Typography } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
@@ -306,18 +306,7 @@ const Trangchu = () => {
             </Swiper>
           </Grid2>
           <Box alignItems="center">
-            <Button
-              variant="contained"
-              style={{
-                marginTop: "20px",
-                marginLeft: "20px",
-                backgroundColor: "#333",
-                color: "#FF69B4",
-                textTransform: "none",
-              }}
-            >
-              + Xem tất cả
-            </Button>
+            
           </Box>
         </Grid2>
       ) : (
@@ -539,13 +528,15 @@ const Trangchu = () => {
                           borderRadius: "100%",
                         }}
                       />
+                      <Link to={`/NhacSi/${item?.id}`} style={{textDecoration:"none" , textAlign:"center"}}>
                       <Typography
                         variant="h5"
-                        component="p"
-                        sx={{ padding: "1px 10px" }}
+                        component="body"
+                        sx={{ padding: "1px 10px" , textDecoration:"none"}}
                       >
                         {item.tenNhacSi}
                       </Typography>
+                      </Link>
                     </Box>
                   </SwiperSlide>
                 );

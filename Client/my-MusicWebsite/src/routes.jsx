@@ -17,6 +17,12 @@ import User from './View/MainComponent/Administrator/User/User';
 import DanhSachPhatDetail from './View/MainComponent/DanhSachPhat/DanhsachPhatDetail/DanhSachPhatDetail';
 import Albums from './View/MainComponent/Albums/Album';
 import ThuVienDetail from './View/MainComponent/ThuVien/ThuVienDetail';
+import NhacSiDetail from './View/MainComponent/Nhacsi/NhacSIDetail/NhacSiDetail';
+import BangXepHang from './View/MainComponent/BangXepHang/BangXepHang';
+import TamTrangDetail from './View/MainComponent/KhamPha/components/TamTrangDetail';
+import TheLoaiDetail from './View/MainComponent/KhamPha/components/TheLoaiDetail';
+import ChuDeDetail from './View/MainComponent/KhamPha/components/ChuDeDetail';
+import TimKiem from './View/MainComponent/TimKiem/TimKiem';
 const AppRoutes = () => {
     return (
       <Routes>
@@ -35,9 +41,15 @@ const AppRoutes = () => {
         <Route path="/Trangchu" element={<Trangchu/>} />
         <Route path="/bainhac/:tenbainhac/:id"  element={<Detail/>} />
         <Route path="/DanhSachPhat/:id" element={<DanhSachPhatDetail/>} />
+        <Route path="/NhacSi/:id" element={<NhacSiDetail/>} />
         <Route path="/KhamPha" element={<KhamPha/>} />
+        <Route path="/KhamPha/TamTrang/:id" element={<TamTrangDetail/>} />
+        <Route path="/KhamPha/TheLoai/:id" element={<TheLoaiDetail/>} />
+        <Route path="/KhamPha/ChuDe/:id" element={<ChuDeDetail/>} />
         <Route path="/Albums" element={<Albums/>} /> 
         <Route path="/ThuVien/:id" element={<ThuVienDetail/>} /> 
+        <Route path="/BangXepHang" element={<BangXepHang/>} /> 
+        <Route path="/TimKiem" element={<TimKiem/>} /> 
         {/* Thêm các route con khác */}
        </Route>
       </Routes>

@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import axios from "axios";
+import { AudioPlayer } from "react-audio-player-component";
 import {
   Box,
   Typography,
-  Button,
   Avatar,
   Card,
   CardContent,
@@ -14,77 +16,48 @@ import {
   Stack,
   Tooltip,
 } from "@mui/material";
-import { AudioPlayer } from "react-audio-player-component";
-import { useParams } from "react-router-dom";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
-import axios from "axios";
+const TimKiem = () => {
+  const location = useLocation();
+  const [keyword, setKeyword] = useState("");
+  const [results, setResults] = useState([]);
 
-const NhacSiDetail = () => {
-  const { id } = useParams();
-  const [baiNhacByNhacSi, setBaiNhacByNhacSi] = useState([]);
-  const [nhacSi, setNhacSi] = useState({});
   useEffect(() => {
-    const getSongsTheoNhacSi = async () => {
-      const response = await axios.get(
-        `https://localhost:7280/api/BaiNhac/getbainhacbynhacsiid?nhacSiId=${id}`
-      );
-      if (response.status === 200) {
-        setBaiNhacByNhacSi(response?.data);
+    const params = new URLSearchParams(location.search);
+    const keywordFromUrl = params.get("keyword");
+
+    setKeyword(keywordFromUrl);
+
+    const fetchSongs = async () => {
+      try {
+        const response = await axios.get(
+          `https://localhost:7280/api/BaiNhac/timkiembaihat/keyword?keyword=${encodeURIComponent(
+            keywordFromUrl
+          )}`
+        );
+        setResults(response.data);
+      } catch (error) {
+        console.error("Lỗi khi tìm kiếm bài hát:", error);
+        setResults([]);
       }
     };
-    getSongsTheoNhacSi();
-  }, []);
-  useEffect(() => {
-    const getNhacSiById = async () => {
-      const response = await axios.get(
-        `https://localhost:7280/api/NhacSi/getnhacsibyid?Id=${id}`
-      );
-      if (response.status === 200) {
-        setNhacSi(response?.data);
-      }
-    };
-    getNhacSiById();
-  }, []);
+
+    if (keywordFromUrl && keywordFromUrl.trim() !== "") {
+      fetchSongs();
+    } else {
+      setResults([]);
+    }
+  }, [location.search]);
+
+  console.log(results);
 
   return (
-    <Box sx={{ backgroundColor: "#1b1036", color: "#fff", minHeight: "100vh" }}>
-      {/* Header */}
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          padding: "32px",
-          background: "linear-gradient(to bottom, #5c2c90, #1b1036)",
-        }}
-      >
-        <img
-          style={{
-            width: "150px",
-            height: "150px",
-            padding: "5px",
-            borderRadius: "100px",
-          }}
-          src={`https://localhost:7280/api/File/image?path=${nhacSi?.url}`}
-        ></img>
-        <Box>
-          <Typography variant="h3" fontWeight="bold">
-            {nhacSi?.tenNhacSi}
-          </Typography>
-          <Button
-            variant="contained"
-            color="secondary"
-            sx={{ marginTop: "16px", borderRadius: "20px" }}
-          >
-            Quan Tâm
-          </Button>
-        </Box>
-      </Box>
-
-      {/* Danh sách bài hát */}
+    <div>
+      <h1>Kết quả tìm kiếm</h1>
       <Box sx={{ padding: "12px" }}>
         <List>
-          {baiNhacByNhacSi.map((song, index) => (
+          {results.map((song, index) => (
             <Card
               key={index}
               sx={{
@@ -156,8 +129,8 @@ const NhacSiDetail = () => {
           ))}
         </List>
       </Box>
-    </Box>
+    </div>
   );
 };
 
-export default NhacSiDetail;
+export default TimKiem;

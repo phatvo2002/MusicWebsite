@@ -20,13 +20,14 @@ import { Link } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import EqualizerIcon from '@mui/icons-material/Equalizer';
 import axios from "axios";
 const mainListItems = [
   { text: "Trang chủ", icon: <HomeRoundedIcon />, url: "/Trangchu" },
   { text: "Khám phá", icon: <AnalyticsRoundedIcon />, url: "/Khampha" },
   { text: "Albums", icon: <LibraryMusicIcon />, url: "/Albums" },
   { text: "Nhạc sĩ", icon: <AudiotrackIcon />, url: "/Nhacsi" },
-  { text: "Top 100 ", icon: <RadioIcon />, url: "/Ngheganday" },
+  { text: "Bản xếp hạng nhạc", icon: <EqualizerIcon />, url: "/BangXepHang" },
 ];
 
 const secondaryListItems = [
