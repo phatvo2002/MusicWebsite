@@ -12,6 +12,7 @@ import {
 import Banner1 from "../../../assets/images/banner1.jpg"
 import Banner2 from "../../../assets/images/banner2.jpg"
 import Banner3 from "../../../assets/images/banner3.jpg"
+
 import {  Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -222,7 +223,7 @@ const KhamPha = () => {
                       }}
                     />
                     <Link
-                      to={`/#`}
+                      to={`/KhamPha/TamTrang/${item.id}`}
                       style={{
                         padding: "1px 10px",
                         textDecoration: "none",
@@ -280,7 +281,7 @@ const KhamPha = () => {
                       }}
                     />
                     <Link
-                      to={`/#`}
+                      to={`/KhamPha/TheLoai/${item.id}`}
                       style={{
                         padding: "1px 10px",
                         textDecoration: "none",
@@ -332,7 +333,7 @@ const KhamPha = () => {
                       }}
                     />
                     <Link
-                      to={`/#`}
+                      to={`/KhamPha/ChuDe/${item.id}`}
                       style={{
                         padding: "1px 10px",
                         textDecoration: "none",
