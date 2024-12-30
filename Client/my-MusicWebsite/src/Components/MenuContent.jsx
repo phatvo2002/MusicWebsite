@@ -25,8 +25,8 @@ import axios from "axios";
 const mainListItems = [
   { text: "Trang chủ", icon: <HomeRoundedIcon />, url: "/Trangchu" },
   { text: "Khám phá", icon: <AnalyticsRoundedIcon />, url: "/Khampha" },
-  { text: "Albums", icon: <LibraryMusicIcon />, url: "/Albums" },
-  { text: "Nhạc sĩ", icon: <AudiotrackIcon />, url: "/Nhacsi" },
+  // { text: "Albums", icon: <LibraryMusicIcon />, url: "/Albums" },
+  // { text: "Nhạc sĩ", icon: <AudiotrackIcon />, url: "/Nhacsi" },
   { text: "Bản xếp hạng nhạc", icon: <EqualizerIcon />, url: "/BangXepHang" },
 ];
 

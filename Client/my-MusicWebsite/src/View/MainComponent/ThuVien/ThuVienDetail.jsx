@@ -27,11 +27,10 @@ const ThuVienDetail = () => {
 
   const handleDeleteBainhac = async (thuVienId , baiNhacId) => {
      const response = axios.delete(`https://localhost:7280/api/ThuVien/deletethuvienbainhac?thuVienId=${thuVienId}&baiNhacId=${baiNhacId}`)
-     console.log(response)
      if(response.status === 200)
      {
+       window.location.reload()
       toast.success("Xóa khỏi thư viện thành công")
-      window.location.reload()
      }
      
   }
@@ -128,7 +127,7 @@ const ThuVienDetail = () => {
               <TableCell align="center">
                  <Stack  direction="row" spacing={2}> 
                   <Tooltip title="Xóa bài nhạc khỏi thư viện" >
-                     <IconButton onClick={handleDeleteBainhac(song?.thuVienId, song?.baiNhacId)}>
+                     <IconButton onClick={()=>handleDeleteBainhac(song?.thuVienId, song?.baiNhacId)}>
                          <DeleteIcon/>
                      </IconButton>
                   </Tooltip>

@@ -21,8 +21,8 @@ export default function Header() {
     toast.success("Đăng xuất thành công", {
       toastId: "alert-add-save-success",
     });
-    window.location.reload();
     gotolink()
+    window.location.reload();
   }
   return (
     <Stack
@@ -40,7 +40,7 @@ export default function Header() {
       <NavbarBreadcrumbs />
       <Stack direction="row" sx={{ gap: 1 }}>
         <Search />
-        <CustomDatePicker />
+        {/* <CustomDatePicker /> */}
         <MenuButton showBadge aria-label="Open notifications">
           <NotificationsRoundedIcon />
         </MenuButton>

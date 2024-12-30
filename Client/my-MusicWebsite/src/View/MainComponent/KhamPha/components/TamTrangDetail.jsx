@@ -4,15 +4,23 @@ import {
   Grid,
   Card,
   CardContent,
+  Stack,
+  Tooltip,
+  IconButton,
 } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import ModalAddDanhSachPhat from "../Modal/ModalAddDanhSachPhat";
+import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 const TamTrangDetail = () => {
   const { id } = useParams();
   const [tamTrang, setTamTrang] = useState([]);
   const [tamTrangbyId, setTamTrangById] = useState({});
+  const [bainhacId, setBaiNhacId] = useState([]);
+  const [modal, setModal] = useState(false);
   useEffect(() => {
     const getTamTrang = async () => {
       const response = await axios.get(
@@ -39,6 +47,37 @@ const TamTrangDetail = () => {
     };
     getTamTrangById();
   }, [id]);
+
+  const handleAddLibary = async (baiNhacId) => {
+    const thuVienId = localStorage.getItem("thuVienID");
+    if (thuVienId == null || undefined) {
+      toast.warning("Bạn cần đăng nhập để thực hiện chức năng");
+    } else {
+      const data = {
+        thuVienId: thuVienId,
+        baiNhacId: baiNhacId,
+      };
+      const response = await axios.post(
+        "https://localhost:7280/api/ThuVien/addthuvienbainhac",
+        data
+      );
+      if (response.status === 200) {
+        toast.success("Thêm vào thư viện thành công");
+      } else {
+        toast.error(
+          "Đã có lỗi xảy ra , vui lòng liên hệ với bộ phận chăm sóc khách hàng để hỗ trợ"
+        );
+      }
+    }
+  };
+
+  const handelOpenModalAddDanhSachPhat = (id) => {
+    setBaiNhacId(id);
+    setModal(true);
+  };
+  const handelcloseModalAddDanhSachPhat = () => {
+    setModal(false);
+  };
 
   return (
     <Box sx={{ minHeight: "100vh", color: "white" }}>
@@ -84,12 +123,29 @@ const TamTrangDetail = () => {
                     >
                       {item.tenBaiNhac}
                     </Link>
+                    <Stack direction="row" spacing={2} padding={1}>
+                        <Tooltip title="Thêm vào thư viện">
+                          <IconButton onClick={()=>handleAddLibary(item?.id)}>
+                            <FavoriteBorderIcon />
+                          </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Thêm vào danh sách phát" onClick={()=> handelOpenModalAddDanhSachPhat(item?.id)}>
+                          <IconButton>
+                            <PlaylistAddIcon />
+                          </IconButton>
+                        </Tooltip>
+                      </Stack>
                 </CardContent>
               </Card>
             </Grid>
           ))}
         </Grid>
       </Box>
+      <ModalAddDanhSachPhat
+          openModal={modal}
+          handleClose={handelcloseModalAddDanhSachPhat}
+          bainhacId={bainhacId}
+        />
     </Box>
   );
 };

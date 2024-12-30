@@ -373,16 +373,16 @@ const Trangchu = () => {
                       {item.nhacSi.tenNhacSi}
                     </Typography>
                     <Stack direction="row" spacing={2} padding={1}>
-                      <Tooltip title="Thêm vào thư viện">
-                        <IconButton>
-                          <FavoriteBorderIcon />
-                        </IconButton>
-                      </Tooltip>
-                      <Tooltip title="Thêm vào danh sách phát">
-                        <IconButton>
-                          <PlaylistAddIcon />
-                        </IconButton>
-                      </Tooltip>
+                    <Tooltip title="Thêm vào thư viện">
+                          <IconButton onClick={()=>handleAddLibary(item?.id)}>
+                            <FavoriteBorderIcon />
+                          </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Thêm vào danh sách phát" onClick={()=> handelOpenModalAddDanhSachPhat(item?.id)}>
+                          <IconButton>
+                            <PlaylistAddIcon />
+                          </IconButton>
+                        </Tooltip>
                     </Stack>
                   </Box>
                 </SwiperSlide>

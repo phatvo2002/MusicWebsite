@@ -23,15 +23,27 @@ import image from "../../../assets/images/playlistBackground.jpg";
 import { Link } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 const Profile = () => {
   const [tabIndex, setTabIndex] = useState(0);
   const [playlist, setPlayList] = useState([]);
   // Xử lý chuyển đổi Tab
+  const navigate = useNavigate()
   const handleTabChange = (event, newValue) => {
     setTabIndex(newValue);
   };
-
+  const gotolink = ()=>{
+    navigate("/Login")
+  }
+  const logout = () => {
+    localStorage.clear();
+    toast.success("Đăng xuất thành công", {
+      toastId: "alert-add-save-success",
+    });
+    gotolink()
+    window.location.reload();
+  }
   const userId = localStorage.getItem("userId");
 
   useEffect(() => {
@@ -81,7 +93,7 @@ const Profile = () => {
               <Tab label="Thư viện" icon={<LibraryMusicIcon />} />
               <Tab label="Lịch sử" icon={<HeadsetIcon />} />
               <Tab label="Đổi mật khẩu" icon={<ManageAccountsIcon />} />
-              <Tab label="Đăng xuất" icon={<LogoutIcon />} />
+              <Tab label="Đăng xuất" icon={<LogoutIcon />} onClick={logout} />
             </Tabs>
           </Paper>
         </Grid2>

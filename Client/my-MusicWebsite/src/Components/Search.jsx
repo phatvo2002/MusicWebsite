@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FormControl, OutlinedInput, InputAdornment } from '@mui/material';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
@@ -8,7 +8,7 @@ export default function Search() {
   const navigate = useNavigate();
 
   const handleSearch = () => {
-    if (!keyword.trim()) return; // Không làm gì nếu từ khóa trống
+    if (!keyword.trim()) return; 
     navigate(`/TimKiem?keyword=${encodeURIComponent(keyword)}`); // Chuyển hướng
   };
 
