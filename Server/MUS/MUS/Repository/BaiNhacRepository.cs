@@ -11,8 +11,8 @@ namespace MUS.Repository
 {
     public class BaiNhacRepository : IBaiNhacRepository
     {
-        public readonly MusDbConText _musDbConText;
-        public readonly IMapper _mapper;
+        private readonly MusDbConText _musDbConText;
+        private readonly IMapper _mapper;
         public BaiNhacRepository(MusDbConText musDbConText , IMapper mapper)
         {
             _musDbConText = musDbConText;
@@ -174,7 +174,7 @@ namespace MUS.Repository
         }
         public async Task<List<BaiNhacDTO>> GetBaiNhacByAlBumId(Guid albumId)
         {
-            var db = await _musDbConText.BaiNhacs.Where(r=> r.AlbumId == albumId).AsNoTracking().ToListAsync();
+            var db = await _musDbConText.BaiNhacs.Where(r=> r.AlbumId == albumId).Include(r=> r.Album).Include(r=>r.NhacSi).AsNoTracking().ToListAsync();
             return _mapper.Map<List<BaiNhacDTO>>(db);
         }
         public async Task<List<BaiNhacDTO>> GetBaiNhacByNhacSiId(Guid nhacSiId)
@@ -258,6 +258,12 @@ namespace MUS.Repository
         public async Task<List<BaiNhacDTO>> TimKiemBaiHat(string keyword)
         {
             var db = await _musDbConText.BaiNhacs.Where(r => r.TenBaiNhac.Contains(keyword) || r.TheLoai.TenTheLoai.Contains(keyword)|| r.NhacSi.TenNhacSi.Contains(keyword)).ToListAsync();
+            return _mapper.Map<List<BaiNhacDTO>>(db);
+        }
+
+        public async Task<List<BaiNhacDTO>> GetBaiNhacByChuDeid(Guid chuDeId)
+        {
+            var db = await _musDbConText.BaiNhacs.Where(r => r.ChudeId == chuDeId).AsNoTracking().ToListAsync();
             return _mapper.Map<List<BaiNhacDTO>>(db);
         }
     }

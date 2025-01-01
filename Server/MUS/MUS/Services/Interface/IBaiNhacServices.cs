@@ -21,7 +21,7 @@ namespace MUS.Services.Interface
         Task<List<BaiNhacDTO>> GetBaiNhacByTamTrangid(Guid tamTrangId);
         Task<List<BaiNhacDTO>> GetBaiNhacByAlBumId(Guid albumId);
         Task<List<BaiNhacDTO>> GetBaiNhacByQuocGiaId(int quocGiaId);
-
+        Task<List<BaiNhacDTO>> GetBaiNhacByChuDeid(Guid chuDeId);
         Task<List<BaiNhacDTO>> GoiYbaiNhacByUserId(Guid userId);
         Task<List<BaiNhacDTO>> GetTop100BaiNhacNgheNhieuNhat();
 

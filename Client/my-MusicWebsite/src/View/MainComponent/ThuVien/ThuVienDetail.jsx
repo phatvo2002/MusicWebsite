@@ -11,8 +11,6 @@ import {
   Tooltip,
   Box,
 } from "@mui/material";
-// import FavoriteIcon from '@mui/icons-material/Favorite';
-// import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import DownloadIcon from '@mui/icons-material/Download';
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -26,7 +24,7 @@ const ThuVienDetail = () => {
   const { id } = useParams();
 
   const handleDeleteBainhac = async (thuVienId , baiNhacId) => {
-     const response = axios.delete(`https://localhost:7280/api/ThuVien/deletethuvienbainhac?thuVienId=${thuVienId}&baiNhacId=${baiNhacId}`)
+     const response =await axios.delete(`https://localhost:7280/api/ThuVien/deletethuvienbainhac?thuVienId=${thuVienId}&baiNhacId=${baiNhacId}`)
      if(response.status === 200)
      {
        window.location.reload()

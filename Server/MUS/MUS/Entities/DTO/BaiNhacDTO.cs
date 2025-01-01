@@ -19,5 +19,6 @@
         public Guid? ChudeId { get; set; }
         public Guid? AlbumId { get; set; }
         public NhacSiDTO? NhacSi { get; set; }
+        public AlbumDTO?  Album { get; set; }
     }
 }

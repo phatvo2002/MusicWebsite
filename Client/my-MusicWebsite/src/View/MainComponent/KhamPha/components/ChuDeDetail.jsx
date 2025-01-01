@@ -19,7 +19,7 @@ const ChuDeDetail = () => {
   useEffect(() => {
     const getTamTrang = async () => {
       const response = await axios.get(
-        `https://localhost:7280/api/BaiNhac/getbainhacbytamtrangid?tamTrangId=${id}`
+        `https://localhost:7280/api/BaiNhac/getbainhacbychudeid?chudeid=${id}`
       );
       if (response.status === 200) {
         setChuDe(response?.data);
@@ -30,9 +30,9 @@ const ChuDeDetail = () => {
     getTamTrang();
   }, [id]);
   useEffect(() => {
-    const getTamTrangById = async () => {
+    const getChuDeById = async () => {
       const response = await axios.get(
-        `https://localhost:7280/api/TamTrang/gettamtrangbyid?Id=${id}`
+        `https://localhost:7280/api/ChuDe/getchudebyid?Id=${id}`
       );
       if (response.status === 200) {
         setChuDeById(response?.data);
@@ -40,7 +40,7 @@ const ChuDeDetail = () => {
         toast.warning("Đã có lỗi xảy ra , vui lòng liên hệ bộ phận admin");
       }
     };
-    getTamTrangById();
+    getChuDeById();
   }, [id]);
   const handleAddLibary = async (baiNhacId)=>{
     const thuVienId = localStorage.getItem("thuVienID");

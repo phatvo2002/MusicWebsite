@@ -20,18 +20,33 @@ import { Box, Button, Grid2, Stack, Typography } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import product from "../../../assets/images/product.jpg";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import ModalAddDanhSachPhat from "./Modal/ModalAddDanhSachPhat";
 const Trangchu = () => {
+  const navigate = useNavigate();
   const [songsTopView, setSongs] = useState([]);
   const [songMoiPhatHanh, setSongMoiPhat] = useState([]);
   const [songTopWatch, setSongTopWatch] = useState([]);
   const [modal, setModal] = useState(false);
   const [nhacSiList, setNhacSiList] = useState([]);
   const [bainhacId , setBaiNhacId] = useState([]);
+  const [album,setAlbums]= useState([]);
   // const navigate = useNavigate();
 
+  const gotoLinkTopXephang = ()=>
+  {
+     navigate("/BangXepHang")
+  }
+  const gotoLinkAlbums = ()=>
+    {
+       navigate("/Albums")
+    }
+    const gotoLinkNhacSis = ()=>
+      {
+         navigate("/NhacSiHome")
+      }
   const userId = localStorage.getItem("userId");
 
   useEffect(() => {
@@ -44,6 +59,18 @@ const Trangchu = () => {
       }
     };
     getNhacSi();
+  }, []);
+
+  useEffect(() => {
+    const getAlbum = async () => {
+      const response = await axios.get(
+        `https://localhost:7280/api/Album/getallalbum`
+      );
+      if (response.status === 200) {
+        setAlbums(response?.data);
+      }
+    };
+    getAlbum();
   }, []);
 
   useEffect(() => {
@@ -80,48 +107,7 @@ const Trangchu = () => {
     getSongsMoiPhatHanh();
   }, []);
 
-  const songs = [
-    {
-      id: 1,
-      title: "Sorforce",
-      artist: "The Neighbourhood",
-      releaseDate: "Nov 4, 2023",
-      album: "Hard to Imagine the Neighbourhood Ever Changing",
-      time: "3:26",
-    },
-    {
-      id: 2,
-      title: "Skyfall Beats",
-      artist: "Nightmares",
-      releaseDate: "Oct 26, 2023",
-      album: "Nightmares",
-      time: "2:45",
-    },
-    {
-      id: 3,
-      title: "Greedy",
-      artist: "Tate McRae",
-      releaseDate: "Dec 30, 2023",
-      album: "Greedy",
-      time: "2:11",
-    },
-    {
-      id: 4,
-      title: "Lovin On Me",
-      artist: "Jack Harlow",
-      releaseDate: "Dec 30, 2023",
-      album: "Lovin On Me",
-      time: "2:18",
-    },
-    {
-      id: 5,
-      title: "Paint the Town Red",
-      artist: "Doja Cat",
-      releaseDate: "Dec 29, 2023",
-      album: "Paint The Town Red",
-      time: "3:51",
-    },
-  ];
+ 
 
   const StyledTableCell = styled(TableCell)({
     color: "#fff",
@@ -194,9 +180,9 @@ const Trangchu = () => {
               style={{
                 marginTop: "20%",
                 transition: "transform 0.3s ease, color 0.3s ease",
-                transform: hover ? "scale(1.1)" : "scale(1)", // Scale effect
+                transform: hover ? "scale(1.1)" : "scale(1)",
                 color: hover ? "#FF6347" : "inherit",
-                animation: "fadeInUp 1s ease-out forwards", // Change color on hover
+                animation: "fadeInUp 1s ease-out forwards",
               }}
               onMouseEnter={() => setHover(true)}
               onMouseLeave={() => setHover(false)}
@@ -390,20 +376,7 @@ const Trangchu = () => {
             })}
           </Swiper>
         </Grid2>
-        <Box alignItems="center">
-          <Button
-            variant="contained"
-            style={{
-              marginTop: "20px",
-              marginLeft: "20px",
-              backgroundColor: "#333",
-              color: "#FF69B4",
-              textTransform: "none",
-            }}
-          >
-            + Xem tất cả
-          </Button>
-        </Box>
+       
       </Grid2>
 
       <Typography
@@ -484,6 +457,7 @@ const Trangchu = () => {
                       color: "#FF69B4",
                       textTransform: "none",
                     }}
+                    onClick={()=> gotoLinkTopXephang()}
                   >
                     + View All
                   </Button>
@@ -552,6 +526,7 @@ const Trangchu = () => {
                 color: "#FF69B4",
                 textTransform: "none",
               }}
+              onClick={gotoLinkNhacSis}
             >
               + View All
             </Button>
@@ -571,46 +546,43 @@ const Trangchu = () => {
           Top <span style={{ color: "#FF69B4" }}> Albums</span>
         </Typography>
         <Grid2 sx={{ padding: "20px" }}>
-          <Stack
-            direction={{ xs: "column", sm: "row" }}
-            spacing={{ xs: 1, sm: 2, md: 4 }}
-          >
-            {songs.map((item, index) => (
-              <Box
-                sx={{
-                  background: "#212121",
-                  borderRadius: "5px",
-                  color: "text.secondary",
-                }}
-                key={index}
-                className="animated-product"
-              >
-                <img
-                  src={product}
-                  style={{
-                    width: "100%",
-                    height: "200px",
-                    padding: "3px 5px",
-                    borderRadius: "5px",
-                  }}
-                />
-                <Typography
-                  variant="h5"
-                  component="p"
-                  sx={{ padding: "1px 10px" }}
-                >
-                  {item.title}
-                </Typography>
-                <Typography
-                  variant="body1"
-                  component="p"
-                  sx={{ padding: "3px 10px" }}
-                >
-                  {item.artist}
-                </Typography>
-              </Box>
-            ))}
-          </Stack>
+         
+          <Grid2 sx={{ padding: "20px" }}>
+            <Swiper
+              modules={[Navigation, Pagination]}
+              spaceBetween={30}
+              slidesPerView={5}
+              navigation
+             
+            >
+              {album.map((item, index) => {
+                return (
+                  <SwiperSlide key={index}>
+                    <Box key={index}>
+                      <img
+                        src={`https://localhost:7280/api/File/image?path=${item.url}`}
+                        style={{
+                          width: "100%",
+                          height: "200px",
+                          padding: "3px 5px",
+                          borderRadius: "100%",
+                        }}
+                      />
+                      <Link to={`/Albums/${item.id}`} style={{textDecoration:"none" , textAlign:"center"}}>
+                      <Typography
+                        variant="h5"
+                        component="body"
+                        sx={{ padding: "1px 10px" , textDecoration:"none"}}
+                      >
+                        {item.tenAlbum}
+                      </Typography>
+                      </Link>
+                    </Box>
+                  </SwiperSlide>
+                );
+              })}
+            </Swiper>
+          </Grid2>
           <Box alignItems="center">
             <Button
               variant="contained"
@@ -620,6 +592,7 @@ const Trangchu = () => {
                 color: "#FF69B4",
                 textTransform: "none",
               }}
+              onClick={gotoLinkAlbums}
             >
               + View All
             </Button>

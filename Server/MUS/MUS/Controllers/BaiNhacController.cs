@@ -123,6 +123,19 @@ namespace MUS.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [HttpGet("getbainhacbychudeid")]
+        public async Task<IActionResult> GetBaiNhacByChuDeId(Guid chudeid)
+        {
+            try
+            {
+                List<BaiNhacDTO> result = await _baiNhacServices.GetBaiNhacByChuDeid(chudeid);
+                return Ok(result);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
         [HttpGet("getbainhacbyquocgiaid")]
         public async Task<IActionResult> GetBaiNhacByQuocGiaId(int quocgiaid)
         {

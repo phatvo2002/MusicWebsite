@@ -7,7 +7,6 @@ import Stack from "@mui/material/Stack";
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import AnalyticsRoundedIcon from "@mui/icons-material/AnalyticsRounded";
 import AudiotrackIcon from "@mui/icons-material/Audiotrack";
-import RadioIcon from "@mui/icons-material/Radio";
 import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
 import { Grid2, Typography } from "@mui/material";
 import LibraryMusicIcon from "@mui/icons-material/LibraryMusic";
@@ -25,8 +24,8 @@ import axios from "axios";
 const mainListItems = [
   { text: "Trang chủ", icon: <HomeRoundedIcon />, url: "/Trangchu" },
   { text: "Khám phá", icon: <AnalyticsRoundedIcon />, url: "/Khampha" },
-  // { text: "Albums", icon: <LibraryMusicIcon />, url: "/Albums" },
-  // { text: "Nhạc sĩ", icon: <AudiotrackIcon />, url: "/Nhacsi" },
+  { text: "Albums", icon: <LibraryMusicIcon />, url: "/Albums" },
+  { text: "Nhạc sĩ", icon: <AudiotrackIcon />, url: "/NhacSiHome" },
   { text: "Bản xếp hạng nhạc", icon: <EqualizerIcon />, url: "/BangXepHang" },
 ];
 
@@ -93,7 +92,7 @@ export default function MenuContent() {
             <ListItemButton selected={index === 0}>
               <ListItemIcon>{item.icon}</ListItemIcon>
               <ListItemText>
-                <Link component={RouterLink} to={item.url}>
+                <Link component={RouterLink} to={item.url}  style={{fontSize:"1rem", textDecoration:"none"}}>
                   {item.text}
                 </Link>
               </ListItemText>
@@ -106,14 +105,13 @@ export default function MenuContent() {
       </Typography>
       <List dense>
         {userId ? (
-    
           <Grid2>
             {secondaryListItems.map((item, index) => (
               <ListItem key={index} disablePadding sx={{ display: "block" }}>
                 <ListItemButton>
                   <ListItemIcon>{item.icon}</ListItemIcon>
-                  <ListItemText>
-                    <Link component={RouterLink} to={`/ThuVien/${thuVien?.id}`}>
+                  <ListItemText >
+                    <Link component={RouterLink} to={`/ThuVien/${thuVien?.id}`}  style={{fontSize:"1rem", textDecoration:"none"}}>
                       Thư viện của bạn
                     </Link>
                   </ListItemText>
@@ -146,7 +144,7 @@ export default function MenuContent() {
                   <PlaylistPlayIcon />
                 </ListItemIcon>
                 <ListItemText>
-                  <Link component={RouterLink} to={`/DanhSachPhat/${item?.id}`}>
+                  <Link component={RouterLink} to={`/DanhSachPhat/${item?.id}`}  style={{fontSize:"1rem", textDecoration:"none"}}> 
                     {item.tenDanhSachPhat}
                   </Link>
                 </ListItemText>
@@ -196,7 +194,7 @@ export default function MenuContent() {
                 <ListItemButton>
                   <ListItemIcon>{item.icon}</ListItemIcon>
                   <ListItemText>
-                    <Link component={RouterLink} to={item.url}>
+                    <Link component={RouterLink} to={item.url}  style={{fontSize:"1rem", textDecoration:"none"}}>
                       {item.text}
                     </Link>
                   </ListItemText>
@@ -208,7 +206,7 @@ export default function MenuContent() {
                 <ListItemButton>
                   <ListItemIcon>{item.icon}</ListItemIcon>
                   <ListItemText>
-                    <Link component={RouterLink} to={item.url}>
+                    <Link component={RouterLink} to={item.url}  style={{fontSize:"1rem" , textDecoration:"none"}}>
                       {item.text}
                     </Link>
                   </ListItemText>

@@ -28,6 +28,7 @@ import { toast } from "react-toastify";
 const Profile = () => {
   const [tabIndex, setTabIndex] = useState(0);
   const [playlist, setPlayList] = useState([]);
+  const [openModalChinhsua, setOpenModalChinhSua] = useState(false);
   // Xử lý chuyển đổi Tab
   const navigate = useNavigate()
   const handleTabChange = (event, newValue) => {
@@ -45,7 +46,13 @@ const Profile = () => {
     window.location.reload();
   }
   const userId = localStorage.getItem("userId");
-
+  const handleOpenMoalChinhSua = ()=>
+  {
+    setOpenModalChinhSua(true)
+  }
+  const handleCloseMoalChinhSua = ()=>{
+    setOpenModalChinhSua(false)
+  }
   useEffect(() => {
     const getplaylist = async () => {
       const response = await axios.get(

@@ -31,6 +31,11 @@ namespace MUS.Services
            return await _baiNhacRepository.GetBaiNhacByAlBumId(albumId);
         }
 
+        public async Task<List<BaiNhacDTO>> GetBaiNhacByChuDeid(Guid chuDeId)
+        {
+            return await _baiNhacRepository.GetBaiNhacByChuDeid(chuDeId);
+        }
+
         public async Task<BaiNhacDTO> GetBaiNhacById(Guid id)
         {
             return await _baiNhacRepository.GetBaiNhacById(id);

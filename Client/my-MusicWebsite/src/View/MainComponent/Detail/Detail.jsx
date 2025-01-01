@@ -178,6 +178,9 @@ const Detail = () => {
               <Typography variant="caption" component="p">
                 {dataBaiNhac.nhacSi?.tenNhacSi}
               </Typography>
+              <Typography variant="caption" component="p">
+               Lượt nghe :  {dataBaiNhac.luotNghe}
+              </Typography>
             </Box>
             <Box sx={{display:"flex" ,gap:1}}>
             <Tooltip title="Thêm bài hát vào thư viện">
