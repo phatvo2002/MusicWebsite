@@ -10,7 +10,8 @@ namespace MUS.Services.Interface
         Task<ResultModel> DeleteUser(Guid Id);
 
         Task<List<UserDTO>> GetAllUser();
-
+        Task<ResultModel> UpdateUser(UserModal modal);
         Task<ResultModel> ResetPassword(Guid id, string oldPassword,string newPasword);
+        Task<UserDTO> GetUserById(Guid id);
     }
 }

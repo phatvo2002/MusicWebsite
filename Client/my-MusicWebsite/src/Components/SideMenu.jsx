@@ -11,6 +11,8 @@ import { IconButton } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 import LoginIcon from '@mui/icons-material/Login';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 const drawerWidth = 240;
 
 const Drawer = styled(MuiDrawer)({
@@ -27,6 +29,20 @@ const Drawer = styled(MuiDrawer)({
 export default function SideMenu() {
 
    const token = localStorage.getItem('token')
+
+   const userId = localStorage.getItem('userId')
+
+   const [userProfile ,setUserProfile] = useState({})
+
+   useEffect(()=>
+  {
+    const getProfile =async ()=>
+    {
+      const res = await axios.get(`https://localhost:7280/api/User/GetUserById?id=${userId}`)
+      setUserProfile(res.data)
+    }
+    getProfile()
+  },[userId])
 
   return (
     <Drawer
@@ -69,10 +85,10 @@ export default function SideMenu() {
         {token  ? (
     <Box sx={{ mr: 'auto' ,gap:2 }}>
     <Typography variant="body2" sx={{ fontWeight: 500, lineHeight: '16px' }}>
-      Admin
+      {userProfile?.tenNguoiDung}
     </Typography>
     <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-      admin@email.com
+      {userProfile?.email}
     </Typography>
     
     <OptionsMenu/>

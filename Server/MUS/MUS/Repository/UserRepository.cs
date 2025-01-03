@@ -162,5 +162,27 @@ namespace MUS.Repository
             return  _mapper.Map<List<UserDTO>>(db);
         }
 
+        public async Task<UserDTO> GetUserById(Guid id)
+        {
+            var db = await _musDbConText.Users.FirstOrDefaultAsync(r => r.Id == id);
+            return _mapper.Map<UserDTO>(db);
+        }
+
+        public async Task<ResultModel> UpdateUser(UserModal modal)
+        {
+            var db = _musDbConText.Users.Where(r => r.Id == modal.Id).FirstOrDefault();
+            if( db != null )
+            {
+                db.TenNguoiDung = modal.TenNguoiDung;
+                db.Email = modal.Email;
+                db.SoDienThoai = modal.SoDienThoai;
+                _musDbConText.Users.Update(db);
+                await _musDbConText.SaveChangesAsync();
+                return new ResultModel() { Status = 200 , Message="Chỉnh sửa dữ liệu thành công", Success = true };
+            }
+            else
+                return new ResultModel() { Status = 202, Message = "Không tìm thấy dữ liệu", Success = false };
+
+        }
     }
 }

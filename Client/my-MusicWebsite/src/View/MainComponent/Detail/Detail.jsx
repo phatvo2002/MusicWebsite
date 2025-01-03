@@ -21,6 +21,7 @@ import { useNavigate } from "react-router-dom";
 import ModalAddDanhSachPhat from "./Modal/ModalAddDanhSachPhat";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import { gray } from "../../../Theme/shared-theme/themePrimitives";
+import { toast } from "react-toastify";
 const Detail = () => {
   const { id } = useParams();
   const [dataBaiNhac, setDataBaiNhac] = useState({});
@@ -109,6 +110,30 @@ const Detail = () => {
     setStartAudio(true); // Hàm đầu tiên
     handelSaveHistory(); // Hàm thứ hai
   };
+
+  const handleAddLibary = async (baiNhacId)=>{
+    const thuVienId = localStorage.getItem("thuVienID");
+    if(thuVienId  == null || undefined)
+    {
+       toast.warning("Bạn cần đăng nhập để thực hiện chức năng")
+    }else
+    {
+      const data = {
+        thuVienId : thuVienId,
+        baiNhacId : baiNhacId,
+      }
+      const response = await axios.post("https://localhost:7280/api/ThuVien/addthuvienbainhac",data)
+      if(response.status === 200)
+      {
+        toast.success("Thêm vào thư viện thành công")
+      }
+      else
+      {
+        toast.error("Đã có lỗi xảy ra , vui lòng liên hệ với bộ phận chăm sóc khách hàng để hỗ trợ")
+      }
+    }
+  }
+
   return (
     <Grid2 container spacing={2}>
       <Button onClick={handleBack}>
@@ -184,7 +209,7 @@ const Detail = () => {
             </Box>
             <Box sx={{display:"flex" ,gap:1}}>
             <Tooltip title="Thêm bài hát vào thư viện">
-               <IconButton>
+               <IconButton onClick={()=>handleAddLibary(id)}>
                   <FavoriteBorderIcon />
                 </IconButton>
             </Tooltip>

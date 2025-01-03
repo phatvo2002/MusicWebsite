@@ -16,7 +16,6 @@ import HeadsetIcon from "@mui/icons-material/Headset";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import LogoutIcon from "@mui/icons-material/Logout";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import LibraryMusicIcon from "@mui/icons-material/LibraryMusic";
 import LichSu from "./Components/LichSu";
 import ChangePassword from "./Components/ChangePassword";
 import image from "../../../assets/images/playlistBackground.jpg";
@@ -25,6 +24,7 @@ import { Link as RouterLink } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import ModalChinhSuaThongTin from "./Components/ModalChinhSuaThongTin";
 const Profile = () => {
   const [tabIndex, setTabIndex] = useState(0);
   const [playlist, setPlayList] = useState([]);
@@ -46,6 +46,18 @@ const Profile = () => {
     window.location.reload();
   }
   const userId = localStorage.getItem("userId");
+
+  const [userProfile ,setUserProfile] = useState({})
+
+  useEffect(()=>
+ {
+   const getProfile =async ()=>
+   {
+     const res = await axios.get(`https://localhost:7280/api/User/GetUserById?id=${userId}`)
+     setUserProfile(res.data)
+   }
+   getProfile()
+ },[userId])
   const handleOpenMoalChinhSua = ()=>
   {
     setOpenModalChinhSua(true)
@@ -97,7 +109,7 @@ const Profile = () => {
             >
               <Tab label="Quản lý tài khoản" icon={<AccountCircleIcon />} />
               <Tab label="Playlist" icon={<QueueMusicIcon />} />
-              <Tab label="Thư viện" icon={<LibraryMusicIcon />} />
+              {/* <Tab label="Thư viện" icon={<LibraryMusicIcon />} /> */}
               <Tab label="Lịch sử" icon={<HeadsetIcon />} />
               <Tab label="Đổi mật khẩu" icon={<ManageAccountsIcon />} />
               <Tab label="Đăng xuất" icon={<LogoutIcon />} onClick={logout} />
@@ -114,21 +126,17 @@ const Profile = () => {
                 <Typography variant="h6" sx={{ fontWeight: "bold" }}>
                   Giới thiệu
                 </Typography>
-                <Button variant="outlined" size="small">
+                <Button variant="outlined" size="small" onClick={handleOpenMoalChinhSua}>
                   Chỉnh sửa
                 </Button>
               </Box>
               <Divider sx={{ my: 1 }} />
               <Box sx={{ lineHeight: 3 }}>
-                <Typography>ID: 37703447</Typography>
-                <Typography>Họ và tên:</Typography>
-                <Typography>Ngày sinh: 01/01/1970</Typography>
-                <Typography>Giới tính: Khác</Typography>
-                <Typography>Điện thoại:</Typography>
-                <Typography>Địa chỉ:</Typography>
-                <Typography>Tỉnh thành:</Typography>
-                <Typography>Số CMND:</Typography>
-                <Typography>Giới thiệu:</Typography>
+                <Typography><b>ID</b>: {userProfile?.id}</Typography>
+                <Typography><b>Họ và tên</b>: {userProfile?.tenNguoiDung}</Typography>
+                <Typography><b>Số điện thoại</b>: {userProfile?.soDienThoai}</Typography>
+                <Typography><b>Email</b>: {userProfile?.email}</Typography>
+                <Typography><b>Vai trò</b>:{userProfile?.roleId =="3612c2e3-bf45-408e-9eda-ea94c81b55b4" ? "Quản trị hệ thống" : "Người dùng"}</Typography>
               </Box>
             </Paper>
           )}
@@ -190,26 +198,27 @@ const Profile = () => {
           )}
 
           {tabIndex === 2 && (
-            <Paper variant="outlined" sx={{ padding: 2, mb: 3 }}></Paper>
-          )}
-
-          {tabIndex === 3 && (
             <Paper variant="outlined" sx={{ padding: 2, mb: 3 }}>
               <LichSu />
             </Paper>
           )}
 
-          {tabIndex === 4 && (
+          {tabIndex === 3 && (
             <Paper variant="outlined" sx={{ padding: 2, mb: 3 }}>
               <ChangePassword />
             </Paper>
           )}
 
-          {tabIndex === 5 && (
+          {tabIndex === 4 && (
             <Paper variant="outlined" sx={{ padding: 2, mb: 3 }}></Paper>
           )}
         </Grid2>
       </Grid2>
+      <ModalChinhSuaThongTin
+        handleClose={handleCloseMoalChinhSua}
+        openModal={openModalChinhsua}
+        userId={userId}
+      />
     </Box>
   );
 };

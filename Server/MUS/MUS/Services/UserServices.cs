@@ -24,6 +24,11 @@ namespace MUS.Services
             return await _userRepository.GetAllUser();
         }
 
+        public async Task<UserDTO> GetUserById(Guid id)
+        {
+            return await _userRepository.GetUserById(id);
+        }
+
         public async Task<LoginDTO> Login(LoginModal modal)
         {
             return await _userRepository.Login(modal);
@@ -37,6 +42,11 @@ namespace MUS.Services
         public async Task<ResultModel> Resgister(RegisterModal modal)
         {
             return await _userRepository.Resgister(modal);
+        }
+
+        public async Task<ResultModel> UpdateUser(UserModal modal)
+        {
+            return await _userRepository.UpdateUser(modal);
         }
     }
 }

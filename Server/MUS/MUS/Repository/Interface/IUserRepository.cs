@@ -8,11 +8,12 @@ namespace MUS.Repository.Interface
         Task<LoginDTO> Login(LoginModal modal);
 
         Task<ResultModel> Resgister(RegisterModal modal);
+        Task<ResultModel> UpdateUser(UserModal modal);
 
         Task<ResultModel> DeleteUser(Guid Id);
 
         Task<List<UserDTO>> GetAllUser();
-
+        Task<UserDTO> GetUserById(Guid id);
         Task<ResultModel> ResetPassword(Guid id,string oldPassword, string newPasword);
     }
 }
