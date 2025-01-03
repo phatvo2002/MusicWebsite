@@ -33,6 +33,8 @@ const ThuVienDetail = () => {
      
   }
 
+
+
   useEffect(() => {
     const getLibary = async () => {
       const response = await axios.get(
@@ -130,8 +132,33 @@ const ThuVienDetail = () => {
                      </IconButton>
                   </Tooltip>
                   <Tooltip title="Tải bài hát">
-                     <IconButton>
-                         <DownloadIcon/>
+                     <IconButton  onClick={async () => {
+                  try {
+                    const response = await axios({
+                      url: `https://localhost:7280/api/File/file`,
+                      method: "GET",
+                      params: {
+                        path:song?.baiNhac?.duongDanFileAmNhac,
+                        filename:song?.baiNhac?.tenFile,
+                      },
+                      responseType: "blob",
+                    });
+              
+                    const blob = new Blob([response.data], { type: "audio/mpeg" });
+                    const url = window.URL.createObjectURL(blob);
+                    const link = document.createElement("a");
+                    link.href = url;
+                    link.setAttribute("download", `${song?.baiNhac?.tenFile}.mp3`);
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+              
+                    window.URL.revokeObjectURL(url);
+                  } catch (error) {
+                    console.error("Error downloading the file", error);
+                  }
+                }}>
+                         <DownloadIcon />
                      </IconButton>
                   </Tooltip>
                  </Stack>

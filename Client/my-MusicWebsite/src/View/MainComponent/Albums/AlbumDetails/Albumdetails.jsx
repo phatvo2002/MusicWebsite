@@ -10,56 +10,17 @@ import {
     ListItemText,
     Divider,
     Stack,
+    Tooltip,
   } from "@mui/material";
   import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
+  import DownloadIcon from '@mui/icons-material/Download';
   import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
+  import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-  
-  const songs = [
-    {
-      id: 1,
-      title: "Sorforce",
-      artist: "The neighborhood",
-      releaseDate: "Nov 4, 2023",
-      album: "Hard to Imagine Neighbourhood Ever Changing",
-      duration: "3:26",
-    },
-    {
-      id: 2,
-      title: "Skyfall Beats",
-      artist: "nightmares",
-      releaseDate: "Oct 26, 2023",
-      album: "nightmares",
-      duration: "2:45",
-    },
-    {
-      id: 3,
-      title: "Greedy",
-      artist: "tate mcree",
-      releaseDate: "Nov 30, 2023",
-      album: "Greedy",
-      duration: "2:11",
-    },
-    {
-      id: 4,
-      title: "Lovin On Me",
-      artist: "jack harlow",
-      releaseDate: "Dec 15, 2023",
-      album: "Lovin On Me",
-      duration: "2:18",
-    },
-    {
-      id: 5,
-      title: "pain the town red",
-      artist: "Doja Cat",
-      releaseDate: "Dec 29, 2023",
-      album: "Paint The Town Red",
-      duration: "3:51",
-    },
-  ];
+import { toast } from "react-toastify";
+
   
   const Albumdetails = () => {
      const {id} = useParams()
@@ -77,7 +38,28 @@ import axios from "axios";
         getAlbums();
       }, []);
 
-      console.log(songAlbums[0]?.album?.url      )
+      const handleAddLibary = async (baiNhacId)=>{
+        const thuVienId = localStorage.getItem("thuVienID");
+        if(thuVienId  == null || undefined)
+        {
+           toast.warning("Bạn cần đăng nhập để thực hiện chức năng")
+        }else
+        {
+          const data = {
+            thuVienId : thuVienId,
+            baiNhacId : baiNhacId,
+          }
+          const response = await axios.post("https://localhost:7280/api/ThuVien/addthuvienbainhac",data)
+          if(response.status === 200)
+          {
+            toast.success("Thêm vào thư viện thành công")
+          }
+          else
+          {
+            toast.error("Đã có lỗi xảy ra , vui lòng liên hệ với bộ phận chăm sóc khách hàng để hỗ trợ")
+          }
+        }
+      }
     return (
       <Box sx={{ bgcolor: "#101828", color: "#fff", minHeight: "100vh", p: 3 }}>
         {/* Header Section */}
@@ -131,7 +113,10 @@ import axios from "axios";
                 <ListItemText
                   primary={
                     <Typography variant="body1" sx={{ fontWeight: 500 }}>
+                      <Link to={`/bainhac/${song.tenBaiNhac}/${song.id}`} style={{textDecoration:"none"}}>
                       {song.tenBaiNhac}
+                      </Link>
+                    
                     </Typography>
                   }
                   secondary={
@@ -149,12 +134,39 @@ import axios from "axios";
                 <Typography sx={{ width: "60px", textAlign: "center" }}>
                   {song.thoiLuongs}
                 </Typography>
-                <IconButton>
+                <IconButton onClick={()=> handleAddLibary(song?.id)}>
                   <FavoriteBorderIcon sx={{ color: "gray" }} />
                 </IconButton>
-                <IconButton>
-                  <MoreVertIcon sx={{ color: "gray" }} />
-                </IconButton>
+                <Tooltip title="Tải bài hát">
+                     <IconButton  onClick={async () => {
+                  try {
+                    const response = await axios({
+                      url: `https://localhost:7280/api/File/file`,
+                      method: "GET",
+                      params: {
+                        path:song?.duongDanFileAmNhac,
+                        filename:song?.tenFile,
+                      },
+                      responseType: "blob",
+                    });
+              
+                    const blob = new Blob([response.data], { type: "audio/mpeg" });
+                    const url = window.URL.createObjectURL(blob);
+                    const link = document.createElement("a");
+                    link.href = url;
+                    link.setAttribute("download", `${song?.tenFile}.mp3`);
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+              
+                    window.URL.revokeObjectURL(url);
+                  } catch (error) {
+                    console.error("Error downloading the file", error);
+                  }
+                }}>
+                         <DownloadIcon />
+                     </IconButton>
+                  </Tooltip>
               </ListItem>
               <Divider sx={{ bgcolor: "gray" }} />
             </Box>

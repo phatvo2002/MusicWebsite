@@ -19,7 +19,8 @@ import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate } from "react-router-dom";
 import ModalAddDanhSachPhat from "./Modal/ModalAddDanhSachPhat";
-import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
+import DownloadIcon from '@mui/icons-material/Download';
+import { Link } from "react-router-dom";
 import { gray } from "../../../Theme/shared-theme/themePrimitives";
 import { toast } from "react-toastify";
 const Detail = () => {
@@ -296,9 +297,9 @@ const Detail = () => {
               <Box sx={{ flex: 1, marginLeft: 2 }}>
                 
                 {/* Title */}
-                <Typography variant="h6" fontWeight="bold">
-                  {data?.tenBaiNhac}
-                </Typography>
+                <Link to={`/bainhac/${data.tenBaiNhac}/${data.id}`} style={{textDecoration:"none"}}>
+                      {data.tenBaiNhac}
+                      </Link>
                 {/* Subtitle */}
                 <Typography variant="body2" color="text.secondary">
                   Aylex
@@ -329,9 +330,36 @@ const Detail = () => {
               </Box>
             
               {/* Download Button */}
-              <IconButton>
-                <CloudDownloadIcon />
-              </IconButton>
+              <Tooltip title="Tải bài hát">
+                     <IconButton  onClick={async () => {
+                  try {
+                    const response = await axios({
+                      url: `https://localhost:7280/api/File/file`,
+                      method: "GET",
+                      params: {
+                        path:data?.duongDanFileAmNhac,
+                        filename:data?.tenFile,
+                      },
+                      responseType: "blob",
+                    });
+              
+                    const blob = new Blob([response.data], { type: "audio/mpeg" });
+                    const url = window.URL.createObjectURL(blob);
+                    const link = document.createElement("a");
+                    link.href = url;
+                    link.setAttribute("download", `${data?.tenFile}.mp3`);
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+              
+                    window.URL.revokeObjectURL(url);
+                  } catch (error) {
+                    console.error("Error downloading the file", error);
+                  }
+                }}>
+                         <DownloadIcon />
+                     </IconButton>
+                  </Tooltip>
             </Box>
           );
         })}
