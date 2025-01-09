@@ -34,10 +34,10 @@ const secondaryListItems = [
 ];
 
 const fordListItems = [
-  { text: "Cài đặt ", icon: <SettingsRoundedIcon />, url: "/caidat" },
+  // { text: "Cài đặt ", icon: <SettingsRoundedIcon />, url: "/caidat" },
 ];
 const AdministratorItem = [
-  { text: "Cài đặt ", icon: <SettingsRoundedIcon />, url: "/" },
+  // { text: "Cài đặt ", icon: <SettingsRoundedIcon />, url: "/" },
   {
     text: "Quản trị hệ thống",
     icon: <ManageAccountsIcon />,

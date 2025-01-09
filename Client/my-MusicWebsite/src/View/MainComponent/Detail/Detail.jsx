@@ -135,6 +135,7 @@ const Detail = () => {
     }
   }
 
+
   return (
     <Grid2 container spacing={2}>
       <Button onClick={handleBack}>
@@ -206,6 +207,9 @@ const Detail = () => {
               </Typography>
               <Typography variant="caption" component="p">
                Lượt nghe :  {dataBaiNhac.luotNghe}
+              </Typography>
+              <Typography variant="caption" component="p">
+               Thể loại:  {dataBaiNhac?.theLoai?.tenTheLoai}
               </Typography>
             </Box>
             <Box sx={{display:"flex" ,gap:1}}>

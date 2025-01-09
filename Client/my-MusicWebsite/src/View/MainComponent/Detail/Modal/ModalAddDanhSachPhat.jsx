@@ -53,8 +53,6 @@ const ModalAddDanhSachPhat = ({openModal, handleClose ,bainhacId }) => {
         const formData = new FormData();
         formData.append("BaiNhacId",bainhacId);
         formData.append("DanhSachPhatId",selectedItem);
-       
-        console.log(formData);
             const response = await axios.post("https://localhost:7280/api/DanhSachPhat/adddanhsachphatbainhac", formData);
     
             if (response.status === 200) {

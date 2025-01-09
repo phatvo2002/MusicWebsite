@@ -20,5 +20,6 @@
         public Guid? AlbumId { get; set; }
         public NhacSiDTO? NhacSi { get; set; }
         public AlbumDTO?  Album { get; set; }
+        public TheLoaiDTO? TheLoai { get; set; }
     }
 }

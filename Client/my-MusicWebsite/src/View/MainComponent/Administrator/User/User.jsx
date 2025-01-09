@@ -99,7 +99,6 @@ const User = () => {
     }
   };
 
-  console.log(data)
 
 
 

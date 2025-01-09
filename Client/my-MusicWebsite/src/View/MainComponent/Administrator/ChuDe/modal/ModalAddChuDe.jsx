@@ -43,7 +43,6 @@ const ModalAddChuDe = ({ openModal, handleClose ,setLoading }) => {
         resetForm();               
         handleClose()    
       };
-  console.log(imageDataBasic)
 
       const handelSave = async () => {
         if (!obj?.tenChude || !imageDataBasic) {

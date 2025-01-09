@@ -74,7 +74,6 @@ const ModalUpdateChuDe = ({ openModal, handleClose, setLoading, selectedId }) =>
     }
   }, [openModal, selectedId]);
 
-  console.log(imageDataBasic)
   // Function to handle updating
   const handleUpdate = async () => {
     if (!obj?.tenChuDe || !imageDataBasic) {

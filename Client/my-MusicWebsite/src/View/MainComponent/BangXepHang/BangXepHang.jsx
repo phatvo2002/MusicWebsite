@@ -36,7 +36,6 @@ const BangXepHang = () => {
     getData();
   }, []);
 
-  console.log(dataSong);
   return (
     <Box sx={{ p: 4, backgroundColor: "#1D1C24", color: "#fff" }}>
       <Stack direction="row" alignItems="center" spacing={1} mb={2}>

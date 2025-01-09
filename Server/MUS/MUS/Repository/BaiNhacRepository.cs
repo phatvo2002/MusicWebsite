@@ -122,7 +122,7 @@ namespace MUS.Repository
 
         public async Task<BaiNhacDTO> GetBaiNhacById(Guid id)
         {
-            var db =await _musDbConText.BaiNhacs.Where(r => r.Id == id).Include(r=> r.NhacSi).FirstOrDefaultAsync();
+            var db =await _musDbConText.BaiNhacs.Where(r => r.Id == id).Include(r=> r.NhacSi).Include(r=> r.TheLoai).FirstOrDefaultAsync();
             return _mapper.Map<BaiNhacDTO>(db);
         }
 

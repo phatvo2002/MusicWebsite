@@ -64,7 +64,7 @@ const ChuDe = () => {
         flex:1,
         renderCell: (params) => (
           <div>
-            <img style={{width:"100px", height:"100px" }} src={`https://localhost:7280/api/File/image?path=${params.row.url}`}></img>
+            <img style={{width:"50px", height:"50px" }} src={`https://localhost:7280/api/File/image?path=${params.row.url}`}></img>
           </div>
         ),
       },

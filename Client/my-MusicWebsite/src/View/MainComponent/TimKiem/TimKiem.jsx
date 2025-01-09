@@ -50,7 +50,6 @@ const TimKiem = () => {
     }
   }, [location.search]);
 
-  console.log(results);
 
   return (
     <div>

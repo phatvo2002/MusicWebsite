@@ -19,7 +19,6 @@ const ModalChinhSuaBaiNhac = ({ openModal, handleClose, setLoading, baiNhacId })
         setLoading: PropTypes.func.isRequired,
         baiNhacId: PropTypes.string.isRequired,
       };
-      console.log(baiNhacId)
       const [selectedDate, setSelectedDate] = useState(null);
       const [obj , setObj] = useState({
         tenBaiNhac :"",

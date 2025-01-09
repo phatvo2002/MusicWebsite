@@ -45,7 +45,6 @@ const ModalAddPlaylist = ({openModal, handleClose ,userId }) => {
         resetForm();               
         handleClose()    
       };
-      console.log(userId)
       const handelSave = async () => {
         if (!obj?.tenDanhSachPhat) {
             toast.warning("Vui lòng nhập đầy đủ dữ liệu", {
