@@ -339,7 +339,6 @@ const Detail = () => {
                        }
                        else
                        {
-
                          const response = await axios({
                            url: `https://localhost:7280/api/File/file`,
                            method: "GET",

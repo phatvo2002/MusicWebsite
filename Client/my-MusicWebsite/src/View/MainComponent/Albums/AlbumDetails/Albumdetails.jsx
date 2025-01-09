@@ -3,7 +3,6 @@ import {
     Box,
     Typography,
     IconButton,
-    Avatar,
     List,
     ListItem,
     ListItemAvatar,
